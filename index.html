@@ -67,10 +67,11 @@
   .card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);}
   .cp{padding:14px 16px;}
 
-  .header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;margin-bottom:14px;}
+  .header{display:flex;justify-content:space-between;align-items:flex-start;padding:14px 16px;margin-bottom:14px;gap:10px;}
   .header-title{font-weight:600;font-size:16px;display:flex;align-items:center;gap:8px;}
   .header-sub{font-size:11px;color:var(--text3);margin-top:2px;text-transform:capitalize;}
-  .hactions{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+  .hactions{display:flex;gap:6px;flex-wrap:wrap;align-items:center;justify-content:flex-end;flex-shrink:0;max-width:60%;}
+  @media(max-width:480px){.hactions .btn-label{display:none;}}
 
   .stats{display:flex;gap:10px;margin-bottom:14px;}
   .stat{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);
@@ -691,6 +692,7 @@ function App() {
   const [extraQuick,   setExtraQuick]   = useState({ name:'', kcal:'', protein:'', qty:'' });
   const [udsMode,      setUdsMode]      = useState('uds');  // 'uds' | 'g' for unit foods
   const [currentDay,   setCurrentDay]   = useState(REAL_TODAY);  // the active working day
+  const [confirm,      setConfirm]      = useState(null);  // 'reset' | 'advance' | null
 
   /* ── Carga inicial ── */
   useEffect(() => {
@@ -894,21 +896,64 @@ function App() {
             Editar alimentos
           </button>
           {isToday && (
-            <button className="btn-reset" onClick={() => setMeals(initMeals())}>
-              <i className="ti ti-refresh"></i> Reiniciar hoy
+            <button className="btn-reset" onClick={() => setConfirm('reset')}>
+              <i className="ti ti-refresh"></i><span className="btn-label"> Reiniciar hoy</span>
             </button>
           )}
           {isToday && (
             <button
               style={{ background:'var(--amber-bg)', color:'var(--amber-text)', borderColor:'rgba(99,56,6,.3)' }}
-              onClick={advanceDay}
+              onClick={() => setConfirm('advance')}
               title="Guarda el día actual y abre uno nuevo"
             >
-              <i className="ti ti-calendar-plus"></i> Día siguiente
+              <i className="ti ti-calendar-plus"></i><span className="btn-label"> Día siguiente</span>
             </button>
           )}
         </div>
       </div>
+
+      {/* MODAL DE CONFIRMACIÓN */}
+      {confirm && (
+        <div style={{
+          position:'fixed', inset:0, background:'rgba(0,0,0,0.45)', zIndex:1000,
+          display:'flex', alignItems:'center', justifyContent:'center', padding:16,
+        }} onClick={() => setConfirm(null)}>
+          <div className="card cp" style={{ maxWidth:340, width:'100%', boxShadow:'0 8px 32px rgba(0,0,0,0.2)' }}
+            onClick={e => e.stopPropagation()}>
+            <div style={{ fontSize:15, fontWeight:600, marginBottom:8, display:'flex', alignItems:'center', gap:8 }}>
+              {confirm === 'reset'
+                ? <><i className="ti ti-alert-triangle" style={{ color:'var(--red-text)' }}></i> Reiniciar el día</>
+                : <><i className="ti ti-calendar-plus" style={{ color:'var(--amber-text)' }}></i> Pasar al día siguiente</>
+              }
+            </div>
+            <p style={{ fontSize:13, color:'var(--text2)', marginBottom:16, lineHeight:1.6 }}>
+              {confirm === 'reset'
+                ? 'Se borrarán todos los alimentos registrados hoy. Esta acción no se puede deshacer.'
+                : 'Se guardarán los datos de hoy y los contadores se reiniciarán para el nuevo día.'
+              }
+            </p>
+            <div style={{ display:'flex', gap:8, justifyContent:'flex-end' }}>
+              <button className="btn-ghost" onClick={() => setConfirm(null)}>
+                Cancelar
+              </button>
+              <button
+                className={confirm === 'reset' ? 'btn-reset' : ''}
+                style={confirm === 'advance' ? { background:'var(--amber-bg)', color:'var(--amber-text)', borderColor:'rgba(99,56,6,.3)' } : {}}
+                onClick={() => {
+                  if (confirm === 'reset') setMeals(initMeals());
+                  else advanceDay();
+                  setConfirm(null);
+                }}
+              >
+                {confirm === 'reset'
+                  ? <><i className="ti ti-trash"></i> Sí, reiniciar</>
+                  : <><i className="ti ti-check"></i> Sí, día siguiente</>
+                }
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* DATE PILLS — oldest left, newest (hoy) right */}
       <div className="date-pills">
