@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contador Nutricional</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+  :root {
+    --bg:#ffffff; --bg2:#f6f6f4; --bg3:#efefeb;
+    --text:#1a1a18; --text2:#6b6b67; --text3:#9a9a96;
+    --border:rgba(0,0,0,0.09); --border2:rgba(0,0,0,0.16);
+    --radius:8px; --radius-lg:12px;
+    --green-bg:#EAF3DE; --green-mid:#97C459; --green-text:#27500A; --green-dark:#3B6D11;
+    --blue-bg:#E6F1FB; --blue-mid:#85B7EB; --blue-text:#0C447C; --blue-dark:#185FA5;
+    --red-bg:#FCEBEB; --red-mid:#F09595; --red-text:#791F1F;
+    --amber-bg:#FAEEDA; --amber-text:#633806;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#1c1c1a; --bg2:#272725; --bg3:#323230;
+      --text:#f0f0ec; --text2:#a0a09c; --text3:#6a6a66;
+      --border:rgba(255,255,255,0.09); --border2:rgba(255,255,255,0.16);
+      --green-bg:#173404; --green-mid:#3B6D11; --green-text:#C0DD97; --green-dark:#97C459;
+      --blue-bg:#042C53; --blue-mid:#185FA5; --blue-text:#B5D4F4; --blue-dark:#85B7EB;
+      --red-bg:#501313; --red-mid:#A32D2D; --red-text:#F7C1C1;
+      --amber-bg:#412402; --amber-text:#FAC775;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,'Segoe UI',system-ui,sans-serif;background:var(--bg3);color:var(--text);min-height:100vh;}
+  #root{max-width:780px;margin:0 auto;padding:16px;}
+
+  select,input[type=number],input[type=text]{
+    height:36px;border:0.5px solid var(--border2);border-radius:var(--radius);
+    padding:0 10px;font-size:13px;background:var(--bg);color:var(--text);
+    width:100%;outline:none;transition:border-color .15s,box-shadow .15s;font-family:inherit;
+  }
+  select:focus,input:focus{box-shadow:0 0 0 2px rgba(59,109,17,.2);border-color:var(--green-dark);}
+  button{
+    height:36px;border:0.5px solid var(--border2);border-radius:var(--radius);
+    padding:0 14px;font-size:13px;background:var(--bg);color:var(--text);
+    cursor:pointer;display:inline-flex;align-items:center;gap:6px;
+    transition:background .12s,transform .1s;font-family:inherit;white-space:nowrap;
+  }
+  button:hover{background:var(--bg2);}
+  button:active{transform:scale(.98);}
+  .btn-add{background:var(--green-bg);color:var(--green-text);border-color:var(--green-mid);font-weight:500;}
+  .btn-add:hover{filter:brightness(.94);}
+  .btn-reset{color:var(--red-text);border-color:var(--red-mid);background:var(--red-bg);}
+  .btn-reset:hover{filter:brightness(.94);}
+  .btn-edit{background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-mid);}
+  .btn-edit:hover{filter:brightness(.94);}
+  .btn-save{background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-mid);}
+  .btn-ghost{background:var(--bg2);}
+  .btn-wide{width:100%;justify-content:center;}
+  .btn-sm{height:28px;padding:0 10px;font-size:12px;}
+  .btn-icon{height:28px;width:28px;padding:0;justify-content:center;border-color:transparent;background:none;color:var(--text3);font-size:15px;}
+  .btn-icon:hover{background:var(--red-bg);color:var(--red-text);border-color:var(--red-mid);}
+  .btn-icon-b:hover{background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-mid);}
+
+  .card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);}
+  .cp{padding:14px 16px;}
+
+  .header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;margin-bottom:14px;}
+  .header-title{font-weight:600;font-size:16px;display:flex;align-items:center;gap:8px;}
+  .header-sub{font-size:11px;color:var(--text3);margin-top:2px;text-transform:capitalize;}
+  .hactions{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+
+  .stats{display:flex;gap:10px;margin-bottom:14px;}
+  .stat{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:12px 16px;flex:1;text-align:center;}
+  .stat-label{font-size:11px;color:var(--text2);margin-bottom:3px;}
+  .stat-val{font-size:24px;font-weight:600;line-height:1.1;}
+  .stat-unit{font-size:13px;font-weight:400;}
+
+  .kcal{color:var(--green-dark);font-weight:500;}
+  .prot{color:var(--blue-dark);font-weight:500;}
+
+  .date-pills{display:flex;gap:5px;overflow-x:auto;margin-bottom:14px;scrollbar-width:none;padding-bottom:2px;}
+  .date-pills::-webkit-scrollbar{display:none;}
+  .dpill{flex-direction:column;gap:1px;height:auto;padding:5px 12px;flex:0 0 auto;font-size:12px;border-radius:16px;}
+  .dpill.active{background:var(--green-bg);color:var(--green-text);border-color:var(--green-mid);}
+  .dpill.nodata{opacity:.5;}
+  .dpill-sub{font-size:9px;color:var(--green-dark);display:block;text-align:center;}
+  .dpill:not(.active) .dpill-sub{color:var(--text3);}
+
+  .tabs{display:flex;gap:5px;overflow-x:auto;margin-bottom:14px;scrollbar-width:none;}
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab{height:auto;padding:7px 11px;flex-direction:column;gap:2px;font-size:11px;min-width:68px;flex:0 0 auto;background:var(--bg);border-color:var(--border);}
+  .tab-icon{font-size:17px;color:var(--text3);}
+  .tab.active{background:var(--green-bg);color:var(--green-text);border-color:var(--green-mid);}
+  .tab.active .tab-icon{color:var(--green-text);}
+  .tab-sub{font-size:9px;color:var(--green-dark);}
+
+  table{width:100%;border-collapse:collapse;}
+  th{font-size:11px;font-weight:500;color:var(--text2);padding:7px 10px;text-align:right;background:var(--bg2);border-bottom:0.5px solid var(--border);}
+  th:first-child{text-align:left;}
+  td{padding:7px 10px;font-size:13px;text-align:right;border-bottom:0.5px solid var(--border);}
+  td:first-child{text-align:left;}
+  tr:last-child td{border-bottom:none;}
+  .tfoot td{border-top:0.5px solid var(--border2)!important;border-bottom:none!important;background:var(--bg2);font-weight:600;font-size:13px;}
+
+  .preview{margin-top:7px;font-size:12px;color:var(--green-dark);background:var(--green-bg);border-radius:6px;padding:4px 10px;display:inline-block;}
+  .empty{text-align:center;padding:2.5rem 1rem;color:var(--text3);font-size:13px;}
+  .empty-icon{font-size:40px;display:block;margin-bottom:8px;opacity:.25;}
+  .modified{background:var(--green-bg)!important;}
+  .modified td:first-child{color:var(--green-text);}
+  label{font-size:11px;color:var(--text2);display:block;margin-bottom:3px;}
+  .sec-title{font-size:12px;font-weight:500;color:var(--text2);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+  .info-note{font-size:11px;color:var(--text2);line-height:1.6;padding:8px 10px;background:var(--bg2);border-radius:var(--radius);border-left:2px solid var(--border2);margin-bottom:12px;}
+  .compact{height:30px!important;font-size:12px!important;padding:0 6px!important;}
+  .day-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:0.5px solid var(--border);font-size:13px;}
+  .day-row:last-child{border-bottom:none;}
+  .hist-item{display:flex;justify-content:space-between;padding:3px 0 3px 22px;font-size:12px;color:var(--text3);}
+  .divider{border:none;border-top:0.5px solid var(--border2);margin:8px 0;}
+  .row-g{display:flex;gap:8px;}
+  .col-g{display:flex;flex-direction:column;gap:8px;}
+  .readonly-banner{background:var(--amber-bg);color:var(--amber-text);border:0.5px solid rgba(99,56,6,.25);border-radius:var(--radius);padding:7px 12px;font-size:12px;display:flex;align-items:center;gap:7px;margin-bottom:14px;}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useMemo, useEffect, useRef } = React;
+
+/* ═══ STORAGE ════════════════════════════════════════════════════════════════ */
+const LS = {
+  get: k => { try { const v = localStorage.getItem(k); return v != null ? JSON.parse(v) : null; } catch { return null; } },
+  set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) { console.warn('Storage error', e); } },
+  del: k => { try { localStorage.removeItem(k); } catch {} },
+};
+
+/* ═══ FECHA ══════════════════════════════════════════════════════════════════ */
+const TODAY    = new Date().toISOString().slice(0, 10);
+const MAX_HIST = 5; // días previos a conservar
+
+function manageDates(stored) {
+  let ds = [...new Set([TODAY, ...(stored || [])])].sort().reverse();
+  const keep   = ds.slice(0, MAX_HIST + 1);
+  const remove = ds.slice(MAX_HIST + 1);
+  remove.forEach(d => LS.del('nutri_day_' + d));
+  LS.set('nutri_dates', keep);
+  return keep;
+}
+
+function fmtDate(ds) {
+  if (ds === TODAY) return 'Hoy';
+  const d    = new Date(ds + 'T12:00:00');
+  const diff = Math.round((new Date(TODAY + 'T12:00:00') - d) / 86400000);
+  if (diff === 1) return 'Ayer';
+  return d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+}
+
+/* ═══ BASE DE ALIMENTOS ══════════════════════════════════════════════════════ */
+const BASE_FOODS = [
+  { id:'pavo',         name:'Embutido de pavo',                        unit:'g',   kcalPer100:100,  proteinPer100:18   },
+  { id:'jamon',        name:'Jamón serrano',                           unit:'g',   kcalPer100:155,  proteinPer100:30   },
+  { id:'tort_jamon',   name:'Tortita arroz jamón serrano (Mercadona)', unit:'g',   kcalPer100:392,  proteinPer100:9.1  },
+  { id:'tort_camp',    name:'Tortita arroz campesina (Mercadona)',     unit:'g',   kcalPer100:385,  proteinPer100:8.2  },
+  { id:'huevo',        name:'Huevo',                                   unit:'g',   kcalPer100:155,  proteinPer100:12.6 },
+  { id:'patata',       name:'Patata cocida',                           unit:'g',   kcalPer100:87,   proteinPer100:2    },
+  { id:'atun_oliva',   name:'Atún en aceite de oliva',                 unit:'g',   kcalPer100:195,  proteinPer100:27   },
+  { id:'atun_girasol', name:'Atún en aceite de girasol',               unit:'g',   kcalPer100:190,  proteinPer100:25   },
+  { id:'atun_natural', name:'Atún al natural',                         unit:'g',   kcalPer100:116,  proteinPer100:25.5 },
+  { id:'ensalada',     name:'Ensalada (lechuga y tomate)',              unit:'g',   kcalPer100:20,   proteinPer100:1.5  },
+  { id:'pan',          name:'Pan integral Mercadona',                  unit:'uds', kcalPer100:65,   proteinPer100:2.5  },
+  { id:'leche_ent',    name:'Leche entera',                            unit:'ml',  kcalPer100:64,   proteinPer100:3.3  },
+  { id:'leche_semi',   name:'Leche semidesnatada',                     unit:'ml',  kcalPer100:47,   proteinPer100:3.4  },
+  { id:'proteina',     name:'Proteína en polvo (whey)',                unit:'g',   kcalPer100:380,  proteinPer100:75   },
+  { id:'cerdo',        name:'Carne de cerdo (bistec)',                  unit:'g',   kcalPer100:175,  proteinPer100:21   },
+  { id:'ternera',      name:'Carne de ternera',                        unit:'g',   kcalPer100:140,  proteinPer100:22   },
+  { id:'pollo',        name:'Filetes de pollo',                        unit:'g',   kcalPer100:120,  proteinPer100:22   },
+  { id:'pina',         name:'Piña en jugo natural (lata)',             unit:'g',   kcalPer100:55,   proteinPer100:0.4  },
+  { id:'compota',      name:'Compota',                                 unit:'g',   kcalPer100:70,   proteinPer100:0.2  },
+  { id:'almendras',    name:'Almendras',                               unit:'g',   kcalPer100:576,  proteinPer100:21   },
+  { id:'nueces',       name:'Nueces',                                  unit:'g',   kcalPer100:654,  proteinPer100:15.2 },
+  { id:'aguacate',     name:'Aguacate',                                unit:'g',   kcalPer100:160,  proteinPer100:2    },
+  { id:'platano',      name:'Plátano',                                 unit:'g',   kcalPer100:89,   proteinPer100:1.1  },
+];
+
+const MEALS = [
+  { id:'desayuno', name:'Desayuno',      icon:'ti-coffee'          },
+  { id:'media',    name:'Media mañana',  icon:'ti-sun'             },
+  { id:'almuerzo', name:'Almuerzo',      icon:'ti-tools-kitchen-2' },
+  { id:'merienda', name:'Merienda',      icon:'ti-cookie'          },
+  { id:'cena',     name:'Cena',          icon:'ti-moon'            },
+  { id:'pre',      name:'Preentreno',    icon:'ti-bolt'            },
+  { id:'post',     name:'Postentreno',   icon:'ti-barbell'         },
+  { id:'extras',   name:'Extras',        icon:'ti-plus-circle'     },
+];
+
+const initMeals = () => Object.fromEntries(MEALS.map(m => [m.id, []]));
+
+/* ═══ CÁLCULO ════════════════════════════════════════════════════════════════ */
+function calcFood(food, amount, overrides) {
+  const ov = overrides?.[food.id] || {};
+  const k  = ov.kcal    !== undefined ? +ov.kcal    : food.kcalPer100;
+  const p  = ov.protein !== undefined ? +ov.protein : food.proteinPer100;
+  return food.unit === 'uds'
+    ? { kcal: Math.round(amount * k),         protein: Math.round(amount * p * 10) / 10 }
+    : { kcal: Math.round(amount / 100 * k),   protein: Math.round(amount / 100 * p * 10) / 10 };
+}
+
+function enrichItems(items, allFoods, overrides) {
+  return items.map(item => {
+    const f = allFoods.find(x => x.id === item.foodId);
+    if (!f) return { ...item, kcal: item.kcal || 0, protein: item.protein || 0 };
+    return { ...item, ...calcFood(f, item.amount, overrides) };
+  });
+}
+
+function mealTotals(items) {
+  return {
+    kcal:    items.reduce((s, i) => s + i.kcal, 0),
+    protein: Math.round(items.reduce((s, i) => s + i.protein, 0) * 10) / 10,
+    count:   items.length,
+  };
+}
+
+function buildDayTotals(mealData, allFoods, overrides) {
+  const breakdown = {};
+  let kcal = 0, prot = 0;
+  MEALS.forEach(ml => {
+    const items = enrichItems(mealData[ml.id] || [], allFoods, overrides);
+    const t     = mealTotals(items);
+    breakdown[ml.id] = { ...t, items };
+    kcal += t.kcal;
+    prot += t.protein;
+  });
+  return { kcal, protein: Math.round(prot * 10) / 10, meals: breakdown };
+}
+
+/* ═══ COMPONENTE: EDITOR DE VALORES ═════════════════════════════════════════ */
+function EditView({ allFoods, overrides, setOverrides, onBack }) {
+  const [search, setSearch] = useState('');
+  const filtered = search
+    ? allFoods.filter(f => f.name.toLowerCase().includes(search.toLowerCase()))
+    : allFoods;
+
+  const setOv = (id, field, val) =>
+    setOverrides(p => ({ ...p, [id]: { ...(p[id] || {}), [field]: val === '' ? undefined : val } }));
+  const resetOv = id =>
+    setOverrides(p => { const n = { ...p }; delete n[id]; return n; });
+
+  const modCount = Object.values(overrides).filter(ov => ov && (ov.kcal !== undefined || ov.protein !== undefined)).length;
+
+  return (
+    <div style={{ paddingBottom: '2rem' }}>
+      <div className="card cp header">
+        <div>
+          <div className="header-title">
+            <i className="ti ti-edit" style={{ color: 'var(--blue-dark)', fontSize: 18 }} aria-hidden="true"></i>
+            Editar valores nutricionales
+          </div>
+          {modCount > 0 && (
+            <div style={{ fontSize: 11, color: 'var(--green-dark)', marginTop: 2 }}>
+              {modCount} alimento{modCount > 1 ? 's' : ''} con valores modificados
+            </div>
+          )}
+        </div>
+        <div className="hactions">
+          {modCount > 0 && (
+            <button className="btn-reset btn-sm" onClick={() => setOverrides({})}>
+              <i className="ti ti-refresh"></i> Restaurar todos
+            </button>
+          )}
+          <button className="btn-edit" onClick={onBack}>
+            <i className="ti ti-arrow-left"></i> Volver
+          </button>
+        </div>
+      </div>
+
+      <div className="info-note">
+        <i className="ti ti-info-circle" style={{ fontSize: 13 }}></i>{' '}
+        Valores por <strong>100g / 100ml</strong>, excepto el pan (por <strong>unidad</strong>).
+        Los cambios se aplican en tiempo real a todos los días. Las filas en verde tienen valores personalizados.
+      </div>
+
+      <input type="text" placeholder="Buscar alimento..." value={search}
+        onChange={e => setSearch(e.target.value)} style={{ marginBottom: 10 }} />
+
+      <div className="card" style={{ overflow: 'hidden', marginBottom: 14 }}>
+        <table style={{ tableLayout: 'fixed' }}>
+          <colgroup>
+            <col style={{ width: '36%' }} /><col style={{ width: '10%' }} />
+            <col style={{ width: '21%' }} /><col style={{ width: '21%' }} /><col style={{ width: '12%' }} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Alimento</th>
+              <th style={{ textAlign: 'center' }}>Un.</th>
+              <th>Kcal / 100</th><th>Prot. / 100</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {filtered.map(f => {
+              const ov  = overrides[f.id] || {};
+              const mod = ov.kcal !== undefined || ov.protein !== undefined;
+              return (
+                <tr key={f.id} className={mod ? 'modified' : ''}>
+                  <td style={{ overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', maxWidth:0, fontSize:12,
+                    color: mod ? 'var(--green-text)' : 'var(--text)', fontWeight: mod ? 500 : 400 }}>
+                    {f.name}
+                  </td>
+                  <td style={{ textAlign:'center', fontSize:11 }}>
+                    <span style={{ padding:'2px 6px', borderRadius:8, fontWeight:500,
+                      background: f.unit==='g'?'var(--green-bg)':f.unit==='ml'?'var(--blue-bg)':'var(--amber-bg)',
+                      color: f.unit==='g'?'var(--green-text)':f.unit==='ml'?'var(--blue-text)':'var(--amber-text)' }}>
+                      {f.unit}
+                    </span>
+                  </td>
+                  <td>
+                    <input type="number" className="compact" min="0"
+                      placeholder={String(f.kcalPer100)}
+                      value={ov.kcal !== undefined ? ov.kcal : ''}
+                      onChange={e => setOv(f.id, 'kcal', e.target.value)} />
+                  </td>
+                  <td>
+                    <input type="number" className="compact" min="0" step="0.1"
+                      placeholder={String(f.proteinPer100)}
+                      value={ov.protein !== undefined ? ov.protein : ''}
+                      onChange={e => setOv(f.id, 'protein', e.target.value)} />
+                  </td>
+                  <td style={{ textAlign: 'center' }}>
+                    {mod && (
+                      <button className="btn-icon btn-icon-b" onClick={() => resetOv(f.id)} title="Restaurar">
+                        <i className="ti ti-refresh"></i>
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+            {filtered.length === 0 && (
+              <tr><td colSpan={5} style={{ textAlign:'center', color:'var(--text3)', padding:'16px', fontSize:13 }}>
+                Sin resultados
+              </td></tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+/* ═══ COMPONENTE: VISTA HISTÓRICO ════════════════════════════════════════════ */
+function HistoryView({ data }) {
+  if (!data || (data.kcal === 0 && data.protein === 0)) {
+    return (
+      <div className="card" style={{ marginBottom: 10 }}>
+        <div className="empty">
+          <i className="ti ti-calendar-off empty-icon" aria-hidden="true"></i>
+          Sin datos registrados para este día
+        </div>
+      </div>
+    );
+  }
+  return (
+    <>
+      <div className="stats">
+        <div className="stat">
+          <div className="stat-label">Calorías</div>
+          <div className="stat-val kcal">{data.kcal} <span className="stat-unit">kcal</span></div>
+        </div>
+        <div className="stat">
+          <div className="stat-label">Proteínas</div>
+          <div className="stat-val prot">{data.protein} <span className="stat-unit">g</span></div>
+        </div>
+      </div>
+      <div className="card cp" style={{ marginBottom: 14 }}>
+        <div className="sec-title">
+          <i className="ti ti-history" aria-hidden="true"></i>
+          Detalle por comida
+        </div>
+        {MEALS.map(ml => {
+          const m = data.meals[ml.id];
+          if (!m || !m.count) return null;
+          return (
+            <div key={ml.id} style={{ marginBottom: 6 }}>
+              <div className="day-row">
+                <span style={{ display:'flex', alignItems:'center', gap:5, color:'var(--text2)', fontSize:13 }}>
+                  <i className={`ti ${ml.icon}`} style={{ fontSize:13 }} aria-hidden="true"></i>
+                  {ml.name}
+                  <span style={{ fontSize:10, color:'var(--text3)' }}>({m.count} alim.)</span>
+                </span>
+                <span>
+                  <span className="kcal">{m.kcal} kcal</span>
+                  <span style={{ color:'var(--text3)', margin:'0 4px' }}>·</span>
+                  <span className="prot">{m.protein}g</span>
+                </span>
+              </div>
+              {m.items.map(item => (
+                <div key={item.id} className="hist-item">
+                  <span>{item.name} <span style={{ color:'var(--text3)' }}>({item.amount}{item.unit})</span></span>
+                  <span>
+                    <span style={{ color:'var(--green-dark)' }}>{item.kcal}kcal</span>
+                    <span style={{ color:'var(--text3)', margin:'0 3px' }}>·</span>
+                    <span style={{ color:'var(--blue-dark)' }}>{item.protein}g</span>
+                  </span>
+                </div>
+              ))}
+            </div>
+          );
+        })}
+        <hr className="divider" />
+        <div style={{ display:'flex', justifyContent:'space-between', fontWeight:600, fontSize:14 }}>
+          <span>TOTAL</span>
+          <span>
+            <span className="kcal">{data.kcal} kcal</span>
+            <span style={{ color:'var(--text3)', margin:'0 4px' }}>·</span>
+            <span className="prot">{data.protein}g prot.</span>
+          </span>
+        </div>
+      </div>
+    </>
+  );
+}
+
+/* ═══ APP PRINCIPAL ══════════════════════════════════════════════════════════ */
+function App() {
+  const [loading,   setLoading]   = useState(true);
+  const [meals,     setMeals]     = useState(initMeals);
+  const [custom,    setCustom]    = useState([]);
+  const [overrides, setOverrides] = useState({});
+  const [history,   setHistory]   = useState({});
+  const [dates,     setDates]     = useState([TODAY]);
+  const [viewDate,  setViewDate]  = useState(TODAY);
+  const [active,    setActive]    = useState('desayuno');
+  const [selFood,   setSelFood]   = useState(BASE_FOODS[0].id);
+  const [amt,       setAmt]       = useState('');
+  const [showAdd,   setShowAdd]   = useState(false);
+  const [editMode,  setEditMode]  = useState(false);
+  const [newF,      setNewF]      = useState({ name:'', unit:'g', kcal:'', protein:'' });
+
+  /* ── Carga inicial desde localStorage ── */
+  useEffect(() => {
+    const storedDates = LS.get('nutri_dates') || [];
+    const customFoods = LS.get('nutri_foods') || [];
+    const ovs         = LS.get('nutri_overrides') || {};
+    const ds          = manageDates(storedDates);
+    const todayData   = LS.get('nutri_day_' + TODAY);
+    const hist        = {};
+    ds.filter(d => d !== TODAY).forEach(d => {
+      const data = LS.get('nutri_day_' + d);
+      if (data) hist[d] = data;
+    });
+    setDates(ds);
+    setCustom(customFoods);
+    setOverrides(ovs);
+    if (todayData) setMeals(todayData);
+    setHistory(hist);
+    setLoading(false);
+  }, []);
+
+  /* ── Guardado automático ── */
+  const saveTimer = useRef(null);
+  useEffect(() => {
+    if (loading) return;
+    clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(() => LS.set('nutri_day_' + TODAY, meals), 300);
+  }, [meals, loading]);
+  useEffect(() => { if (!loading) LS.set('nutri_overrides', overrides); }, [overrides, loading]);
+  useEffect(() => { if (!loading) LS.set('nutri_foods',    custom);    }, [custom,    loading]);
+
+  /* ── Datos derivados ── */
+  const allFoods = useMemo(() => [...BASE_FOODS, ...custom], [custom]);
+  const food     = allFoods.find(f => f.id === selFood) || BASE_FOODS[0];
+
+  const enrichedToday = useMemo(() => {
+    const r = {};
+    Object.entries(meals).forEach(([mid, items]) => { r[mid] = enrichItems(items, allFoods, overrides); });
+    return r;
+  }, [meals, overrides, allFoods]);
+
+  const todayMealT = useMemo(() =>
+    Object.fromEntries(MEALS.map(ml => [ml.id, mealTotals(enrichedToday[ml.id] || [])])),
+    [enrichedToday]
+  );
+
+  const todayDay = useMemo(() => ({
+    kcal:    Object.values(todayMealT).reduce((s, m) => s + m.kcal, 0),
+    protein: Math.round(Object.values(todayMealT).reduce((s, m) => s + m.protein, 0) * 10) / 10,
+  }), [todayMealT]);
+
+  const histData = useMemo(() => {
+    const r = {};
+    Object.entries(history).forEach(([d, data]) => { r[d] = buildDayTotals(data, allFoods, overrides); });
+    return r;
+  }, [history, allFoods, overrides]);
+
+  /* ── Handlers ── */
+  const addItem = () => {
+    const n = +amt;
+    if (!n || n <= 0) return;
+    setMeals(p => ({
+      ...p,
+      [active]: [...p[active], { id: Date.now(), foodId: food.id, name: food.name, amount: n, unit: food.unit }]
+    }));
+    setAmt('');
+  };
+
+  const delItem = (mid, id) => setMeals(p => ({ ...p, [mid]: p[mid].filter(i => i.id !== id) }));
+
+  const saveCustom = () => {
+    if (!newF.name || !newF.kcal || !newF.protein) return;
+    const nf = { id: 'c' + Date.now(), name: newF.name + ' ✦', unit: newF.unit, kcalPer100: +newF.kcal, proteinPer100: +newF.protein };
+    setCustom(p => [...p, nf]);
+    // Seleccionarlo automáticamente en el desplegable
+    setSelFood(nf.id);
+    setNewF({ name:'', unit:'g', kcal:'', protein:'' });
+    setShowAdd(false);
+  };
+
+  /* ── Render ── */
+  if (loading) {
+    return (
+      <div style={{ textAlign:'center', padding:'3rem', color:'var(--text2)' }}>
+        <i className="ti ti-loader" style={{ fontSize:28, display:'block', marginBottom:8, opacity:.35 }}></i>
+        Cargando datos guardados...
+      </div>
+    );
+  }
+
+  if (editMode) {
+    return <EditView allFoods={allFoods} overrides={overrides} setOverrides={setOverrides} onBack={() => setEditMode(false)} />;
+  }
+
+  const isToday    = viewDate === TODAY;
+  const curItems   = enrichedToday[active] || [];
+  const curTotals  = todayMealT[active];
+  const activeMeal = MEALS.find(m => m.id === active);
+  const preview    = amt && +amt > 0 ? calcFood(food, +amt, overrides) : null;
+  const hasDayData = Object.values(todayMealT).some(t => t.count > 0);
+  const modCount   = Object.values(overrides).filter(ov => ov && (ov.kcal !== undefined || ov.protein !== undefined)).length;
+  const todayLabel = new Date().toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long' });
+
+  return (
+    <div style={{ paddingBottom: '2rem' }}>
+
+      {/* ── HEADER ── */}
+      <div className="card cp header">
+        <div>
+          <div className="header-title">
+            <i className="ti ti-leaf" style={{ color:'var(--green-dark)', fontSize:19 }} aria-hidden="true"></i>
+            Contador Nutricional
+          </div>
+          <div className="header-sub">{todayLabel}</div>
+        </div>
+        <div className="hactions">
+          <button className="btn-edit" onClick={() => setEditMode(true)}>
+            <i className="ti ti-edit"></i>
+            Editar valores{modCount > 0 ? ` (${modCount})` : ''}
+          </button>
+          {isToday && (
+            <button className="btn-reset" onClick={() => setMeals(initMeals())}>
+              <i className="ti ti-refresh"></i> Reiniciar hoy
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* ── DATE PILLS ── */}
+      <div className="date-pills">
+        {dates.map(d => {
+          const pd      = d === TODAY ? todayDay : histData[d] || { kcal: 0, protein: 0 };
+          const hasData = pd.kcal > 0 || pd.protein > 0;
+          return (
+            <button key={d}
+              className={`tab dpill ${viewDate === d ? 'active' : ''} ${!hasData ? 'nodata' : ''}`}
+              onClick={() => setViewDate(d)}>
+              <span>{fmtDate(d)}</span>
+              {hasData && <span className="dpill-sub">{pd.kcal}kcal · {pd.protein}g</span>}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* ── BANNER SOLO LECTURA ── */}
+      {!isToday && (
+        <div className="readonly-banner">
+          <i className="ti ti-eye" style={{ fontSize:15 }}></i>
+          Viendo {fmtDate(viewDate).toLowerCase()} — solo lectura.
+          <button style={{ marginLeft:'auto', height:26, padding:'0 10px', fontSize:11 }}
+            onClick={() => setViewDate(TODAY)}>
+            Ir a hoy
+          </button>
+        </div>
+      )}
+
+      {/* ── VISTA HOY ── */}
+      {isToday && (<>
+        <div className="stats">
+          <div className="stat">
+            <div className="stat-label">Calorías del día</div>
+            <div className="stat-val kcal">{todayDay.kcal} <span className="stat-unit">kcal</span></div>
+          </div>
+          <div className="stat">
+            <div className="stat-label">Proteínas del día</div>
+            <div className="stat-val prot">{todayDay.protein} <span className="stat-unit">g</span></div>
+          </div>
+        </div>
+
+        {/* Meal tabs */}
+        <div className="tabs">
+          {MEALS.map(ml => {
+            const t = todayMealT[ml.id];
+            return (
+              <button key={ml.id} className={`tab ${active === ml.id ? 'active' : ''}`}
+                onClick={() => setActive(ml.id)}>
+                <i className={`ti ${ml.icon} tab-icon`} aria-hidden="true"></i>
+                {ml.name}
+                {t.count > 0 && <span className="tab-sub">{t.kcal}kcal·{t.protein}g</span>}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Añadir alimento */}
+        <div className="card cp" style={{ marginBottom:10 }}>
+          <div className="sec-title">
+            <i className={`ti ${activeMeal?.icon}`} aria-hidden="true"></i>
+            {activeMeal?.name} — Añadir alimento
+          </div>
+          <div className="row-g" style={{ flexWrap:'wrap' }}>
+            <div style={{ flex:'2 1 180px' }}>
+              <select value={selFood} onChange={e => setSelFood(e.target.value)}>
+                <optgroup label="── Alimentos base ──">
+                  {BASE_FOODS.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
+                </optgroup>
+                {custom.length > 0 && (
+                  <optgroup label="── Alimentos personalizados ──">
+                    {custom.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
+                  </optgroup>
+                )}
+              </select>
+            </div>
+            <div style={{ flex:'1 1 90px', display:'flex', alignItems:'center', gap:5 }}>
+              <input type="number" min="0" placeholder={food.unit}
+                value={amt} onChange={e => setAmt(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && addItem()} />
+              <span style={{ fontSize:11, color:'var(--text3)', minWidth:18 }}>{food.unit}</span>
+            </div>
+            <button className="btn-add" onClick={addItem} style={{ flex:'0 0 auto' }}>
+              <i className="ti ti-plus"></i> Añadir
+            </button>
+          </div>
+          {preview && (
+            <div className="preview">
+              <i className="ti ti-arrow-right" style={{ fontSize:11 }}></i>{' '}
+              <span className="kcal">{preview.kcal} kcal</span>{' · '}
+              <span className="prot">{preview.protein}g proteína</span>
+            </div>
+          )}
+        </div>
+
+        {/* Tabla de alimentos */}
+        {curItems.length > 0 ? (
+          <div className="card" style={{ marginBottom:10, overflow:'hidden' }}>
+            <table style={{ tableLayout:'fixed' }}>
+              <colgroup>
+                <col style={{ width:'44%' }} /><col style={{ width:'18%' }} />
+                <col style={{ width:'16%' }} /><col style={{ width:'14%' }} /><col style={{ width:'8%' }} />
+              </colgroup>
+              <thead>
+                <tr><th>Alimento</th><th>Cantidad</th><th>Kcal</th><th>Prot.</th><th></th></tr>
+              </thead>
+              <tbody>
+                {curItems.map(item => (
+                  <tr key={item.id}>
+                    <td style={{ overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', maxWidth:0, fontSize:12 }}>{item.name}</td>
+                    <td style={{ color:'var(--text2)', fontSize:12 }}>{item.amount} {item.unit}</td>
+                    <td className="kcal">{item.kcal}</td>
+                    <td className="prot" style={{ fontSize:12 }}>{item.protein}g</td>
+                    <td style={{ textAlign:'center' }}>
+                      <button className="btn-icon" onClick={() => delItem(active, item.id)} aria-label="Eliminar">
+                        <i className="ti ti-x"></i>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colSpan={2} className="tfoot">Total {activeMeal?.name}</td>
+                  <td className="kcal tfoot">{curTotals.kcal} kcal</td>
+                  <td className="prot tfoot" style={{ fontSize:12 }}>{curTotals.protein}g</td>
+                  <td className="tfoot"></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        ) : (
+          <div className="card" style={{ marginBottom:10 }}>
+            <div className="empty">
+              <i className="ti ti-bowl-chopsticks empty-icon" aria-hidden="true"></i>
+              Sin alimentos en {activeMeal?.name.toLowerCase()}
+            </div>
+          </div>
+        )}
+
+        {/* Resumen del día */}
+        {hasDayData && (
+          <div className="card cp" style={{ marginBottom:10 }}>
+            <div className="sec-title">
+              <i className="ti ti-calendar-stats" aria-hidden="true"></i>
+              Resumen completo del día
+            </div>
+            {MEALS.map(ml => {
+              const t = todayMealT[ml.id];
+              if (!t.count) return null;
+              return (
+                <div className="day-row" key={ml.id}>
+                  <span style={{ display:'flex', alignItems:'center', gap:5, color:'var(--text2)' }}>
+                    <i className={`ti ${ml.icon}`} style={{ fontSize:13 }} aria-hidden="true"></i>
+                    {ml.name}
+                  </span>
+                  <span>
+                    <span className="kcal">{t.kcal} kcal</span>
+                    <span style={{ color:'var(--text3)', margin:'0 4px' }}>·</span>
+                    <span className="prot">{t.protein}g</span>
+                  </span>
+                </div>
+              );
+            })}
+            <hr className="divider" />
+            <div style={{ display:'flex', justifyContent:'space-between', fontWeight:600, fontSize:14 }}>
+              <span>TOTAL DEL DÍA</span>
+              <span>
+                <span className="kcal">{todayDay.kcal} kcal</span>
+                <span style={{ color:'var(--text3)', margin:'0 4px' }}>·</span>
+                <span className="prot">{todayDay.protein}g proteína</span>
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* Alimento personalizado */}
+        <button className="btn-wide" style={{ marginBottom:8 }} onClick={() => setShowAdd(!showAdd)}>
+          <i className={`ti ${showAdd ? 'ti-x' : 'ti-circle-plus'}`}></i>
+          {showAdd ? 'Cancelar' : 'Agregar alimento personalizado'}
+        </button>
+
+        {showAdd && (
+          <div className="card cp" style={{ marginBottom:10 }}>
+            <div className="sec-title">
+              <i className="ti ti-circle-plus" aria-hidden="true"></i>
+              Nuevo alimento personalizado
+            </div>
+            <div className="col-g">
+              <div>
+                <label>Nombre del alimento</label>
+                <input type="text" placeholder="ej. Queso fresco batido 0%"
+                  value={newF.name} onChange={e => setNewF(p => ({ ...p, name: e.target.value }))} />
+              </div>
+              <div className="row-g">
+                <div style={{ flex:1 }}>
+                  <label>Unidad</label>
+                  <select value={newF.unit} onChange={e => setNewF(p => ({ ...p, unit: e.target.value }))}>
+                    <option value="g">Gramos (g)</option>
+                    <option value="ml">Mililitros (ml)</option>
+                    <option value="uds">Unidades (uds)</option>
+                  </select>
+                </div>
+                <div style={{ flex:1 }}>
+                  <label>Kcal por {newF.unit === 'uds' ? '1 unidad' : '100' + newF.unit}</label>
+                  <input type="number" min="0" placeholder="kcal"
+                    value={newF.kcal} onChange={e => setNewF(p => ({ ...p, kcal: e.target.value }))} />
+                </div>
+                <div style={{ flex:1 }}>
+                  <label>Prot. por {newF.unit === 'uds' ? '1 unidad' : '100' + newF.unit}</label>
+                  <input type="number" min="0" step="0.1" placeholder="g"
+                    value={newF.protein} onChange={e => setNewF(p => ({ ...p, protein: e.target.value }))} />
+                </div>
+              </div>
+              <div className="row-g">
+                <button className="btn-save" onClick={saveCustom}>
+                  <i className="ti ti-check"></i> Guardar alimento
+                </button>
+                <button className="btn-ghost" onClick={() => setShowAdd(false)}>
+                  <i className="ti ti-x"></i> Cancelar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {custom.length > 0 && (
+          <div style={{ fontSize:11, color:'var(--text3)', textAlign:'center', marginTop:4 }}>
+            {custom.length} alimento{custom.length > 1 ? 's' : ''} personalizado{custom.length > 1 ? 's' : ''} guardado{custom.length > 1 ? 's' : ''}:
+            {custom.map(f => (
+              <span key={f.id} style={{ marginLeft:5, background:'var(--bg2)', padding:'1px 7px', borderRadius:4 }}>
+                {f.name}
+              </span>
+            ))}
+          </div>
+        )}
+      </>)}
+
+      {/* ── VISTA HISTÓRICO ── */}
+      {!isToday && <HistoryView data={histData[viewDate]} />}
+
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
