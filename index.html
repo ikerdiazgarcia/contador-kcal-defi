@@ -86,6 +86,8 @@
   .date-pills::-webkit-scrollbar{display:none;}
   .dpill{flex-direction:column;gap:1px;height:auto;padding:5px 12px;flex:0 0 auto;font-size:12px;border-radius:16px;}
   .dpill.active{background:var(--green-bg);color:var(--green-text);border-color:var(--green-mid);}
+  .dpill.past{background:var(--bg2);color:var(--text3);border-color:var(--border);}
+  .dpill.past.active{background:var(--bg3);color:var(--text2);border-color:var(--border2);}
   .dpill.nodata{opacity:.5;}
   .dpill-sub{font-size:9px;color:var(--green-dark);display:block;text-align:center;}
   .dpill:not(.active) .dpill-sub{color:var(--text3);}
@@ -184,11 +186,12 @@ const LS = {
 };
 
 /* ═══ FECHAS ══════════════════════════════════════════════════════════════════ */
-const TODAY    = new Date().toISOString().slice(0, 10);
-const MAX_HIST = 5;
+const REAL_TODAY = new Date().toISOString().slice(0, 10);
+const MAX_HIST   = 4;  // today + 4 past = 5 days
 
-function manageDates(stored) {
-  let ds = [...new Set([TODAY, ...(stored || [])])].sort().reverse();
+function manageDates(stored, currentDay) {
+  // Merge stored dates with currentDay, newest first, keep MAX_HIST+1 (today+4 past=5)
+  let ds = [...new Set([currentDay, ...(stored || [])])].sort().reverse();
   const keep   = ds.slice(0, MAX_HIST + 1);
   const remove = ds.slice(MAX_HIST + 1);
   remove.forEach(d => LS.del('nutri_day_' + d));
@@ -196,12 +199,13 @@ function manageDates(stored) {
   return keep;
 }
 
-function fmtDate(ds) {
-  if (ds === TODAY) return 'Hoy';
+function fmtDate(ds, currentDay) {
+  if (ds === currentDay) return 'Hoy';
+  const dCur = new Date(currentDay + 'T12:00:00');
   const d    = new Date(ds + 'T12:00:00');
-  const diff = Math.round((new Date(TODAY + 'T12:00:00') - d) / 86400000);
+  const diff = Math.round((dCur - d) / 86400000);
   if (diff === 1) return 'Ayer';
-  return d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+  return d.toLocaleDateString('es-ES', { weekday:'short', day:'numeric', month:'short' });
 }
 
 /* ═══ BASE DE ALIMENTOS (se ordenan alfabéticamente después) ══════════════════ */
@@ -597,7 +601,7 @@ function EditView({ allFoods, overrides, setOverrides, custom, setCustom, delete
 }
 
 /* ═══ COMPONENTE: VISTA HISTÓRICO ════════════════════════════════════════════ */
-function HistoryView({ data }) {
+function HistoryView({ data, dateLabel }) {
   if (!data || (data.kcal === 0 && data.protein === 0)) {
     return (
       <div className="card" style={{ marginBottom: 10 }}>
@@ -676,8 +680,8 @@ function App() {
   const [deletedFoods, setDeletedFoods] = useState([]);   // IDs ocultos (base o custom)
   const [overrides,    setOverrides]    = useState({});
   const [history,      setHistory]      = useState({});
-  const [dates,        setDates]        = useState([TODAY]);
-  const [viewDate,     setViewDate]     = useState(TODAY);
+  const [dates,        setDates]        = useState([REAL_TODAY]);
+  const [viewDate,     setViewDate]     = useState(REAL_TODAY);
   const [active,       setActive]       = useState('desayuno');
   const [selFood,      setSelFood]      = useState(BASE_FOODS[0].id);
   const [amt,          setAmt]          = useState('');
@@ -686,16 +690,20 @@ function App() {
   const [newF,         setNewF]         = useState({ name:'', unit:'g', kcal:'', protein:'', gramsPerUnit:'' });
   const [extraQuick,   setExtraQuick]   = useState({ name:'', kcal:'', protein:'', qty:'' });
   const [udsMode,      setUdsMode]      = useState('uds');  // 'uds' | 'g' for unit foods
+  const [currentDay,   setCurrentDay]   = useState(REAL_TODAY);  // the active working day
 
   /* ── Carga inicial ── */
   useEffect(() => {
-    const ds        = manageDates(LS.get('nutri_dates') || []);
+    const savedDay  = LS.get('nutri_currentDay') || REAL_TODAY;
+    const ds        = manageDates(LS.get('nutri_dates') || [], savedDay);
     const customF   = LS.get('nutri_foods')    || [];
     const ovs       = LS.get('nutri_overrides') || {};
     const deleted   = LS.get('nutri_deleted')  || [];
-    const todayD    = LS.get('nutri_day_' + TODAY);
+    const todayD    = LS.get('nutri_day_' + savedDay);
     const hist = {};
-    ds.filter(d => d !== TODAY).forEach(d => { const data = LS.get('nutri_day_' + d); if (data) hist[d] = data; });
+    ds.filter(d => d !== savedDay).forEach(d => { const data = LS.get('nutri_day_' + d); if (data) hist[d] = data; });
+    setCurrentDay(savedDay);
+    setViewDate(savedDay);
     setDates(ds);
     setCustom(customF);
     setOverrides(ovs);
@@ -710,7 +718,7 @@ function App() {
   useEffect(() => {
     if (loading) return;
     clearTimeout(saveTimer.current);
-    saveTimer.current = setTimeout(() => LS.set('nutri_day_' + TODAY, meals), 300);
+    saveTimer.current = setTimeout(() => LS.set('nutri_day_' + currentDay, meals), 300);
   }, [meals, loading]);
   useEffect(() => { if (!loading) LS.set('nutri_overrides', overrides);       }, [overrides,    loading]);
   useEffect(() => { if (!loading) LS.set('nutri_foods',     custom);          }, [custom,       loading]);
@@ -796,6 +804,26 @@ function App() {
 
   const delItem = (mid, id) => setMeals(p => ({ ...p, [mid]: p[mid].filter(i => i.id !== id) }));
 
+  /* ── Pasar al día siguiente ── */
+  const advanceDay = () => {
+    // 1. Persist current day's meals before moving on
+    LS.set('nutri_day_' + currentDay, meals);
+    // 2. Compute next calendar day from currentDay
+    const base = new Date(currentDay + 'T12:00:00');
+    base.setDate(base.getDate() + 1);
+    const nextDay = base.toISOString().slice(0, 10);
+    // 3. Move current meals to history, reset today
+    setHistory(prev => ({ ...prev, [currentDay]: meals }));
+    setMeals(initMeals());
+    // 4. Update dates list (add nextDay, prune old, keep 5 max)
+    const newDates = manageDates([currentDay, ...dates.filter(x => x !== currentDay)], nextDay);
+    setDates(newDates);
+    // 5. Switch working day
+    setCurrentDay(nextDay);
+    setViewDate(nextDay);
+    LS.set('nutri_currentDay', nextDay);
+  };
+
   const saveCustom = () => {
     if (!newF.name || !newF.kcal || !newF.protein) return;
     const nf = {
@@ -837,13 +865,16 @@ function App() {
     );
   }
 
-  const isToday    = viewDate === TODAY;
+  const isToday    = viewDate === currentDay;
   const curItems   = enrichedToday[active] || [];
   const curTotals  = todayMealT[active];
   const activeMeal = MEALS.find(m => m.id === active);
   const preview    = amt && +amt > 0 && food ? calcFood(food, +amt, overrides) : null;
   const hasDayData = Object.values(todayMealT).some(t => t.count > 0);
-  const todayLabel = new Date().toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long' });
+  const todayLabel = (() => {
+    const d = new Date(currentDay + 'T12:00:00');
+    return d.toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long' });
+  })();
 
   return (
     <div style={{ paddingBottom: '2rem' }}>
@@ -867,19 +898,31 @@ function App() {
               <i className="ti ti-refresh"></i> Reiniciar hoy
             </button>
           )}
+          {isToday && (
+            <button
+              style={{ background:'var(--amber-bg)', color:'var(--amber-text)', borderColor:'rgba(99,56,6,.3)' }}
+              onClick={advanceDay}
+              title="Guarda el día actual y abre uno nuevo"
+            >
+              <i className="ti ti-calendar-plus"></i> Día siguiente
+            </button>
+          )}
         </div>
       </div>
 
-      {/* DATE PILLS */}
+      {/* DATE PILLS — oldest left, newest (hoy) right */}
       <div className="date-pills">
-        {dates.map(d => {
-          const pd      = d === TODAY ? todayDay : (histData[d] || { kcal:0, protein:0 });
+        {[...dates].reverse().map(d => {
+          const isCurrentDay = d === currentDay;
+          const pd      = isCurrentDay ? todayDay : (histData[d] || { kcal:0, protein:0 });
           const hasData = pd.kcal > 0 || pd.protein > 0;
+          const label   = fmtDate(d, currentDay);
           return (
             <button key={d}
-              className={`tab dpill ${viewDate === d ? 'active' : ''} ${!hasData ? 'nodata' : ''}`}
-              onClick={() => setViewDate(d)}>
-              <span>{fmtDate(d)}</span>
+              className={`tab dpill ${viewDate === d ? 'active' : ''} ${!isCurrentDay ? 'past' : ''} ${!hasData && !isCurrentDay ? 'nodata' : ''}`}
+              onClick={() => setViewDate(d)}
+            >
+              <span style={{ fontWeight: isCurrentDay ? 600 : 400 }}>{label}</span>
               {hasData && <span className="dpill-sub">{pd.kcal}kcal · {pd.protein}g</span>}
             </button>
           );
@@ -890,8 +933,8 @@ function App() {
       {!isToday && (
         <div className="readonly-banner">
           <i className="ti ti-eye" style={{ fontSize:15 }}></i>
-          Viendo {fmtDate(viewDate).toLowerCase()} — solo lectura.
-          <button style={{ marginLeft:'auto', height:26, padding:'0 10px', fontSize:11 }} onClick={() => setViewDate(TODAY)}>
+          Viendo {fmtDate(viewDate, currentDay).toLowerCase()} — solo lectura.
+          <button style={{ marginLeft:'auto', height:26, padding:'0 10px', fontSize:11 }} onClick={() => setViewDate(currentDay)}>
             Ir a hoy
           </button>
         </div>
@@ -1182,7 +1225,7 @@ function App() {
       </>)}
 
       {/* VISTA HISTÓRICO */}
-      {!isToday && <HistoryView data={histData[viewDate]} />}
+      {!isToday && <HistoryView data={histData[viewDate]} dateLabel={fmtDate(viewDate, currentDay)} />}
 
     </div>
   );
