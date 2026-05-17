@@ -133,25 +133,42 @@
     border-radius:var(--radius);padding:7px 12px;font-size:12px;display:flex;align-items:center;
     gap:7px;margin-bottom:14px;}
 
-  /* Edit table: card-row layout per food */
+  /* Edit rows */
   .edit-row{border-bottom:0.5px solid var(--border);}
   .edit-row:last-child{border-bottom:none;}
-  .edit-main{display:flex;align-items:center;gap:6px;padding:8px 12px;flex-wrap:wrap;}
-  .edit-extra{padding:4px 12px 10px 12px;background:var(--amber-bg);border-top:0.5px solid rgba(99,56,6,.12);}
-  .food-name{flex:1 1 160px;font-size:12px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
-  .food-name.mod{color:var(--green-text);}
-  .edit-field{display:flex;flex-direction:column;gap:2px;}
-  .edit-field label{font-size:10px;color:var(--text3);margin-bottom:0;}
-  .unit-badge{font-size:10px;padding:2px 7px;border-radius:8px;font-weight:500;display:inline-block;flex-shrink:0;}
-  .ub-g{background:var(--green-bg);color:var(--green-text);}
-  .ub-ml{background:var(--blue-bg);color:var(--blue-text);}
-  .ub-u{background:var(--amber-bg);color:var(--amber-text);}
-  .uds-hint{font-size:10px;color:var(--amber-text);display:flex;align-items:center;gap:4px;padding:4px 0 0;}
-  .actions-col{display:flex;gap:3px;flex-shrink:0;}
   .tag-custom{font-size:9px;padding:1px 5px;border-radius:4px;background:var(--blue-bg);
     color:var(--blue-text);font-weight:500;margin-left:4px;}
   .tag-base{font-size:9px;padding:1px 5px;border-radius:4px;background:var(--bg2);
     color:var(--text3);font-weight:500;margin-left:4px;}
+
+  /* Color-coded edit inputs */
+  .inp-kcal{border-color:var(--green-mid)!important;background:var(--green-bg)!important;color:var(--green-text)!important;}
+  .inp-kcal::placeholder{color:var(--green-dark);opacity:.6;}
+  .inp-kcal:focus{box-shadow:0 0 0 2px rgba(151,196,89,.3)!important;border-color:var(--green-dark)!important;}
+  .inp-prot{border-color:var(--blue-mid)!important;background:var(--blue-bg)!important;color:var(--blue-text)!important;}
+  .inp-prot::placeholder{color:var(--blue-dark);opacity:.6;}
+  .inp-prot:focus{box-shadow:0 0 0 2px rgba(133,183,235,.3)!important;border-color:var(--blue-dark)!important;}
+
+  /* Desktop edit grid */
+  .edit-grid-desktop{display:grid;grid-template-columns:1fr 80px 65px 65px 80px 70px;gap:6px;padding:7px 12px;align-items:center;}
+  /* Mobile edit card: 2-row layout */
+  .edit-card-mob{padding:8px 12px;}
+  .edit-row1{display:flex;align-items:center;gap:6px;margin-bottom:5px;}
+  .edit-row2{display:flex;gap:6px;}
+  .edit-name{flex:1;min-width:0;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  @media(min-width:600px){.edit-card-mob{display:none!important;}.edit-grid-desktop{display:grid!important;}}
+  @media(max-width:599px){.edit-grid-desktop{display:none!important;}.edit-card-mob{display:block!important;}}
+
+  /* Quick-add extras */
+  .quick-add-grid{display:grid;grid-template-columns:1fr 72px 72px 72px;gap:6px;}
+  @media(max-width:480px){.quick-add-grid{grid-template-columns:1fr 1fr;}}
+
+  /* uds toggle */
+  .toggle-pill{display:inline-flex;border:0.5px solid var(--border2);border-radius:20px;overflow:hidden;}
+  .toggle-pill button{border:none;border-radius:0;background:none;height:28px;padding:0 10px;font-size:11px;color:var(--text2);}
+  .toggle-pill button.on{background:var(--green-bg);color:var(--green-text);font-weight:500;}
+  .toggle-pill button:first-child{border-right:0.5px solid var(--border2);}
+  .toggle-pill button:hover{background:var(--bg2);}
 </style>
 </head>
 <body>
@@ -270,6 +287,7 @@ function getEffUnit(food, overrides) {
 
 function enrichItems(items, allFoods, overrides) {
   return items.map(item => {
+    if (item._fixed) return item;  // pre-calculated (quick extra or direct-g uds)
     const f = allFoods.find(x => x.id === item.foodId);
     if (!f) return { ...item, kcal: item.kcal || 0, protein: item.protein || 0 };
     return { ...item, ...calcFood(f, item.amount, overrides) };
@@ -379,12 +397,22 @@ function EditView({ allFoods, overrides, setOverrides, custom, setCustom, delete
         </div>
       </div>
 
-      {/* Info */}
+      {/* Info + leyenda de colores */}
       <div className="info-note">
         <i className="ti ti-info-circle" style={{ fontSize: 13 }}></i>{' '}
-        Cambia la unidad de medida, kcal y proteínas por 100g/ml. Si usas <strong>unidades</strong>,
+        Cambia la unidad de medida y los valores nutricionales por 100g/ml. Si usas <strong>unidades</strong>,
         indica los <strong>gramos por unidad</strong> para un cálculo exacto.
         Los alimentos <strong>base</strong> eliminados se ocultan y pueden restaurarse. Los <strong>personalizados</strong> se eliminan definitivamente.
+        <div style={{ display:'flex', gap:6, marginTop:8, flexWrap:'wrap' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:5 }}>
+            <input readOnly className="compact inp-kcal" style={{ width:60, textAlign:'right', pointerEvents:'none' }} placeholder="Kcal" />
+            <span style={{ fontSize:11, color:'var(--text2)' }}>= Kcal por 100g/ml/ud</span>
+          </div>
+          <div style={{ display:'flex', alignItems:'center', gap:5 }}>
+            <input readOnly className="compact inp-prot" style={{ width:60, textAlign:'right', pointerEvents:'none' }} placeholder="Prot." />
+            <span style={{ fontSize:11, color:'var(--text2)' }}>= Proteína por 100g/ml/ud</span>
+          </div>
+        </div>
       </div>
 
       <input type="text" placeholder="Buscar alimento..." value={search}
@@ -392,21 +420,16 @@ function EditView({ allFoods, overrides, setOverrides, custom, setCustom, delete
 
       {/* Lista */}
       <div className="card" style={{ overflow: 'hidden', marginBottom: 14 }}>
-        {/* Cabecera */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 80px 65px 65px 80px 70px',
-          padding: '6px 12px',
-          background: 'var(--bg2)',
-          borderBottom: '0.5px solid var(--border)',
+        {/* Cabecera DESKTOP únicamente */}
+        <div className="edit-grid-desktop" style={{
+          background: 'var(--bg2)', borderBottom: '0.5px solid var(--border)',
           fontSize: 10, fontWeight: 500, color: 'var(--text2)',
-          gap: 6, alignItems: 'center',
         }}>
           <span>Alimento</span>
           <span style={{ textAlign: 'center' }}>Unidad</span>
           <span style={{ textAlign: 'right' }}>Kcal/100</span>
           <span style={{ textAlign: 'right' }}>Prot./100</span>
-          <span style={{ textAlign: 'center' }}>g o ml/ud.</span>
+          <span style={{ textAlign: 'center' }}>g/ud.</span>
           <span style={{ textAlign: 'center' }}>Acciones</span>
         </div>
 
@@ -424,18 +447,18 @@ function EditView({ allFoods, overrides, setOverrides, custom, setCustom, delete
           const deleted = isDeleted(f.id);
           const hasOv   = hasOverrides(f.id);
 
-          // Fila de confirmación de borrado
+          // Confirmación de borrado
           if (confirmDel === f.id) {
             return (
               <div key={f.id} style={{
                 display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px',
-                background: 'var(--red-bg)', borderBottom: '0.5px solid var(--border)',
+                background: 'var(--red-bg)', borderBottom: '0.5px solid var(--border)', flexWrap:'wrap',
               }}>
                 <i className="ti ti-alert-triangle" style={{ color: 'var(--red-text)', fontSize: 15 }}></i>
-                <span style={{ flex: 1, fontSize: 12, color: 'var(--red-text)' }}>
+                <span style={{ flex: 1, fontSize: 12, color: 'var(--red-text)', minWidth: 140 }}>
                   {base
-                    ? <>¿Ocultar <strong>{f.name}</strong>? Podrás restaurarlo después.</>
-                    : <>¿Eliminar <strong>{f.name}</strong>? Esta acción no se puede deshacer.</>
+                    ? <>¿Ocultar <strong>{f.name}</strong>? Podrás restaurarlo.</>
+                    : <>¿Eliminar <strong>{f.name}</strong>? No se puede deshacer.</>
                   }
                 </span>
                 <button className="btn-sm btn-reset" onClick={() => deleteFood(f.id)}>
@@ -448,106 +471,116 @@ function EditView({ allFoods, overrides, setOverrides, custom, setCustom, delete
             );
           }
 
+          // Campos reutilizables
+          const kcalInp = (
+            <input type="number" className="compact inp-kcal" min="0" style={{ textAlign:'right', width:'100%' }}
+              disabled={deleted}
+              placeholder={String(f.kcalPer100)}
+              value={ov.kcal !== undefined ? ov.kcal : ''}
+              onChange={e => setOv(f.id, 'kcal', e.target.value)} />
+          );
+          const protInp = (
+            <input type="number" className="compact inp-prot" min="0" step="0.1" style={{ textAlign:'right', width:'100%' }}
+              disabled={deleted}
+              placeholder={String(f.proteinPer100)}
+              value={ov.protein !== undefined ? ov.protein : ''}
+              onChange={e => setOv(f.id, 'protein', e.target.value)} />
+          );
+          const gpuInp = isUds && !deleted ? (
+            <input type="number" className="compact" min="0" style={{ textAlign:'right', width:'100%' }}
+              placeholder={f.gramsPerUnit ? String(f.gramsPerUnit) : 'g/ud'}
+              value={ov.gramsPerUnit !== undefined ? ov.gramsPerUnit : ''}
+              onChange={e => setOv(f.id, 'gramsPerUnit', e.target.value)} />
+          ) : (
+            <span style={{ fontSize:11, color:'var(--text3)', display:'block', textAlign:'center' }}>—</span>
+          );
+          const unitSel = (
+            <select className="compact-sel" value={effUnit} disabled={deleted}
+              onChange={e => changeUnit(f, e.target.value)} style={{ width:'100%' }}>
+              <option value="g">g</option>
+              <option value="ml">ml</option>
+              <option value="uds">uds</option>
+            </select>
+          );
+          const actionsBtns = deleted ? (
+            <button className="btn-icon btn-icon-b" title="Restaurar alimento" onClick={() => restoreFood(f.id)}>
+              <i className="ti ti-restore"></i>
+            </button>
+          ) : (
+            <>
+              {hasOv && (
+                <button className="btn-icon btn-icon-b" title="Restaurar valores originales" onClick={() => resetOv(f.id)}>
+                  <i className="ti ti-refresh"></i>
+                </button>
+              )}
+              <button className="btn-icon" title={base ? 'Ocultar alimento' : 'Eliminar alimento'} onClick={() => setConfirmDel(f.id)}>
+                <i className="ti ti-trash"></i>
+              </button>
+            </>
+          );
+
+          const udsHint = isUds && !deleted ? (
+            <div style={{ fontSize:10.5, color:'var(--amber-text)', display:'flex', alignItems:'center', gap:4, marginTop:4 }}>
+              <i className="ti ti-info-circle" style={{ fontSize:12 }}></i>
+              {(() => {
+                const gpu = ov.gramsPerUnit !== undefined ? +ov.gramsPerUnit : (f.gramsPerUnit || null);
+                const k   = ov.kcal    !== undefined ? +ov.kcal    : f.kcalPer100;
+                const p   = ov.protein !== undefined ? +ov.protein : f.proteinPer100;
+                if (gpu) return `1 unidad = ${gpu}g → ${Math.round(gpu/100*k)} kcal · ${Math.round(gpu/100*p*10)/10}g prot.`;
+                return 'Indica los gramos por unidad para un cálculo preciso.';
+              })()}
+            </div>
+          ) : null;
+
           return (
-            <div key={f.id} className="edit-row"
-              style={{ opacity: deleted ? 0.45 : 1, background: 'transparent' }}>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 80px 65px 65px 80px 70px',
-                padding: '7px 12px', gap: 6, alignItems: 'center',
-              }}>
-                {/* Nombre */}
-                <div style={{ overflow: 'hidden' }}>
-                  <span style={{
-                    fontSize: 12, fontWeight: 400, color: 'var(--text)',
-                    display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-                  }}>
+            <div key={f.id} className="edit-row" style={{ opacity: deleted ? 0.45 : 1 }}>
+
+              {/* ── DESKTOP ── */}
+              <div className="edit-grid-desktop">
+                <div style={{ overflow:'hidden' }}>
+                  <span style={{ fontSize:12, display:'block', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
                     {f.name}
                     <span className={base ? 'tag-base' : 'tag-custom'}>{base ? 'base' : 'custom'}</span>
-                    {deleted && <span style={{ fontSize: 9, color: 'var(--red-text)', marginLeft: 4, fontWeight: 500 }}>OCULTO</span>}
+                    {deleted && <span style={{ fontSize:9, color:'var(--red-text)', marginLeft:4, fontWeight:500 }}>OCULTO</span>}
                   </span>
                 </div>
-
-                {/* Selector de unidad */}
-                <div>
-                  <select className="compact-sel" value={effUnit} disabled={deleted}
-                    onChange={e => changeUnit(f, e.target.value)} style={{ width: '100%' }}>
-                    <option value="g">g</option>
-                    <option value="ml">ml</option>
-                    <option value="uds">uds</option>
-                  </select>
-                </div>
-
-                {/* Kcal por 100 */}
-                <div>
-                  <input type="number" className="compact" min="0" style={{ textAlign: 'right' }}
-                    disabled={deleted}
-                    placeholder={String(f.kcalPer100)}
-                    value={ov.kcal !== undefined ? ov.kcal : ''}
-                    onChange={e => setOv(f.id, 'kcal', e.target.value)} />
-                </div>
-
-                {/* Proteína por 100 */}
-                <div>
-                  <input type="number" className="compact" min="0" step="0.1" style={{ textAlign: 'right' }}
-                    disabled={deleted}
-                    placeholder={String(f.proteinPer100)}
-                    value={ov.protein !== undefined ? ov.protein : ''}
-                    onChange={e => setOv(f.id, 'protein', e.target.value)} />
-                </div>
-
-                {/* Gramos por unidad */}
-                <div>
-                  {isUds && !deleted ? (
-                    <input type="number" className="compact" min="0" style={{ textAlign: 'right' }}
-                      placeholder={f.gramsPerUnit ? String(f.gramsPerUnit) : 'g/ud'}
-                      value={ov.gramsPerUnit !== undefined ? ov.gramsPerUnit : ''}
-                      onChange={e => setOv(f.id, 'gramsPerUnit', e.target.value)} />
-                  ) : (
-                    <span style={{ fontSize: 11, color: 'var(--text3)', display: 'block', textAlign: 'center' }}>—</span>
-                  )}
-                </div>
-
-                {/* Acciones */}
-                <div style={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
-                  {deleted ? (
-                    <button className="btn-icon btn-icon-b" title="Restaurar alimento"
-                      onClick={() => restoreFood(f.id)}>
-                      <i className="ti ti-restore"></i>
-                    </button>
-                  ) : (
-                    <>
-                      {hasOv && (
-                        <button className="btn-icon btn-icon-b" title="Restaurar valores originales"
-                          onClick={() => resetOv(f.id)}>
-                          <i className="ti ti-refresh"></i>
-                        </button>
-                      )}
-                      <button className="btn-icon" title={base ? 'Ocultar alimento' : 'Eliminar alimento'}
-                        onClick={() => setConfirmDel(f.id)}>
-                        <i className="ti ti-trash"></i>
-                      </button>
-                    </>
-                  )}
-                </div>
+                <div>{unitSel}</div>
+                <div>{kcalInp}</div>
+                <div>{protInp}</div>
+                <div>{gpuInp}</div>
+                <div style={{ display:'flex', gap:2, justifyContent:'center' }}>{actionsBtns}</div>
               </div>
-
-              {/* Info cálculo por unidades */}
+              {/* uds hint desktop */}
               {isUds && !deleted && (
-                <div style={{
-                  padding: '3px 12px 7px 12px', fontSize: 10.5,
-                  color: 'var(--amber-text)', display: 'flex', alignItems: 'center', gap: 5,
-                }}>
-                  <i className="ti ti-info-circle" style={{ fontSize: 12 }}></i>
-                  {(() => {
-                    const gpu = ov.gramsPerUnit !== undefined ? +ov.gramsPerUnit : (f.gramsPerUnit || null);
-                    const k   = ov.kcal    !== undefined ? +ov.kcal    : f.kcalPer100;
-                    const p   = ov.protein !== undefined ? +ov.protein : f.proteinPer100;
-                    if (gpu) return `Cada unidad = ${gpu}g → ${Math.round(gpu/100*k)} kcal · ${Math.round(gpu/100*p*10)/10}g prot.`;
-                    return 'Indica los gramos por unidad para un cálculo preciso.';
-                  })()}
+                <div style={{ padding:'0 12px 7px', fontSize:10.5, color:'var(--amber-text)', display:'flex', alignItems:'center', gap:5 }}
+                  className="edit-grid-desktop" >
+                  {udsHint}
                 </div>
               )}
+
+              {/* ── MÓVIL ── */}
+              <div className="edit-card-mob">
+                {/* Fila 1: nombre | unidad | g/ud | acciones */}
+                <div className="edit-row1">
+                  <span className="edit-name">
+                    {f.name}
+                    <span className={base ? 'tag-base' : 'tag-custom'}>{base ? 'base' : 'custom'}</span>
+                    {deleted && <span style={{ fontSize:9, color:'var(--red-text)', marginLeft:4, fontWeight:500 }}>OCULTO</span>}
+                  </span>
+                  <div style={{ width:60, flexShrink:0 }}>{unitSel}</div>
+                  <div style={{ width:56, flexShrink:0 }}>{isUds && !deleted ? gpuInp : <span style={{fontSize:11,color:'var(--text3)',display:'block',textAlign:'center'}}>—</span>}</div>
+                  <div style={{ display:'flex', gap:2, flexShrink:0 }}>{actionsBtns}</div>
+                </div>
+                {/* Fila 2: kcal | prot */}
+                {!deleted && (
+                  <div className="edit-row2">
+                    <div style={{ flex:1 }}>{kcalInp}</div>
+                    <div style={{ flex:1 }}>{protInp}</div>
+                  </div>
+                )}
+                {udsHint}
+              </div>
+
             </div>
           );
         })}
@@ -648,6 +681,8 @@ function App() {
   const [showAdd,      setShowAdd]      = useState(false);
   const [editMode,     setEditMode]     = useState(false);
   const [newF,         setNewF]         = useState({ name:'', unit:'g', kcal:'', protein:'', gramsPerUnit:'' });
+  const [extraQuick,   setExtraQuick]   = useState({ name:'', kcal:'', protein:'', qty:'' });
+  const [udsMode,      setUdsMode]      = useState('uds');  // 'uds' | 'g' for unit foods
 
   /* ── Carga inicial ── */
   useEffect(() => {
@@ -712,11 +747,48 @@ function App() {
   const addItem = () => {
     const n = +amt;
     if (!n || n <= 0 || !food) return;
+    // For uds foods: if user chose to enter grams directly, override unit to 'g' for this entry
+    const resolvedUnit = effUnit === 'uds' && udsMode === 'g' ? 'g' : effUnit;
+    // Build a synthetic food override for direct-grams entry on a uds food
+    let entryKcal, entryProt;
+    if (effUnit === 'uds' && udsMode === 'g') {
+      // calculate as grams
+      const ov = overrides?.[food.id] || {};
+      const k  = ov.kcal    !== undefined ? +ov.kcal    : food.kcalPer100;
+      const p  = ov.protein !== undefined ? +ov.protein : food.proteinPer100;
+      entryKcal    = Math.round(n / 100 * k);
+      entryProt    = Math.round(n / 100 * p * 10) / 10;
+    } else {
+      const res = calcFood(food, n, overrides);
+      entryKcal    = res.kcal;
+      entryProt    = res.protein;
+    }
     setMeals(p => ({
       ...p,
-      [active]: [...p[active], { id: Date.now(), foodId: food.id, name: food.name, amount: n, unit: effUnit }],
+      [active]: [...p[active], {
+        id: Date.now(), foodId: food.id, name: food.name,
+        amount: n, unit: resolvedUnit,
+        kcal: entryKcal, protein: entryProt,
+        _fixed: true,   // mark as pre-calculated so enrichItems skips recalc
+      }],
     }));
     setAmt('');
+  };
+
+  const addQuickExtra = () => {
+    const { name, kcal, protein, qty } = extraQuick;
+    const n = +qty, k = +kcal, p = +protein;
+    if (!name || !k || !p || !n || n <= 0) return;
+    const itemKcal = Math.round(n / 100 * k);
+    const itemProt = Math.round(n / 100 * p * 10) / 10;
+    setMeals(prev => ({
+      ...prev,
+      extras: [...prev.extras, {
+        id: Date.now(), foodId: '__quick__', name, amount: n, unit: 'g',
+        kcal: itemKcal, protein: itemProt, _fixed: true,
+      }],
+    }));
+    setExtraQuick({ name:'', kcal:'', protein:'', qty:'' });
   };
 
   const delItem = (mid, id) => setMeals(p => ({ ...p, [mid]: p[mid].filter(i => i.id !== id) }));
@@ -859,34 +931,64 @@ function App() {
           </div>
           <div className="row-g" style={{ flexWrap:'wrap' }}>
             <div style={{ flex:'2 1 180px' }}>
-              <select value={selFood} onChange={e => setSelFood(e.target.value)}>
+              <select value={selFood} onChange={e => { setSelFood(e.target.value); setUdsMode('uds'); }}>
                 <optgroup label="── Alimentos base ──">
-                  {sortFoods(BASE_FOODS).map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
+                  {sortFoods(BASE_FOODS.filter(f => !deletedFoods.includes(f.id))).map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
                 </optgroup>
                 {custom.length > 0 && (
                   <optgroup label="── Alimentos personalizados ──">
-                    {sortFoods(custom).map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
+                    {sortFoods(custom.filter(f => !deletedFoods.includes(f.id))).map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
                   </optgroup>
                 )}
               </select>
             </div>
+            {/* Toggle unidades/gramos para alimentos medidos en uds */}
+            {effUnit === 'uds' && (
+              <div className="toggle-pill" style={{ alignSelf:'center' }}>
+                <button className={udsMode === 'uds' ? 'on' : ''} onClick={() => setUdsMode('uds')}>uds</button>
+                <button className={udsMode === 'g' ? 'on' : ''} onClick={() => setUdsMode('g')}>g</button>
+              </div>
+            )}
             <div style={{ flex:'1 1 90px', display:'flex', alignItems:'center', gap:5 }}>
-              <input type="number" min="0" placeholder={effUnit}
+              <input type="number" min="0"
+                placeholder={effUnit === 'uds' ? (udsMode === 'g' ? 'g' : 'uds') : effUnit}
                 value={amt} onChange={e => setAmt(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && addItem()} />
-              <span style={{ fontSize:11, color:'var(--text3)', minWidth:22 }}>{effUnit}</span>
+              <span style={{ fontSize:11, color:'var(--text3)', minWidth:28 }}>
+                {effUnit === 'uds' ? udsMode : effUnit}
+              </span>
             </div>
             <button className="btn-add" onClick={addItem} style={{ flex:'0 0 auto' }}>
               <i className="ti ti-plus"></i> Añadir
             </button>
           </div>
-          {preview && (
+          {preview && effUnit !== 'uds' && (
             <div className="preview">
               <i className="ti ti-arrow-right" style={{ fontSize:11 }}></i>{' '}
               <span className="kcal">{preview.kcal} kcal</span>{' · '}
               <span className="prot">{preview.protein}g proteína</span>
             </div>
           )}
+          {effUnit === 'uds' && amt && +amt > 0 && (() => {
+            const ov = overrides?.[food?.id] || {};
+            const k  = ov.kcal    !== undefined ? +ov.kcal    : (food?.kcalPer100 || 0);
+            const p  = ov.protein !== undefined ? +ov.protein : (food?.proteinPer100 || 0);
+            const gpu = ov.gramsPerUnit !== undefined ? +ov.gramsPerUnit : (food?.gramsPerUnit || null);
+            const n  = +amt;
+            let eKcal, eProt;
+            if (udsMode === 'g') {
+              eKcal = Math.round(n / 100 * k); eProt = Math.round(n / 100 * p * 10) / 10;
+            } else if (gpu) {
+              eKcal = Math.round(n * gpu / 100 * k); eProt = Math.round(n * gpu / 100 * p * 10) / 10;
+            } else { return null; }
+            return (
+              <div className="preview">
+                <i className="ti ti-arrow-right" style={{ fontSize:11 }}></i>{' '}
+                <span className="kcal">{eKcal} kcal</span>{' · '}
+                <span className="prot">{eProt}g proteína</span>
+              </div>
+            );
+          })()}
         </div>
 
         {/* Tabla de alimentos */}
@@ -931,6 +1033,41 @@ function App() {
               <i className="ti ti-bowl-chopsticks empty-icon"></i>
               Sin alimentos en {activeMeal?.name.toLowerCase()}
             </div>
+          </div>
+        )}
+
+        {/* Quick-add para Extras */}
+        {active === 'extras' && (
+          <div className="card cp" style={{ marginBottom:10 }}>
+            <div className="sec-title">
+              <i className="ti ti-pencil-plus"></i>
+              Añadir comida esporádica (sin guardar)
+            </div>
+            <div style={{ fontSize:11, color:'var(--text3)', marginBottom:8, lineHeight:1.5 }}>
+              Introduce los datos manualmente. No se guardará en la lista de alimentos.
+            </div>
+            <div className="quick-add-grid" style={{ marginBottom:7 }}>
+              <input type="text" placeholder="Nombre"
+                value={extraQuick.name} onChange={e => setExtraQuick(p => ({ ...p, name: e.target.value }))} />
+              <input type="number" className="inp-kcal" min="0" placeholder="Kcal/100g"
+                value={extraQuick.kcal} onChange={e => setExtraQuick(p => ({ ...p, kcal: e.target.value }))} />
+              <input type="number" className="inp-prot" min="0" step="0.1" placeholder="Prot/100g"
+                value={extraQuick.protein} onChange={e => setExtraQuick(p => ({ ...p, protein: e.target.value }))} />
+              <input type="number" min="0" placeholder="Gramos"
+                value={extraQuick.qty}
+                onChange={e => setExtraQuick(p => ({ ...p, qty: e.target.value }))}
+                onKeyDown={e => e.key === 'Enter' && addQuickExtra()} />
+            </div>
+            {extraQuick.kcal && extraQuick.protein && extraQuick.qty && +extraQuick.qty > 0 && (
+              <div className="preview" style={{ marginBottom:7 }}>
+                <i className="ti ti-arrow-right" style={{ fontSize:11 }}></i>{' '}
+                <span className="kcal">{Math.round(+extraQuick.qty/100*+extraQuick.kcal)} kcal</span>{' · '}
+                <span className="prot">{Math.round(+extraQuick.qty/100*+extraQuick.protein*10)/10}g proteína</span>
+              </div>
+            )}
+            <button className="btn-add" onClick={addQuickExtra} style={{ width:'100%', justifyContent:'center' }}>
+              <i className="ti ti-plus"></i> Añadir a Extras
+            </button>
           </div>
         )}
 
