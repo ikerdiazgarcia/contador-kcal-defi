@@ -32,7 +32,7 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:-apple-system,'Segoe UI',system-ui,sans-serif;background:var(--bg3);color:var(--text);min-height:100vh;}
-  #root{max-width:780px;margin:0 auto;padding:16px;}
+  #root{max-width:820px;margin:0 auto;padding:16px;}
 
   select,input[type=number],input[type=text]{
     height:36px;border:0.5px solid var(--border2);border-radius:var(--radius);
@@ -58,8 +58,10 @@
   .btn-ghost{background:var(--bg2);}
   .btn-wide{width:100%;justify-content:center;}
   .btn-sm{height:28px;padding:0 10px;font-size:12px;}
-  .btn-icon{height:28px;width:28px;padding:0;justify-content:center;border-color:transparent;background:none;color:var(--text3);font-size:15px;}
+  .btn-icon{height:28px;width:28px;padding:0;justify-content:center;border-color:transparent;
+    background:none;color:var(--text3);font-size:14px;border-radius:var(--radius);flex-shrink:0;}
   .btn-icon:hover{background:var(--red-bg);color:var(--red-text);border-color:var(--red-mid);}
+  .btn-icon-b{color:var(--text3);}
   .btn-icon-b:hover{background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-mid);}
 
   .card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);}
@@ -71,7 +73,8 @@
   .hactions{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
 
   .stats{display:flex;gap:10px;margin-bottom:14px;}
-  .stat{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:12px 16px;flex:1;text-align:center;}
+  .stat{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);
+    padding:12px 16px;flex:1;text-align:center;}
   .stat-label{font-size:11px;color:var(--text2);margin-bottom:3px;}
   .stat-val{font-size:24px;font-weight:600;line-height:1.1;}
   .stat-unit{font-size:13px;font-weight:400;}
@@ -89,36 +92,66 @@
 
   .tabs{display:flex;gap:5px;overflow-x:auto;margin-bottom:14px;scrollbar-width:none;}
   .tabs::-webkit-scrollbar{display:none;}
-  .tab{height:auto;padding:7px 11px;flex-direction:column;gap:2px;font-size:11px;min-width:68px;flex:0 0 auto;background:var(--bg);border-color:var(--border);}
+  .tab{height:auto;padding:7px 11px;flex-direction:column;gap:2px;font-size:11px;
+    min-width:68px;flex:0 0 auto;background:var(--bg);border-color:var(--border);}
   .tab-icon{font-size:17px;color:var(--text3);}
   .tab.active{background:var(--green-bg);color:var(--green-text);border-color:var(--green-mid);}
   .tab.active .tab-icon{color:var(--green-text);}
   .tab-sub{font-size:9px;color:var(--green-dark);}
 
   table{width:100%;border-collapse:collapse;}
-  th{font-size:11px;font-weight:500;color:var(--text2);padding:7px 10px;text-align:right;background:var(--bg2);border-bottom:0.5px solid var(--border);}
+  th{font-size:11px;font-weight:500;color:var(--text2);padding:6px 8px;text-align:right;
+    background:var(--bg2);border-bottom:0.5px solid var(--border);}
   th:first-child{text-align:left;}
-  td{padding:7px 10px;font-size:13px;text-align:right;border-bottom:0.5px solid var(--border);}
+  td{padding:6px 8px;font-size:12px;text-align:right;border-bottom:0.5px solid var(--border);vertical-align:middle;}
   td:first-child{text-align:left;}
   tr:last-child td{border-bottom:none;}
-  .tfoot td{border-top:0.5px solid var(--border2)!important;border-bottom:none!important;background:var(--bg2);font-weight:600;font-size:13px;}
+  .tfoot td{border-top:0.5px solid var(--border2)!important;border-bottom:none!important;
+    background:var(--bg2);font-weight:600;font-size:13px;}
 
-  .preview{margin-top:7px;font-size:12px;color:var(--green-dark);background:var(--green-bg);border-radius:6px;padding:4px 10px;display:inline-block;}
+  .preview{margin-top:7px;font-size:12px;color:var(--green-dark);background:var(--green-bg);
+    border-radius:6px;padding:4px 10px;display:inline-block;}
   .empty{text-align:center;padding:2.5rem 1rem;color:var(--text3);font-size:13px;}
   .empty-icon{font-size:40px;display:block;margin-bottom:8px;opacity:.25;}
   .modified{background:var(--green-bg)!important;}
   .modified td:first-child{color:var(--green-text);}
   label{font-size:11px;color:var(--text2);display:block;margin-bottom:3px;}
-  .sec-title{font-size:12px;font-weight:500;color:var(--text2);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
-  .info-note{font-size:11px;color:var(--text2);line-height:1.6;padding:8px 10px;background:var(--bg2);border-radius:var(--radius);border-left:2px solid var(--border2);margin-bottom:12px;}
-  .compact{height:30px!important;font-size:12px!important;padding:0 6px!important;}
-  .day-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:0.5px solid var(--border);font-size:13px;}
+  .sec-title{font-size:12px;font-weight:500;color:var(--text2);margin-bottom:10px;
+    display:flex;align-items:center;gap:6px;}
+  .info-note{font-size:11px;color:var(--text2);line-height:1.6;padding:8px 10px;background:var(--bg2);
+    border-radius:var(--radius);border-left:2px solid var(--border2);margin-bottom:12px;}
+  .compact{height:28px!important;font-size:11px!important;padding:0 5px!important;}
+  .compact-sel{height:28px!important;font-size:11px!important;padding:0 4px!important;}
+  .day-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;
+    border-bottom:0.5px solid var(--border);font-size:13px;}
   .day-row:last-child{border-bottom:none;}
   .hist-item{display:flex;justify-content:space-between;padding:3px 0 3px 22px;font-size:12px;color:var(--text3);}
   .divider{border:none;border-top:0.5px solid var(--border2);margin:8px 0;}
   .row-g{display:flex;gap:8px;}
   .col-g{display:flex;flex-direction:column;gap:8px;}
-  .readonly-banner{background:var(--amber-bg);color:var(--amber-text);border:0.5px solid rgba(99,56,6,.25);border-radius:var(--radius);padding:7px 12px;font-size:12px;display:flex;align-items:center;gap:7px;margin-bottom:14px;}
+  .readonly-banner{background:var(--amber-bg);color:var(--amber-text);border:0.5px solid rgba(99,56,6,.25);
+    border-radius:var(--radius);padding:7px 12px;font-size:12px;display:flex;align-items:center;
+    gap:7px;margin-bottom:14px;}
+
+  /* Edit table: card-row layout per food */
+  .edit-row{border-bottom:0.5px solid var(--border);}
+  .edit-row:last-child{border-bottom:none;}
+  .edit-main{display:flex;align-items:center;gap:6px;padding:8px 12px;flex-wrap:wrap;}
+  .edit-extra{padding:4px 12px 10px 12px;background:var(--amber-bg);border-top:0.5px solid rgba(99,56,6,.12);}
+  .food-name{flex:1 1 160px;font-size:12px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
+  .food-name.mod{color:var(--green-text);}
+  .edit-field{display:flex;flex-direction:column;gap:2px;}
+  .edit-field label{font-size:10px;color:var(--text3);margin-bottom:0;}
+  .unit-badge{font-size:10px;padding:2px 7px;border-radius:8px;font-weight:500;display:inline-block;flex-shrink:0;}
+  .ub-g{background:var(--green-bg);color:var(--green-text);}
+  .ub-ml{background:var(--blue-bg);color:var(--blue-text);}
+  .ub-u{background:var(--amber-bg);color:var(--amber-text);}
+  .uds-hint{font-size:10px;color:var(--amber-text);display:flex;align-items:center;gap:4px;padding:4px 0 0;}
+  .actions-col{display:flex;gap:3px;flex-shrink:0;}
+  .tag-custom{font-size:9px;padding:1px 5px;border-radius:4px;background:var(--blue-bg);
+    color:var(--blue-text);font-weight:500;margin-left:4px;}
+  .tag-base{font-size:9px;padding:1px 5px;border-radius:4px;background:var(--bg2);
+    color:var(--text3);font-weight:500;margin-left:4px;}
 </style>
 </head>
 <body>
@@ -129,13 +162,13 @@ const { useState, useMemo, useEffect, useRef } = React;
 /* ═══ STORAGE ════════════════════════════════════════════════════════════════ */
 const LS = {
   get: k => { try { const v = localStorage.getItem(k); return v != null ? JSON.parse(v) : null; } catch { return null; } },
-  set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) { console.warn('Storage error', e); } },
+  set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) { console.warn(e); } },
   del: k => { try { localStorage.removeItem(k); } catch {} },
 };
 
-/* ═══ FECHA ══════════════════════════════════════════════════════════════════ */
+/* ═══ FECHAS ══════════════════════════════════════════════════════════════════ */
 const TODAY    = new Date().toISOString().slice(0, 10);
-const MAX_HIST = 5; // días previos a conservar
+const MAX_HIST = 5;
 
 function manageDates(stored) {
   let ds = [...new Set([TODAY, ...(stored || [])])].sort().reverse();
@@ -154,31 +187,31 @@ function fmtDate(ds) {
   return d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
 }
 
-/* ═══ BASE DE ALIMENTOS ══════════════════════════════════════════════════════ */
+/* ═══ BASE DE ALIMENTOS (se ordenan alfabéticamente después) ══════════════════ */
 const BASE_FOODS = [
-  { id:'pavo',         name:'Embutido de pavo',                        unit:'g',   kcalPer100:100,  proteinPer100:18   },
-  { id:'jamon',        name:'Jamón serrano',                           unit:'g',   kcalPer100:155,  proteinPer100:30   },
-  { id:'tort_jamon',   name:'Tortita arroz jamón serrano (Mercadona)', unit:'g',   kcalPer100:392,  proteinPer100:9.1  },
-  { id:'tort_camp',    name:'Tortita arroz campesina (Mercadona)',     unit:'g',   kcalPer100:385,  proteinPer100:8.2  },
-  { id:'huevo',        name:'Huevo',                                   unit:'g',   kcalPer100:155,  proteinPer100:12.6 },
-  { id:'patata',       name:'Patata cocida',                           unit:'g',   kcalPer100:87,   proteinPer100:2    },
-  { id:'atun_oliva',   name:'Atún en aceite de oliva',                 unit:'g',   kcalPer100:195,  proteinPer100:27   },
+  { id:'aguacate',     name:'Aguacate',                                unit:'g',   kcalPer100:160,  proteinPer100:2    },
+  { id:'almendras',    name:'Almendras',                               unit:'g',   kcalPer100:576,  proteinPer100:21   },
   { id:'atun_girasol', name:'Atún en aceite de girasol',               unit:'g',   kcalPer100:190,  proteinPer100:25   },
   { id:'atun_natural', name:'Atún al natural',                         unit:'g',   kcalPer100:116,  proteinPer100:25.5 },
-  { id:'ensalada',     name:'Ensalada (lechuga y tomate)',              unit:'g',   kcalPer100:20,   proteinPer100:1.5  },
-  { id:'pan',          name:'Pan integral Mercadona',                  unit:'uds', kcalPer100:65,   proteinPer100:2.5  },
-  { id:'leche_ent',    name:'Leche entera',                            unit:'ml',  kcalPer100:64,   proteinPer100:3.3  },
-  { id:'leche_semi',   name:'Leche semidesnatada',                     unit:'ml',  kcalPer100:47,   proteinPer100:3.4  },
-  { id:'proteina',     name:'Proteína en polvo (whey)',                unit:'g',   kcalPer100:380,  proteinPer100:75   },
+  { id:'atun_oliva',   name:'Atún en aceite de oliva',                 unit:'g',   kcalPer100:195,  proteinPer100:27   },
   { id:'cerdo',        name:'Carne de cerdo (bistec)',                  unit:'g',   kcalPer100:175,  proteinPer100:21   },
   { id:'ternera',      name:'Carne de ternera',                        unit:'g',   kcalPer100:140,  proteinPer100:22   },
-  { id:'pollo',        name:'Filetes de pollo',                        unit:'g',   kcalPer100:120,  proteinPer100:22   },
-  { id:'pina',         name:'Piña en jugo natural (lata)',             unit:'g',   kcalPer100:55,   proteinPer100:0.4  },
   { id:'compota',      name:'Compota',                                 unit:'g',   kcalPer100:70,   proteinPer100:0.2  },
-  { id:'almendras',    name:'Almendras',                               unit:'g',   kcalPer100:576,  proteinPer100:21   },
+  { id:'ensalada',     name:'Ensalada (lechuga y tomate)',              unit:'g',   kcalPer100:20,   proteinPer100:1.5  },
+  { id:'huevo',        name:'Huevo',                                   unit:'g',   kcalPer100:155,  proteinPer100:12.6 },
+  { id:'jamon',        name:'Jamón serrano',                           unit:'g',   kcalPer100:155,  proteinPer100:30   },
+  { id:'leche_ent',    name:'Leche entera',                            unit:'ml',  kcalPer100:64,   proteinPer100:3.3  },
+  { id:'leche_semi',   name:'Leche semidesnatada',                     unit:'ml',  kcalPer100:47,   proteinPer100:3.4  },
   { id:'nueces',       name:'Nueces',                                  unit:'g',   kcalPer100:654,  proteinPer100:15.2 },
-  { id:'aguacate',     name:'Aguacate',                                unit:'g',   kcalPer100:160,  proteinPer100:2    },
+  { id:'pan',          name:'Pan integral Mercadona',                  unit:'uds', kcalPer100:65,   proteinPer100:2.5, gramsPerUnit:35 },
+  { id:'patata',       name:'Patata cocida',                           unit:'g',   kcalPer100:87,   proteinPer100:2    },
+  { id:'pavo',         name:'Pavo (embutido)',                         unit:'g',   kcalPer100:100,  proteinPer100:18   },
+  { id:'pina',         name:'Piña en jugo natural (lata)',             unit:'g',   kcalPer100:55,   proteinPer100:0.4  },
   { id:'platano',      name:'Plátano',                                 unit:'g',   kcalPer100:89,   proteinPer100:1.1  },
+  { id:'pollo',        name:'Pollo (filetes)',                         unit:'g',   kcalPer100:120,  proteinPer100:22   },
+  { id:'proteina',     name:'Proteína en polvo (whey)',                unit:'g',   kcalPer100:380,  proteinPer100:75   },
+  { id:'tort_camp',    name:'Tortita arroz campesina (Mercadona)',     unit:'uds', kcalPer100:38,   proteinPer100:0.8, gramsPerUnit:10  },
+  { id:'tort_jamon',   name:'Tortita arroz jamón serrano (Mercadona)', unit:'uds', kcalPer100:39,   proteinPer100:0.9, gramsPerUnit:10  },
 ];
 
 const MEALS = [
@@ -194,14 +227,45 @@ const MEALS = [
 
 const initMeals = () => Object.fromEntries(MEALS.map(m => [m.id, []]));
 
+function sortFoods(arr) {
+  return [...arr].sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }));
+}
+
 /* ═══ CÁLCULO ════════════════════════════════════════════════════════════════ */
+/*
+  Lógica de unidades:
+  - g / ml  → kcal = (amount / 100) * kcalPer100
+  - uds     → kcal = amount * (gramsPerUnit / 100) * kcalPer100
+              gramsPerUnit viene de la definición base o del override.
+              Si no hay gramsPerUnit definido, tratamos kcalPer100 como kcal/unidad (legacy).
+*/
 function calcFood(food, amount, overrides) {
-  const ov = overrides?.[food.id] || {};
-  const k  = ov.kcal    !== undefined ? +ov.kcal    : food.kcalPer100;
-  const p  = ov.protein !== undefined ? +ov.protein : food.proteinPer100;
-  return food.unit === 'uds'
-    ? { kcal: Math.round(amount * k),         protein: Math.round(amount * p * 10) / 10 }
-    : { kcal: Math.round(amount / 100 * k),   protein: Math.round(amount / 100 * p * 10) / 10 };
+  const ov  = overrides?.[food.id] || {};
+  const k   = ov.kcal         !== undefined ? +ov.kcal         : food.kcalPer100;
+  const p   = ov.protein      !== undefined ? +ov.protein      : food.proteinPer100;
+  const unt = ov.unit         !== undefined ? ov.unit          : food.unit;
+  const gpu = ov.gramsPerUnit !== undefined ? +ov.gramsPerUnit
+            : food.gramsPerUnit            ? +food.gramsPerUnit
+            : null;
+
+  if (unt === 'uds') {
+    if (gpu) {
+      return {
+        kcal:    Math.round(amount * gpu / 100 * k),
+        protein: Math.round(amount * gpu / 100 * p * 10) / 10,
+      };
+    }
+    // legacy: kcalPer100 es kcal por unidad
+    return { kcal: Math.round(amount * k), protein: Math.round(amount * p * 10) / 10 };
+  }
+  return {
+    kcal:    Math.round(amount / 100 * k),
+    protein: Math.round(amount / 100 * p * 10) / 10,
+  };
+}
+
+function getEffUnit(food, overrides) {
+  return overrides?.[food.id]?.unit ?? food.unit;
 }
 
 function enrichItems(items, allFoods, overrides) {
@@ -233,115 +297,264 @@ function buildDayTotals(mealData, allFoods, overrides) {
   return { kcal, protein: Math.round(prot * 10) / 10, meals: breakdown };
 }
 
-/* ═══ COMPONENTE: EDITOR DE VALORES ═════════════════════════════════════════ */
-function EditView({ allFoods, overrides, setOverrides, onBack }) {
-  const [search, setSearch] = useState('');
+/* ═══ COMPONENTE: EDITOR DE ALIMENTOS ═══════════════════════════════════════ */
+function EditView({ allFoods, overrides, setOverrides, custom, setCustom, deletedFoods, setDeletedFoods, onBack }) {
+  const [search, setSearch]       = useState('');
+  const [confirmDel, setConfirmDel] = useState(null);
+
+  // Include deleted base foods so user can see and restore them
+  const allWithDeleted = useMemo(() => {
+    const deletedBase = BASE_FOODS.filter(f => deletedFoods.includes(f.id));
+    return sortFoods([...allFoods, ...deletedBase]);
+  }, [allFoods, deletedFoods]);
+
   const filtered = search
-    ? allFoods.filter(f => f.name.toLowerCase().includes(search.toLowerCase()))
-    : allFoods;
+    ? allWithDeleted.filter(f => f.name.toLowerCase().includes(search.toLowerCase()))
+    : allWithDeleted;
+
+  const isBase    = id => BASE_FOODS.some(f => f.id === id);
+  const isDeleted = id => deletedFoods.includes(id);
 
   const setOv = (id, field, val) =>
-    setOverrides(p => ({ ...p, [id]: { ...(p[id] || {}), [field]: val === '' ? undefined : val } }));
+    setOverrides(p => ({
+      ...p,
+      [id]: { ...(p[id] || {}), [field]: val === '' ? undefined : val },
+    }));
+
+  const changeUnit = (food, newUnit) => {
+    setOverrides(p => {
+      const existing = { ...(p[food.id] || {}) };
+      if (newUnit === food.unit) {
+        delete existing.unit;
+        delete existing.gramsPerUnit;
+      } else {
+        existing.unit = newUnit;
+        if (newUnit !== 'uds') delete existing.gramsPerUnit;
+      }
+      return { ...p, [food.id]: existing };
+    });
+  };
+
   const resetOv = id =>
     setOverrides(p => { const n = { ...p }; delete n[id]; return n; });
 
-  const modCount = Object.values(overrides).filter(ov => ov && (ov.kcal !== undefined || ov.protein !== undefined)).length;
+  const deleteFood = id => {
+    if (isBase(id)) {
+      // Ocultar alimento base (se puede restaurar)
+      setDeletedFoods(p => [...p, id]);
+    } else {
+      // Eliminar alimento personalizado definitivamente
+      setCustom(p => p.filter(f => f.id !== id));
+      setOverrides(p => { const n = { ...p }; delete n[id]; return n; });
+    }
+    setConfirmDel(null);
+  };
+
+  const restoreFood = id => {
+    setDeletedFoods(p => p.filter(x => x !== id));
+  };
+
+  const hasOverrides = id => {
+    const ov = overrides[id];
+    return ov && Object.values(ov).some(v => v !== undefined);
+  };
 
   return (
     <div style={{ paddingBottom: '2rem' }}>
+      {/* Header */}
       <div className="card cp header">
         <div>
           <div className="header-title">
-            <i className="ti ti-edit" style={{ color: 'var(--blue-dark)', fontSize: 18 }} aria-hidden="true"></i>
-            Editar valores nutricionales
+            <i className="ti ti-edit" style={{ color: 'var(--blue-dark)', fontSize: 18 }}></i>
+            Editar lista de alimentos
           </div>
-          {modCount > 0 && (
-            <div style={{ fontSize: 11, color: 'var(--green-dark)', marginTop: 2 }}>
-              {modCount} alimento{modCount > 1 ? 's' : ''} con valores modificados
-            </div>
-          )}
+          <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 2 }}>
+            {allFoods.length} activos · {deletedFoods.length} ocultos
+          </div>
         </div>
         <div className="hactions">
-          {modCount > 0 && (
-            <button className="btn-reset btn-sm" onClick={() => setOverrides({})}>
-              <i className="ti ti-refresh"></i> Restaurar todos
-            </button>
-          )}
           <button className="btn-edit" onClick={onBack}>
             <i className="ti ti-arrow-left"></i> Volver
           </button>
         </div>
       </div>
 
+      {/* Info */}
       <div className="info-note">
         <i className="ti ti-info-circle" style={{ fontSize: 13 }}></i>{' '}
-        Valores por <strong>100g / 100ml</strong>, excepto el pan (por <strong>unidad</strong>).
-        Los cambios se aplican en tiempo real a todos los días. Las filas en verde tienen valores personalizados.
+        Cambia la unidad de medida, kcal y proteínas por 100g/ml. Si usas <strong>unidades</strong>,
+        indica los <strong>gramos por unidad</strong> para un cálculo exacto.
+        Los alimentos <strong>base</strong> eliminados se ocultan y pueden restaurarse. Los <strong>personalizados</strong> se eliminan definitivamente.
       </div>
 
       <input type="text" placeholder="Buscar alimento..." value={search}
         onChange={e => setSearch(e.target.value)} style={{ marginBottom: 10 }} />
 
+      {/* Lista */}
       <div className="card" style={{ overflow: 'hidden', marginBottom: 14 }}>
-        <table style={{ tableLayout: 'fixed' }}>
-          <colgroup>
-            <col style={{ width: '36%' }} /><col style={{ width: '10%' }} />
-            <col style={{ width: '21%' }} /><col style={{ width: '21%' }} /><col style={{ width: '12%' }} />
-          </colgroup>
-          <thead>
-            <tr>
-              <th>Alimento</th>
-              <th style={{ textAlign: 'center' }}>Un.</th>
-              <th>Kcal / 100</th><th>Prot. / 100</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map(f => {
-              const ov  = overrides[f.id] || {};
-              const mod = ov.kcal !== undefined || ov.protein !== undefined;
-              return (
-                <tr key={f.id} className={mod ? 'modified' : ''}>
-                  <td style={{ overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', maxWidth:0, fontSize:12,
-                    color: mod ? 'var(--green-text)' : 'var(--text)', fontWeight: mod ? 500 : 400 }}>
+        {/* Cabecera */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 80px 65px 65px 80px 70px',
+          padding: '6px 12px',
+          background: 'var(--bg2)',
+          borderBottom: '0.5px solid var(--border)',
+          fontSize: 10, fontWeight: 500, color: 'var(--text2)',
+          gap: 6, alignItems: 'center',
+        }}>
+          <span>Alimento</span>
+          <span style={{ textAlign: 'center' }}>Unidad</span>
+          <span style={{ textAlign: 'right' }}>Kcal/100</span>
+          <span style={{ textAlign: 'right' }}>Prot./100</span>
+          <span style={{ textAlign: 'center' }}>g o ml/ud.</span>
+          <span style={{ textAlign: 'center' }}>Acciones</span>
+        </div>
+
+        {filtered.length === 0 && (
+          <div style={{ textAlign: 'center', padding: '16px', color: 'var(--text3)', fontSize: 13 }}>
+            Sin resultados
+          </div>
+        )}
+
+        {filtered.map(f => {
+          const ov      = overrides[f.id] || {};
+          const effUnit = ov.unit !== undefined ? ov.unit : f.unit;
+          const isUds   = effUnit === 'uds';
+          const base    = isBase(f.id);
+          const deleted = isDeleted(f.id);
+          const hasOv   = hasOverrides(f.id);
+
+          // Fila de confirmación de borrado
+          if (confirmDel === f.id) {
+            return (
+              <div key={f.id} style={{
+                display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px',
+                background: 'var(--red-bg)', borderBottom: '0.5px solid var(--border)',
+              }}>
+                <i className="ti ti-alert-triangle" style={{ color: 'var(--red-text)', fontSize: 15 }}></i>
+                <span style={{ flex: 1, fontSize: 12, color: 'var(--red-text)' }}>
+                  {base
+                    ? <>¿Ocultar <strong>{f.name}</strong>? Podrás restaurarlo después.</>
+                    : <>¿Eliminar <strong>{f.name}</strong>? Esta acción no se puede deshacer.</>
+                  }
+                </span>
+                <button className="btn-sm btn-reset" onClick={() => deleteFood(f.id)}>
+                  <i className="ti ti-trash"></i> {base ? 'Ocultar' : 'Eliminar'}
+                </button>
+                <button className="btn-sm btn-ghost" onClick={() => setConfirmDel(null)}>
+                  Cancelar
+                </button>
+              </div>
+            );
+          }
+
+          return (
+            <div key={f.id} className="edit-row"
+              style={{ opacity: deleted ? 0.45 : 1, background: 'transparent' }}>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 80px 65px 65px 80px 70px',
+                padding: '7px 12px', gap: 6, alignItems: 'center',
+              }}>
+                {/* Nombre */}
+                <div style={{ overflow: 'hidden' }}>
+                  <span style={{
+                    fontSize: 12, fontWeight: 400, color: 'var(--text)',
+                    display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                  }}>
                     {f.name}
-                  </td>
-                  <td style={{ textAlign:'center', fontSize:11 }}>
-                    <span style={{ padding:'2px 6px', borderRadius:8, fontWeight:500,
-                      background: f.unit==='g'?'var(--green-bg)':f.unit==='ml'?'var(--blue-bg)':'var(--amber-bg)',
-                      color: f.unit==='g'?'var(--green-text)':f.unit==='ml'?'var(--blue-text)':'var(--amber-text)' }}>
-                      {f.unit}
-                    </span>
-                  </td>
-                  <td>
-                    <input type="number" className="compact" min="0"
-                      placeholder={String(f.kcalPer100)}
-                      value={ov.kcal !== undefined ? ov.kcal : ''}
-                      onChange={e => setOv(f.id, 'kcal', e.target.value)} />
-                  </td>
-                  <td>
-                    <input type="number" className="compact" min="0" step="0.1"
-                      placeholder={String(f.proteinPer100)}
-                      value={ov.protein !== undefined ? ov.protein : ''}
-                      onChange={e => setOv(f.id, 'protein', e.target.value)} />
-                  </td>
-                  <td style={{ textAlign: 'center' }}>
-                    {mod && (
-                      <button className="btn-icon btn-icon-b" onClick={() => resetOv(f.id)} title="Restaurar">
-                        <i className="ti ti-refresh"></i>
+                    <span className={base ? 'tag-base' : 'tag-custom'}>{base ? 'base' : 'custom'}</span>
+                    {deleted && <span style={{ fontSize: 9, color: 'var(--red-text)', marginLeft: 4, fontWeight: 500 }}>OCULTO</span>}
+                  </span>
+                </div>
+
+                {/* Selector de unidad */}
+                <div>
+                  <select className="compact-sel" value={effUnit} disabled={deleted}
+                    onChange={e => changeUnit(f, e.target.value)} style={{ width: '100%' }}>
+                    <option value="g">g</option>
+                    <option value="ml">ml</option>
+                    <option value="uds">uds</option>
+                  </select>
+                </div>
+
+                {/* Kcal por 100 */}
+                <div>
+                  <input type="number" className="compact" min="0" style={{ textAlign: 'right' }}
+                    disabled={deleted}
+                    placeholder={String(f.kcalPer100)}
+                    value={ov.kcal !== undefined ? ov.kcal : ''}
+                    onChange={e => setOv(f.id, 'kcal', e.target.value)} />
+                </div>
+
+                {/* Proteína por 100 */}
+                <div>
+                  <input type="number" className="compact" min="0" step="0.1" style={{ textAlign: 'right' }}
+                    disabled={deleted}
+                    placeholder={String(f.proteinPer100)}
+                    value={ov.protein !== undefined ? ov.protein : ''}
+                    onChange={e => setOv(f.id, 'protein', e.target.value)} />
+                </div>
+
+                {/* Gramos por unidad */}
+                <div>
+                  {isUds && !deleted ? (
+                    <input type="number" className="compact" min="0" style={{ textAlign: 'right' }}
+                      placeholder={f.gramsPerUnit ? String(f.gramsPerUnit) : 'g/ud'}
+                      value={ov.gramsPerUnit !== undefined ? ov.gramsPerUnit : ''}
+                      onChange={e => setOv(f.id, 'gramsPerUnit', e.target.value)} />
+                  ) : (
+                    <span style={{ fontSize: 11, color: 'var(--text3)', display: 'block', textAlign: 'center' }}>—</span>
+                  )}
+                </div>
+
+                {/* Acciones */}
+                <div style={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
+                  {deleted ? (
+                    <button className="btn-icon btn-icon-b" title="Restaurar alimento"
+                      onClick={() => restoreFood(f.id)}>
+                      <i className="ti ti-restore"></i>
+                    </button>
+                  ) : (
+                    <>
+                      {hasOv && (
+                        <button className="btn-icon btn-icon-b" title="Restaurar valores originales"
+                          onClick={() => resetOv(f.id)}>
+                          <i className="ti ti-refresh"></i>
+                        </button>
+                      )}
+                      <button className="btn-icon" title={base ? 'Ocultar alimento' : 'Eliminar alimento'}
+                        onClick={() => setConfirmDel(f.id)}>
+                        <i className="ti ti-trash"></i>
                       </button>
-                    )}
-                  </td>
-                </tr>
-              );
-            })}
-            {filtered.length === 0 && (
-              <tr><td colSpan={5} style={{ textAlign:'center', color:'var(--text3)', padding:'16px', fontSize:13 }}>
-                Sin resultados
-              </td></tr>
-            )}
-          </tbody>
-        </table>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* Info cálculo por unidades */}
+              {isUds && !deleted && (
+                <div style={{
+                  padding: '3px 12px 7px 12px', fontSize: 10.5,
+                  color: 'var(--amber-text)', display: 'flex', alignItems: 'center', gap: 5,
+                }}>
+                  <i className="ti ti-info-circle" style={{ fontSize: 12 }}></i>
+                  {(() => {
+                    const gpu = ov.gramsPerUnit !== undefined ? +ov.gramsPerUnit : (f.gramsPerUnit || null);
+                    const k   = ov.kcal    !== undefined ? +ov.kcal    : f.kcalPer100;
+                    const p   = ov.protein !== undefined ? +ov.protein : f.proteinPer100;
+                    if (gpu) return `Cada unidad = ${gpu}g → ${Math.round(gpu/100*k)} kcal · ${Math.round(gpu/100*p*10)/10}g prot.`;
+                    return 'Indica los gramos por unidad para un cálculo preciso.';
+                  })()}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <div style={{ fontSize: 11, color: 'var(--text3)', textAlign: 'center' }}>
+        {allFoods.length} activos · {deletedFoods.length} oculto{deletedFoods.length !== 1 ? 's' : ''} · {custom.length} personalizado{custom.length !== 1 ? 's' : ''}
       </div>
     </div>
   );
@@ -353,7 +566,7 @@ function HistoryView({ data }) {
     return (
       <div className="card" style={{ marginBottom: 10 }}>
         <div className="empty">
-          <i className="ti ti-calendar-off empty-icon" aria-hidden="true"></i>
+          <i className="ti ti-calendar-off empty-icon"></i>
           Sin datos registrados para este día
         </div>
       </div>
@@ -373,8 +586,7 @@ function HistoryView({ data }) {
       </div>
       <div className="card cp" style={{ marginBottom: 14 }}>
         <div className="sec-title">
-          <i className="ti ti-history" aria-hidden="true"></i>
-          Detalle por comida
+          <i className="ti ti-history"></i> Detalle por comida
         </div>
         {MEALS.map(ml => {
           const m = data.meals[ml.id];
@@ -383,7 +595,7 @@ function HistoryView({ data }) {
             <div key={ml.id} style={{ marginBottom: 6 }}>
               <div className="day-row">
                 <span style={{ display:'flex', alignItems:'center', gap:5, color:'var(--text2)', fontSize:13 }}>
-                  <i className={`ti ${ml.icon}`} style={{ fontSize:13 }} aria-hidden="true"></i>
+                  <i className={`ti ${ml.icon}`} style={{ fontSize:13 }}></i>
                   {ml.name}
                   <span style={{ fontSize:10, color:'var(--text3)' }}>({m.count} alim.)</span>
                 </span>
@@ -395,9 +607,9 @@ function HistoryView({ data }) {
               </div>
               {m.items.map(item => (
                 <div key={item.id} className="hist-item">
-                  <span>{item.name} <span style={{ color:'var(--text3)' }}>({item.amount}{item.unit})</span></span>
+                  <span>{item.name} <span style={{ color:'var(--text3)' }}>({item.amount} {item.unit})</span></span>
                   <span>
-                    <span style={{ color:'var(--green-dark)' }}>{item.kcal}kcal</span>
+                    <span style={{ color:'var(--green-dark)' }}>{item.kcal} kcal</span>
                     <span style={{ color:'var(--text3)', margin:'0 3px' }}>·</span>
                     <span style={{ color:'var(--blue-dark)' }}>{item.protein}g</span>
                   </span>
@@ -422,36 +634,35 @@ function HistoryView({ data }) {
 
 /* ═══ APP PRINCIPAL ══════════════════════════════════════════════════════════ */
 function App() {
-  const [loading,   setLoading]   = useState(true);
-  const [meals,     setMeals]     = useState(initMeals);
-  const [custom,    setCustom]    = useState([]);
-  const [overrides, setOverrides] = useState({});
-  const [history,   setHistory]   = useState({});
-  const [dates,     setDates]     = useState([TODAY]);
-  const [viewDate,  setViewDate]  = useState(TODAY);
-  const [active,    setActive]    = useState('desayuno');
-  const [selFood,   setSelFood]   = useState(BASE_FOODS[0].id);
-  const [amt,       setAmt]       = useState('');
-  const [showAdd,   setShowAdd]   = useState(false);
-  const [editMode,  setEditMode]  = useState(false);
-  const [newF,      setNewF]      = useState({ name:'', unit:'g', kcal:'', protein:'' });
+  const [loading,      setLoading]      = useState(true);
+  const [meals,        setMeals]        = useState(initMeals);
+  const [custom,       setCustom]       = useState([]);
+  const [deletedFoods, setDeletedFoods] = useState([]);   // IDs ocultos (base o custom)
+  const [overrides,    setOverrides]    = useState({});
+  const [history,      setHistory]      = useState({});
+  const [dates,        setDates]        = useState([TODAY]);
+  const [viewDate,     setViewDate]     = useState(TODAY);
+  const [active,       setActive]       = useState('desayuno');
+  const [selFood,      setSelFood]      = useState(BASE_FOODS[0].id);
+  const [amt,          setAmt]          = useState('');
+  const [showAdd,      setShowAdd]      = useState(false);
+  const [editMode,     setEditMode]     = useState(false);
+  const [newF,         setNewF]         = useState({ name:'', unit:'g', kcal:'', protein:'', gramsPerUnit:'' });
 
-  /* ── Carga inicial desde localStorage ── */
+  /* ── Carga inicial ── */
   useEffect(() => {
-    const storedDates = LS.get('nutri_dates') || [];
-    const customFoods = LS.get('nutri_foods') || [];
-    const ovs         = LS.get('nutri_overrides') || {};
-    const ds          = manageDates(storedDates);
-    const todayData   = LS.get('nutri_day_' + TODAY);
-    const hist        = {};
-    ds.filter(d => d !== TODAY).forEach(d => {
-      const data = LS.get('nutri_day_' + d);
-      if (data) hist[d] = data;
-    });
+    const ds        = manageDates(LS.get('nutri_dates') || []);
+    const customF   = LS.get('nutri_foods')    || [];
+    const ovs       = LS.get('nutri_overrides') || {};
+    const deleted   = LS.get('nutri_deleted')  || [];
+    const todayD    = LS.get('nutri_day_' + TODAY);
+    const hist = {};
+    ds.filter(d => d !== TODAY).forEach(d => { const data = LS.get('nutri_day_' + d); if (data) hist[d] = data; });
     setDates(ds);
-    setCustom(customFoods);
+    setCustom(customF);
     setOverrides(ovs);
-    if (todayData) setMeals(todayData);
+    setDeletedFoods(deleted);
+    if (todayD) setMeals(todayD);
     setHistory(hist);
     setLoading(false);
   }, []);
@@ -463,12 +674,17 @@ function App() {
     clearTimeout(saveTimer.current);
     saveTimer.current = setTimeout(() => LS.set('nutri_day_' + TODAY, meals), 300);
   }, [meals, loading]);
-  useEffect(() => { if (!loading) LS.set('nutri_overrides', overrides); }, [overrides, loading]);
-  useEffect(() => { if (!loading) LS.set('nutri_foods',    custom);    }, [custom,    loading]);
+  useEffect(() => { if (!loading) LS.set('nutri_overrides', overrides);       }, [overrides,    loading]);
+  useEffect(() => { if (!loading) LS.set('nutri_foods',     custom);          }, [custom,       loading]);
+  useEffect(() => { if (!loading) LS.set('nutri_deleted',   deletedFoods);    }, [deletedFoods, loading]);
 
   /* ── Datos derivados ── */
-  const allFoods = useMemo(() => [...BASE_FOODS, ...custom], [custom]);
-  const food     = allFoods.find(f => f.id === selFood) || BASE_FOODS[0];
+  const allFoods = useMemo(
+    () => sortFoods([...BASE_FOODS, ...custom].filter(f => !deletedFoods.includes(f.id))),
+    [custom, deletedFoods]
+  );
+  const food     = allFoods.find(f => f.id === selFood) || allFoods[0];
+  const effUnit  = food ? getEffUnit(food, overrides) : 'g';
 
   const enrichedToday = useMemo(() => {
     const r = {};
@@ -495,10 +711,10 @@ function App() {
   /* ── Handlers ── */
   const addItem = () => {
     const n = +amt;
-    if (!n || n <= 0) return;
+    if (!n || n <= 0 || !food) return;
     setMeals(p => ({
       ...p,
-      [active]: [...p[active], { id: Date.now(), foodId: food.id, name: food.name, amount: n, unit: food.unit }]
+      [active]: [...p[active], { id: Date.now(), foodId: food.id, name: food.name, amount: n, unit: effUnit }],
     }));
     setAmt('');
   };
@@ -507,11 +723,17 @@ function App() {
 
   const saveCustom = () => {
     if (!newF.name || !newF.kcal || !newF.protein) return;
-    const nf = { id: 'c' + Date.now(), name: newF.name + ' ✦', unit: newF.unit, kcalPer100: +newF.kcal, proteinPer100: +newF.protein };
-    setCustom(p => [...p, nf]);
-    // Seleccionarlo automáticamente en el desplegable
+    const nf = {
+      id: 'c' + Date.now(),
+      name: newF.name,
+      unit: newF.unit,
+      kcalPer100:    +newF.kcal,
+      proteinPer100: +newF.protein,
+      ...(newF.unit === 'uds' && newF.gramsPerUnit ? { gramsPerUnit: +newF.gramsPerUnit } : {}),
+    };
+    setCustom(p => p.concat(nf));
     setSelFood(nf.id);
-    setNewF({ name:'', unit:'g', kcal:'', protein:'' });
+    setNewF({ name:'', unit:'g', kcal:'', protein:'', gramsPerUnit:'' });
     setShowAdd(false);
   };
 
@@ -520,32 +742,42 @@ function App() {
     return (
       <div style={{ textAlign:'center', padding:'3rem', color:'var(--text2)' }}>
         <i className="ti ti-loader" style={{ fontSize:28, display:'block', marginBottom:8, opacity:.35 }}></i>
-        Cargando datos guardados...
+        Cargando datos...
       </div>
     );
   }
 
   if (editMode) {
-    return <EditView allFoods={allFoods} overrides={overrides} setOverrides={setOverrides} onBack={() => setEditMode(false)} />;
+    return (
+      <EditView
+        allFoods={allFoods}
+        overrides={overrides}
+        setOverrides={setOverrides}
+        custom={custom}
+        setCustom={setCustom}
+        deletedFoods={deletedFoods}
+        setDeletedFoods={setDeletedFoods}
+        onBack={() => setEditMode(false)}
+      />
+    );
   }
 
   const isToday    = viewDate === TODAY;
   const curItems   = enrichedToday[active] || [];
   const curTotals  = todayMealT[active];
   const activeMeal = MEALS.find(m => m.id === active);
-  const preview    = amt && +amt > 0 ? calcFood(food, +amt, overrides) : null;
+  const preview    = amt && +amt > 0 && food ? calcFood(food, +amt, overrides) : null;
   const hasDayData = Object.values(todayMealT).some(t => t.count > 0);
-  const modCount   = Object.values(overrides).filter(ov => ov && (ov.kcal !== undefined || ov.protein !== undefined)).length;
   const todayLabel = new Date().toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long' });
 
   return (
     <div style={{ paddingBottom: '2rem' }}>
 
-      {/* ── HEADER ── */}
+      {/* HEADER */}
       <div className="card cp header">
         <div>
           <div className="header-title">
-            <i className="ti ti-leaf" style={{ color:'var(--green-dark)', fontSize:19 }} aria-hidden="true"></i>
+            <i className="ti ti-leaf" style={{ color:'var(--green-dark)', fontSize:19 }}></i>
             Contador Nutricional
           </div>
           <div className="header-sub">{todayLabel}</div>
@@ -553,7 +785,7 @@ function App() {
         <div className="hactions">
           <button className="btn-edit" onClick={() => setEditMode(true)}>
             <i className="ti ti-edit"></i>
-            Editar valores{modCount > 0 ? ` (${modCount})` : ''}
+            Editar alimentos
           </button>
           {isToday && (
             <button className="btn-reset" onClick={() => setMeals(initMeals())}>
@@ -563,10 +795,10 @@ function App() {
         </div>
       </div>
 
-      {/* ── DATE PILLS ── */}
+      {/* DATE PILLS */}
       <div className="date-pills">
         {dates.map(d => {
-          const pd      = d === TODAY ? todayDay : histData[d] || { kcal: 0, protein: 0 };
+          const pd      = d === TODAY ? todayDay : (histData[d] || { kcal:0, protein:0 });
           const hasData = pd.kcal > 0 || pd.protein > 0;
           return (
             <button key={d}
@@ -579,20 +811,20 @@ function App() {
         })}
       </div>
 
-      {/* ── BANNER SOLO LECTURA ── */}
+      {/* BANNER SOLO LECTURA */}
       {!isToday && (
         <div className="readonly-banner">
           <i className="ti ti-eye" style={{ fontSize:15 }}></i>
           Viendo {fmtDate(viewDate).toLowerCase()} — solo lectura.
-          <button style={{ marginLeft:'auto', height:26, padding:'0 10px', fontSize:11 }}
-            onClick={() => setViewDate(TODAY)}>
+          <button style={{ marginLeft:'auto', height:26, padding:'0 10px', fontSize:11 }} onClick={() => setViewDate(TODAY)}>
             Ir a hoy
           </button>
         </div>
       )}
 
-      {/* ── VISTA HOY ── */}
+      {/* VISTA HOY */}
       {isToday && (<>
+
         <div className="stats">
           <div className="stat">
             <div className="stat-label">Calorías del día</div>
@@ -611,7 +843,7 @@ function App() {
             return (
               <button key={ml.id} className={`tab ${active === ml.id ? 'active' : ''}`}
                 onClick={() => setActive(ml.id)}>
-                <i className={`ti ${ml.icon} tab-icon`} aria-hidden="true"></i>
+                <i className={`ti ${ml.icon} tab-icon`}></i>
                 {ml.name}
                 {t.count > 0 && <span className="tab-sub">{t.kcal}kcal·{t.protein}g</span>}
               </button>
@@ -622,27 +854,27 @@ function App() {
         {/* Añadir alimento */}
         <div className="card cp" style={{ marginBottom:10 }}>
           <div className="sec-title">
-            <i className={`ti ${activeMeal?.icon}`} aria-hidden="true"></i>
+            <i className={`ti ${activeMeal?.icon}`}></i>
             {activeMeal?.name} — Añadir alimento
           </div>
           <div className="row-g" style={{ flexWrap:'wrap' }}>
             <div style={{ flex:'2 1 180px' }}>
               <select value={selFood} onChange={e => setSelFood(e.target.value)}>
                 <optgroup label="── Alimentos base ──">
-                  {BASE_FOODS.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
+                  {sortFoods(BASE_FOODS).map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
                 </optgroup>
                 {custom.length > 0 && (
                   <optgroup label="── Alimentos personalizados ──">
-                    {custom.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
+                    {sortFoods(custom).map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
                   </optgroup>
                 )}
               </select>
             </div>
             <div style={{ flex:'1 1 90px', display:'flex', alignItems:'center', gap:5 }}>
-              <input type="number" min="0" placeholder={food.unit}
+              <input type="number" min="0" placeholder={effUnit}
                 value={amt} onChange={e => setAmt(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && addItem()} />
-              <span style={{ fontSize:11, color:'var(--text3)', minWidth:18 }}>{food.unit}</span>
+              <span style={{ fontSize:11, color:'var(--text3)', minWidth:22 }}>{effUnit}</span>
             </div>
             <button className="btn-add" onClick={addItem} style={{ flex:'0 0 auto' }}>
               <i className="ti ti-plus"></i> Añadir
@@ -696,7 +928,7 @@ function App() {
         ) : (
           <div className="card" style={{ marginBottom:10 }}>
             <div className="empty">
-              <i className="ti ti-bowl-chopsticks empty-icon" aria-hidden="true"></i>
+              <i className="ti ti-bowl-chopsticks empty-icon"></i>
               Sin alimentos en {activeMeal?.name.toLowerCase()}
             </div>
           </div>
@@ -706,8 +938,7 @@ function App() {
         {hasDayData && (
           <div className="card cp" style={{ marginBottom:10 }}>
             <div className="sec-title">
-              <i className="ti ti-calendar-stats" aria-hidden="true"></i>
-              Resumen completo del día
+              <i className="ti ti-calendar-stats"></i> Resumen completo del día
             </div>
             {MEALS.map(ml => {
               const t = todayMealT[ml.id];
@@ -715,7 +946,7 @@ function App() {
               return (
                 <div className="day-row" key={ml.id}>
                   <span style={{ display:'flex', alignItems:'center', gap:5, color:'var(--text2)' }}>
-                    <i className={`ti ${ml.icon}`} style={{ fontSize:13 }} aria-hidden="true"></i>
+                    <i className={`ti ${ml.icon}`} style={{ fontSize:13 }}></i>
                     {ml.name}
                   </span>
                   <span>
@@ -738,7 +969,7 @@ function App() {
           </div>
         )}
 
-        {/* Alimento personalizado */}
+        {/* Añadir alimento personalizado */}
         <button className="btn-wide" style={{ marginBottom:8 }} onClick={() => setShowAdd(!showAdd)}>
           <i className={`ti ${showAdd ? 'ti-x' : 'ti-circle-plus'}`}></i>
           {showAdd ? 'Cancelar' : 'Agregar alimento personalizado'}
@@ -747,8 +978,7 @@ function App() {
         {showAdd && (
           <div className="card cp" style={{ marginBottom:10 }}>
             <div className="sec-title">
-              <i className="ti ti-circle-plus" aria-hidden="true"></i>
-              Nuevo alimento personalizado
+              <i className="ti ti-circle-plus"></i> Nuevo alimento personalizado
             </div>
             <div className="col-g">
               <div>
@@ -759,23 +989,38 @@ function App() {
               <div className="row-g">
                 <div style={{ flex:1 }}>
                   <label>Unidad</label>
-                  <select value={newF.unit} onChange={e => setNewF(p => ({ ...p, unit: e.target.value }))}>
+                  <select value={newF.unit} onChange={e => setNewF(p => ({ ...p, unit: e.target.value, gramsPerUnit:'' }))}>
                     <option value="g">Gramos (g)</option>
                     <option value="ml">Mililitros (ml)</option>
                     <option value="uds">Unidades (uds)</option>
                   </select>
                 </div>
                 <div style={{ flex:1 }}>
-                  <label>Kcal por {newF.unit === 'uds' ? '1 unidad' : '100' + newF.unit}</label>
+                  <label>Kcal por {newF.unit === 'uds' ? '100g' : '100' + newF.unit}</label>
                   <input type="number" min="0" placeholder="kcal"
                     value={newF.kcal} onChange={e => setNewF(p => ({ ...p, kcal: e.target.value }))} />
                 </div>
                 <div style={{ flex:1 }}>
-                  <label>Prot. por {newF.unit === 'uds' ? '1 unidad' : '100' + newF.unit}</label>
+                  <label>Prot. por {newF.unit === 'uds' ? '100g' : '100' + newF.unit}</label>
                   <input type="number" min="0" step="0.1" placeholder="g"
                     value={newF.protein} onChange={e => setNewF(p => ({ ...p, protein: e.target.value }))} />
                 </div>
+                {newF.unit === 'uds' && (
+                  <div style={{ flex:1 }}>
+                    <label>Gramos por unidad</label>
+                    <input type="number" min="0" placeholder="g"
+                      value={newF.gramsPerUnit} onChange={e => setNewF(p => ({ ...p, gramsPerUnit: e.target.value }))} />
+                  </div>
+                )}
               </div>
+              {newF.unit === 'uds' && newF.kcal && newF.protein && newF.gramsPerUnit && (
+                <div className="preview" style={{ fontSize:11 }}>
+                  <i className="ti ti-calculator" style={{ fontSize:11 }}></i>{' '}
+                  Cada unidad ≈ <span className="kcal">{Math.round(+newF.gramsPerUnit/100*+newF.kcal)} kcal</span>
+                  {' · '}
+                  <span className="prot">{Math.round(+newF.gramsPerUnit/100*+newF.protein*10)/10}g prot.</span>
+                </div>
+              )}
               <div className="row-g">
                 <button className="btn-save" onClick={saveCustom}>
                   <i className="ti ti-check"></i> Guardar alimento
@@ -789,18 +1034,14 @@ function App() {
         )}
 
         {custom.length > 0 && (
-          <div style={{ fontSize:11, color:'var(--text3)', textAlign:'center', marginTop:4 }}>
-            {custom.length} alimento{custom.length > 1 ? 's' : ''} personalizado{custom.length > 1 ? 's' : ''} guardado{custom.length > 1 ? 's' : ''}:
-            {custom.map(f => (
-              <span key={f.id} style={{ marginLeft:5, background:'var(--bg2)', padding:'1px 7px', borderRadius:4 }}>
-                {f.name}
-              </span>
-            ))}
+          <div style={{ fontSize:11, color:'var(--text3)', textAlign:'center', marginTop:6 }}>
+            {custom.length} alimento{custom.length > 1 ? 's' : ''} personalizado{custom.length > 1 ? 's' : ''} en la lista
           </div>
         )}
+
       </>)}
 
-      {/* ── VISTA HISTÓRICO ── */}
+      {/* VISTA HISTÓRICO */}
       {!isToday && <HistoryView data={histData[viewDate]} />}
 
     </div>
