@@ -9,18 +9,64 @@
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <style>
-  /* Tema por defecto (light estándar) — se sobreescribe con data-theme en <html> */
+  /* ── BASE (se sobreescribe por data-theme) ── */
   :root {
+    --radius:8px; --radius-lg:12px;
     --bg:#ffffff; --bg2:#f6f6f4; --bg3:#efefeb;
     --text:#1a1a18; --text2:#6b6b67; --text3:#9a9a96;
     --border:rgba(0,0,0,0.09); --border2:rgba(0,0,0,0.16);
-    --radius:8px; --radius-lg:12px;
-    --acc:#185FA5; --acc-bg:#E6F1FB; --acc-mid:#85B7EB; --acc-text:#0C447C; --acc-dark:#0C447C;
+    --acc:#3B6D11; --acc-bg:#EAF3DE; --acc-mid:#97C459; --acc-text:#27500A; --acc-dark:#3B6D11;
     --red-bg:#FCEBEB; --red-mid:#F09595; --red-text:#791F1F;
     --amber-bg:#FAEEDA; --amber-text:#633806;
   }
+  /* ── CLARO: paleta original verde/azul ── */
+  [data-theme="default"] {
+    --bg:#ffffff; --bg2:#f6f6f4; --bg3:#efefeb;
+    --text:#1a1a18; --text2:#6b6b67; --text3:#9a9a96;
+    --border:rgba(0,0,0,0.09); --border2:rgba(0,0,0,0.16);
+    --acc:#3B6D11; --acc-bg:#EAF3DE; --acc-mid:#97C459; --acc-text:#27500A; --acc-dark:#3B6D11;
+    --red-bg:#FCEBEB; --red-mid:#F09595; --red-text:#791F1F;
+    --amber-bg:#FAEEDA; --amber-text:#633806;
+  }
+  /* ── CLAROS ── */
+  [data-theme="deep-space-l"] {
+    --bg:#ffffff; --bg2:#f0f9ff; --bg3:#e0f2fe;
+    --text:#0c4a6e; --text2:#0369a1; --text3:#7dd3fc;
+    --border:rgba(3,105,161,0.12); --border2:rgba(3,105,161,0.25);
+    --acc:#0369a1; --acc-bg:#e0f2fe; --acc-mid:#38bdf8; --acc-text:#0c4a6e; --acc-dark:#0369a1;
+    --red-bg:#fff1f2; --red-mid:#fda4af; --red-text:#9f1239;
+    --amber-bg:#fffbeb; --amber-text:#92400e;
+  }
 
-  /* ── TEMAS OSCUROS ── */
+
+
+  [data-theme="steel-teal-l"] {
+    --bg:#ffffff; --bg2:#f0fdfa; --bg3:#ccfbf1;
+    --text:#134e4a; --text2:#0f766e; --text3:#5eead4;
+    --border:rgba(15,118,110,0.12); --border2:rgba(15,118,110,0.25);
+    --acc:#0f766e; --acc-bg:#f0fdfa; --acc-mid:#2dd4bf; --acc-text:#134e4a; --acc-dark:#0f766e;
+    --red-bg:#fff1f2; --red-mid:#fda4af; --red-text:#9f1239;
+    --amber-bg:#fffbeb; --amber-text:#92400e;
+  }
+
+
+  [data-theme="void-purple-l"] {
+    --bg:#ffffff; --bg2:#faf5ff; --bg3:#ede9fe;
+    --text:#4c1d95; --text2:#7c3aed; --text3:#c4b5fd;
+    --border:rgba(124,58,237,0.12); --border2:rgba(124,58,237,0.25);
+    --acc:#7c3aed; --acc-bg:#faf5ff; --acc-mid:#a78bfa; --acc-text:#4c1d95; --acc-dark:#7c3aed;
+    --red-bg:#fff1f2; --red-mid:#fda4af; --red-text:#9f1239;
+    --amber-bg:#fffbeb; --amber-text:#92400e;
+  }
+  [data-theme="matrix-l"] {
+    --bg:#ffffff; --bg2:#f0fdf4; --bg3:#dcfce7;
+    --text:#14532d; --text2:#16a34a; --text3:#86efac;
+    --border:rgba(22,163,74,0.12); --border2:rgba(22,163,74,0.25);
+    --acc:#16a34a; --acc-bg:#f0fdf4; --acc-mid:#4ade80; --acc-text:#14532d; --acc-dark:#16a34a;
+    --red-bg:#fff1f2; --red-mid:#fda4af; --red-text:#9f1239;
+    --amber-bg:#fffbeb; --amber-text:#92400e;
+  }
+  /* ── OSCUROS ── */
   [data-theme="deep-space"] {
     --bg:#111827; --bg2:#0a0e1a; --bg3:#06090f;
     --text:#e0f4ff; --text2:#7ec8e3; --text3:#3d6a7c;
@@ -29,27 +75,24 @@
     --red-bg:#3b0f0f; --red-mid:#7f1d1d; --red-text:#fca5a5;
     --amber-bg:#2d1a00; --amber-text:#fbbf24;
   }
-  [data-theme="obsidian-blue"] {
-    --bg:#0e1120; --bg2:#06080f; --bg3:#030508;
-    --text:#eff6ff; --text2:#60a5fa; --text3:#1e40af;
-    --border:rgba(59,130,246,0.14); --border2:rgba(59,130,246,0.28);
-    --acc:#3b82f6; --acc-bg:#1e3a8a; --acc-mid:#1d4ed8; --acc-text:#93c5fd; --acc-dark:#3b82f6;
-    --red-bg:#3b0f0f; --red-mid:#7f1d1d; --red-text:#fca5a5;
-    --amber-bg:#2d1a00; --amber-text:#fbbf24;
-  }
-  [data-theme="void-purple"] {
-    --bg:#12102a; --bg2:#080810; --bg3:#050508;
-    --text:#ede9fe; --text2:#a78bfa; --text3:#4c1d95;
-    --border:rgba(167,139,250,0.13); --border2:rgba(167,139,250,0.26);
-    --acc:#a78bfa; --acc-bg:#4c1d95; --acc-mid:#7c3aed; --acc-text:#ddd6fe; --acc-dark:#a78bfa;
-    --red-bg:#3b0f0f; --red-mid:#7f1d1d; --red-text:#fca5a5;
-    --amber-bg:#2d1a00; --amber-text:#fbbf24;
-  }
+
+
+
   [data-theme="steel-teal"] {
     --bg:#0f1f2e; --bg2:#09111a; --bg3:#050d12;
     --text:#f0fdfa; --text2:#2dd4bf; --text3:#0f4c44;
     --border:rgba(45,212,191,0.13); --border2:rgba(45,212,191,0.26);
     --acc:#2dd4bf; --acc-bg:#134e4a; --acc-mid:#0f766e; --acc-text:#99f6e4; --acc-dark:#2dd4bf;
+    --red-bg:#3b0f0f; --red-mid:#7f1d1d; --red-text:#fca5a5;
+    --amber-bg:#2d1a00; --amber-text:#fbbf24;
+  }
+
+
+  [data-theme="void-purple"] {
+    --bg:#12102a; --bg2:#080810; --bg3:#050508;
+    --text:#ede9fe; --text2:#a78bfa; --text3:#4c1d95;
+    --border:rgba(167,139,250,0.13); --border2:rgba(167,139,250,0.26);
+    --acc:#a78bfa; --acc-bg:#4c1d95; --acc-mid:#7c3aed; --acc-text:#ddd6fe; --acc-dark:#a78bfa;
     --red-bg:#3b0f0f; --red-mid:#7f1d1d; --red-text:#fca5a5;
     --amber-bg:#2d1a00; --amber-text:#fbbf24;
   }
@@ -210,25 +253,26 @@
     .mob-nav{
       display:flex;position:fixed;bottom:0;left:0;right:0;
       background:var(--bg);border-top:0.5px solid var(--border2);
-      z-index:200;padding:0;
+      z-index:200;
+      /* safe area for notch phones */
+      padding-bottom:env(safe-area-inset-bottom, 0px);
     }
     .mob-nav-btn{
       flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-      gap:2px;padding:8px 4px 10px;border:none;background:none;cursor:pointer;
-      color:var(--text3);font-size:9px;font-weight:500;letter-spacing:.02em;
+      gap:5px;padding:30px 4px 55px;border:none;background:none;cursor:pointer;
+      color:var(--text3);font-size:10px;font-weight:500;letter-spacing:.02em;
       transition:color .12s,background .12s;font-family:inherit;
     }
-    .mob-nav-btn i{font-size:22px;display:block;}
-    .mob-nav-btn:hover{background:var(--bg2);}
-    .mob-nav-btn.danger{color:var(--red-text);}
+    .mob-nav-btn i{font-size:26px;display:block;}
+    .mob-nav-btn:active{background:var(--bg2);}
+    .mob-nav-btn.active-tab{color:var(--acc-dark);}
     .mob-nav-btn.warn{color:var(--amber-text);}
-    .mob-nav-btn.acc{color:var(--acc);}
-    /* hide desktop-only header buttons on mobile */
+    .mob-nav-btn.acc{color:var(--acc-dark);}
     .desktop-hactions{display:flex;}
   }
   @media(max-width:600px){
     .desktop-hactions{display:none!important;}
-    #root{padding-bottom:70px;}
+    #root{padding-bottom:calc(88px + env(safe-area-inset-bottom, 0px));}
   }
 
   /* ── SETTINGS PANEL ── */
@@ -276,17 +320,22 @@ const LS = {
 
 /* ═══ TEMAS ══════════════════════════════════════════════════════════════════ */
 const THEMES = [
-  { id:'default',      name:'Clásico',      bg:'#fff',     acc:'#185FA5', dot2:'#85B7EB', dark:false },
-  { id:'deep-space',   name:'Deep Space',   bg:'#111827',  acc:'#4fc3f7', dot2:'#0e7490', dark:true  },
-  { id:'obsidian-blue',name:'Obsidian Blue',bg:'#0e1120',  acc:'#3b82f6', dot2:'#1d4ed8', dark:true  },
-  { id:'void-purple',  name:'Void Purple',  bg:'#12102a',  acc:'#a78bfa', dot2:'#7c3aed', dark:true  },
-  { id:'steel-teal',   name:'Steel Teal',   bg:'#0f1f2e',  acc:'#2dd4bf', dot2:'#0f766e', dark:true  },
-  { id:'matrix',       name:'Matrix',       bg:'#0a1a0e',  acc:'#4ade80', dot2:'#16a34a', dark:true  },
+  { id:'default',       name:'Clásico',    bg:'#ffffff', bg2:'#f6f6f4', acc:'#3B6D11', dark:false, group:'Clásico' },
+  // Claros
+  { id:'deep-space-l',  name:'Deep Space', bg:'#ffffff', bg2:'#f0f9ff', acc:'#0369a1', dark:false, group:'Claro'   },
+  { id:'steel-teal-l',  name:'Steel Teal', bg:'#ffffff', bg2:'#f0fdfa', acc:'#0f766e', dark:false, group:'Claro'   },
+  { id:'void-purple-l', name:'Void Purple',bg:'#ffffff', bg2:'#faf5ff', acc:'#7c3aed', dark:false, group:'Claro'   },
+  { id:'matrix-l',      name:'Matrix',     bg:'#ffffff', bg2:'#f0fdf4', acc:'#16a34a', dark:false, group:'Claro'   },
+  // Oscuros
+  { id:'deep-space',    name:'Deep Space', bg:'#111827', bg2:'#0a0e1a', acc:'#4fc3f7', dark:true,  group:'Oscuro'  },
+  { id:'steel-teal',    name:'Steel Teal', bg:'#0f1f2e', bg2:'#09111a', acc:'#2dd4bf', dark:true,  group:'Oscuro'  },
+  { id:'void-purple',   name:'Void Purple',bg:'#12102a', bg2:'#080810', acc:'#a78bfa', dark:true,  group:'Oscuro'  },
+  { id:'matrix',        name:'Matrix',     bg:'#0a1a0e', bg2:'#030805', acc:'#4ade80', dark:true,  group:'Oscuro'  },
 ];
 
 function applyTheme(id) {
-  document.documentElement.setAttribute('data-theme', id === 'default' ? '' : id);
-  if (id === 'default') document.documentElement.removeAttribute('data-theme');
+  // Always set attribute so [data-theme="default"] CSS rule fires
+  document.documentElement.setAttribute('data-theme', id);
 }
 
 /* ═══ FECHAS ══════════════════════════════════════════════════════════════════ */
@@ -963,20 +1012,7 @@ function App() {
     );
   }
 
-  if (editMode) {
-    return (
-      <EditView
-        allFoods={allFoods}
-        overrides={overrides}
-        setOverrides={setOverrides}
-        custom={custom}
-        setCustom={setCustom}
-        deletedFoods={deletedFoods}
-        setDeletedFoods={setDeletedFoods}
-        onBack={() => setEditMode(false)}
-      />
-    );
-  }
+  // editMode is rendered inline below (so mobile nav stays visible)
 
   const isToday    = viewDate === currentDay;
   const curItems   = enrichedToday[active] || [];
@@ -992,6 +1028,75 @@ function App() {
   return (
     <div style={{ paddingBottom: '2rem' }}>
 
+      {/* EDIT VIEW (inline so mobile nav persists) */}
+      {editMode && (
+        <EditView
+          allFoods={allFoods}
+          overrides={overrides}
+          setOverrides={setOverrides}
+          custom={custom}
+          setCustom={setCustom}
+          deletedFoods={deletedFoods}
+          setDeletedFoods={setDeletedFoods}
+          onBack={() => setEditMode(false)}
+        />
+      )}
+      {editMode && (
+        <nav className="mob-nav" aria-label="Navegación principal">
+          <button className="mob-nav-btn" onClick={() => setEditMode(false)}>
+            <i className="ti ti-home" aria-hidden="true"></i>Contador
+          </button>
+          <button className="mob-nav-btn active-tab" onClick={() => setEditMode(true)}>
+            <i className="ti ti-tools-kitchen-2" aria-hidden="true"></i>Alimentos
+          </button>
+          <button className="mob-nav-btn warn" style={{ opacity:.35 }} disabled>
+            <i className="ti ti-calendar-plus" aria-hidden="true"></i>Sig. día
+          </button>
+          <button className="mob-nav-btn acc" onClick={() => setShowSettings(true)}>
+            <i className="ti ti-settings" aria-hidden="true"></i>Config.
+          </button>
+        </nav>
+      )}
+      {editMode && showSettings && (
+        <div className="settings-overlay" onClick={() => setShowSettings(false)}>
+          <div className="settings-panel" onClick={e => e.stopPropagation()}>
+            <div className="settings-title">
+              <i className="ti ti-settings" style={{ color:'var(--acc-dark)' }}></i>
+              Configuración
+            </div>
+            <p style={{ fontSize:12, color:'var(--text2)', marginBottom:12 }}>Tema de color</p>
+            <div className="theme-grid">
+              {['Clásico','Claro','Oscuro'].map(grp => {
+                const items = THEMES.filter(t => t.group === grp);
+                if (!items.length) return null;
+                return (
+                  <React.Fragment key={grp}>
+                    <div style={{ gridColumn:'1/-1', fontSize:10, fontWeight:600, color:'var(--text3)', textTransform:'uppercase', letterSpacing:'.06em', marginTop:grp!=='Clásico'?8:0 }}>{grp}</div>
+                    {items.map(t => (
+                      <div key={t.id} className={`theme-card ${theme===t.id?'selected':''}`}
+                        style={{ background:t.bg, border:theme===t.id?`2px solid ${t.acc}`:`1.5px solid rgba(128,128,128,0.2)` }}
+                        onClick={() => setTheme(t.id)}>
+                        <div className="theme-dot-row">
+                          <div className="theme-dot" style={{ background:t.acc }}></div>
+                          <div className="theme-dot" style={{ background:t.bg2 }}></div>
+                          <div className="theme-dot" style={{ background:t.dark?'#1f2937':'#e5e7eb' }}></div>
+                        </div>
+                        <div className="theme-name" style={{ color:t.dark?'#e5e7eb':'#374151' }}>{t.name}</div>
+                        {theme===t.id && <div style={{ fontSize:9, color:t.acc, fontWeight:600 }}>✓ Activo</div>}
+                      </div>
+                    ))}
+                  </React.Fragment>
+                );
+              })}
+            </div>
+            <div style={{ marginTop:20, display:'flex', justifyContent:'flex-end' }}>
+              <button onClick={() => setShowSettings(false)} style={{ padding:'0 20px' }}>Cerrar</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {!editMode && (<>
+
       {/* HEADER */}
       <div className="card cp header">
         <div>
@@ -1001,16 +1106,12 @@ function App() {
           </div>
           <div className="header-sub">{todayLabel}</div>
         </div>
+        {/* Desktop actions */}
         <div className="hactions desktop-hactions">
           <button className="btn-edit" onClick={() => setEditMode(true)}>
             <i className="ti ti-edit"></i>
-            Editar alimentos
+            <span className="btn-label">Editar alimentos</span>
           </button>
-          {isToday && (
-            <button className="btn-reset" onClick={() => setConfirm('reset')}>
-              <i className="ti ti-refresh"></i><span className="btn-label"> Reiniciar hoy</span>
-            </button>
-          )}
           {isToday && (
             <button
               style={{ background:'var(--amber-bg)', color:'var(--amber-text)', borderColor:'rgba(99,56,6,.3)' }}
@@ -1020,42 +1121,63 @@ function App() {
               <i className="ti ti-calendar-plus"></i><span className="btn-label"> Día siguiente</span>
             </button>
           )}
-          <button onClick={() => setShowSettings(true)} title="Configuración"
-            style={{ padding:'0 10px' }}>
+          {isToday && (
+            <button className="btn-reset" onClick={() => setConfirm('reset')}>
+              <i className="ti ti-refresh"></i><span className="btn-label"> Reiniciar hoy</span>
+            </button>
+          )}
+          <button onClick={() => setShowSettings(true)} title="Configuración" style={{ padding:'0 10px' }}>
             <i className="ti ti-settings"></i>
           </button>
         </div>
+        {/* Mobile: solo reiniciar en header (siempre visible arriba a la derecha) */}
+        {isToday && (
+          <button className="btn-reset" style={{ display:'none' }}
+            id="mob-reset-btn"
+            onClick={() => setConfirm('reset')}>
+            <i className="ti ti-refresh"></i>
+          </button>
+        )}
       </div>
 
-      {/* MOBILE BOTTOM NAV */}
-      <nav className="mob-nav" aria-label="Navegación">
-        <button className="mob-nav-btn" onClick={() => setEditMode(true)}>
+      {/* MOBILE REINICIAR (top-right, separate from nav) */}
+      {isToday && (
+        <style>{`@media(max-width:600px){#mob-reset-btn{display:inline-flex!important;}}`}</style>
+      )}
+
+      {/* MOBILE BOTTOM NAV — 4 buttons: Contador | Alimentos | Sig.día | Config */}
+      <nav className="mob-nav" aria-label="Navegación principal">
+        <button
+          className={`mob-nav-btn ${!editMode ? 'active-tab' : ''}`}
+          onClick={() => setEditMode(false)}
+          aria-label="Inicio"
+        >
+          <i className="ti ti-home" aria-hidden="true"></i>
+          Contador
+        </button>
+        <button
+          className={`mob-nav-btn ${editMode ? 'active-tab' : ''}`}
+          onClick={() => setEditMode(true)}
+          aria-label="Editar alimentos"
+        >
           <i className="ti ti-tools-kitchen-2" aria-hidden="true"></i>
           Alimentos
         </button>
-        {isToday ? (
-          <button className="mob-nav-btn warn" onClick={() => setConfirm('advance')}>
-            <i className="ti ti-calendar-plus" aria-hidden="true"></i>
-            Sig. día
-          </button>
-        ) : (
-          <button className="mob-nav-btn" style={{ opacity:.35 }} disabled>
-            <i className="ti ti-calendar-plus" aria-hidden="true"></i>
-            Sig. día
-          </button>
-        )}
-        {isToday ? (
-          <button className="mob-nav-btn danger" onClick={() => setConfirm('reset')}>
-            <i className="ti ti-refresh" aria-hidden="true"></i>
-            Reiniciar
-          </button>
-        ) : (
-          <button className="mob-nav-btn" style={{ opacity:.35 }} disabled>
-            <i className="ti ti-refresh" aria-hidden="true"></i>
-            Reiniciar
-          </button>
-        )}
-        <button className="mob-nav-btn acc" onClick={() => setShowSettings(true)}>
+        <button
+          className={`mob-nav-btn warn ${!isToday ? '' : ''}`}
+          style={{ opacity: isToday ? 1 : 0.35 }}
+          disabled={!isToday}
+          onClick={() => isToday && setConfirm('advance')}
+          aria-label="Día siguiente"
+        >
+          <i className="ti ti-calendar-plus" aria-hidden="true"></i>
+          Sig. día
+        </button>
+        <button
+          className="mob-nav-btn acc"
+          onClick={() => setShowSettings(true)}
+          aria-label="Configuración"
+        >
           <i className="ti ti-settings" aria-hidden="true"></i>
           Config.
         </button>
@@ -1422,42 +1544,46 @@ function App() {
       {!isToday && <HistoryView data={histData[viewDate]} dateLabel={fmtDate(viewDate, currentDay)} />}
 
       {/* PANEL DE CONFIGURACIÓN */}
-      {showSettings && (
+      {!editMode && showSettings && (
         <div className="settings-overlay" onClick={() => setShowSettings(false)}>
           <div className="settings-panel" onClick={e => e.stopPropagation()}>
             <div className="settings-title">
               <i className="ti ti-settings" style={{ color:'var(--acc-dark)' }} aria-hidden="true"></i>
               Configuración
             </div>
-
             <p style={{ fontSize:12, color:'var(--text2)', marginBottom:12 }}>Tema de color</p>
             <div className="theme-grid">
-              {THEMES.map(t => (
-                <div key={t.id} className={`theme-card ${theme === t.id ? 'selected' : ''}`}
-                  style={{ background: t.bg, border: theme === t.id ? `2px solid ${t.acc}` : `1.5px solid rgba(128,128,128,0.2)` }}
-                  onClick={() => setTheme(t.id)}>
-                  <div className="theme-dot-row">
-                    <div className="theme-dot" style={{ background: t.acc }}></div>
-                    <div className="theme-dot" style={{ background: t.dot2 }}></div>
-                    <div className="theme-dot" style={{ background: t.dark ? '#1f2937' : '#e5e7eb' }}></div>
-                  </div>
-                  <div className="theme-name" style={{ color: t.dark ? '#e5e7eb' : '#374151' }}>{t.name}</div>
-                  {theme === t.id && (
-                    <div style={{ fontSize:9, color: t.acc, fontWeight:600, marginTop:1 }}>✓ Activo</div>
-                  )}
-                </div>
-              ))}
+              {['Clásico','Claro','Oscuro'].map(grp => {
+                const items = THEMES.filter(t => t.group === grp);
+                if (!items.length) return null;
+                return (
+                  <React.Fragment key={grp}>
+                    <div style={{ gridColumn:'1/-1', fontSize:10, fontWeight:600, color:'var(--text3)', textTransform:'uppercase', letterSpacing:'.06em', marginTop: grp !== 'Clásico' ? 10 : 0 }}>{grp}</div>
+                    {items.map(t => (
+                      <div key={t.id} className={`theme-card ${theme === t.id ? 'selected' : ''}`}
+                        style={{ background: t.bg, border: theme === t.id ? `2px solid ${t.acc}` : `1.5px solid rgba(128,128,128,0.2)` }}
+                        onClick={() => setTheme(t.id)}>
+                        <div className="theme-dot-row">
+                          <div className="theme-dot" style={{ background: t.acc }}></div>
+                          <div className="theme-dot" style={{ background: t.bg2 }}></div>
+                          <div className="theme-dot" style={{ background: t.dark ? '#1f2937' : '#e5e7eb' }}></div>
+                        </div>
+                        <div className="theme-name" style={{ color: t.dark ? '#e5e7eb' : '#374151' }}>{t.name}</div>
+                        {theme === t.id && <div style={{ fontSize:9, color: t.acc, fontWeight:600, marginTop:1 }}>✓ Activo</div>}
+                      </div>
+                    ))}
+                  </React.Fragment>
+                );
+              })}
             </div>
-
             <div style={{ marginTop:20, display:'flex', justifyContent:'flex-end' }}>
-              <button onClick={() => setShowSettings(false)} style={{ padding:'0 20px' }}>
-                Cerrar
-              </button>
+              <button onClick={() => setShowSettings(false)} style={{ padding:'0 20px' }}>Cerrar</button>
             </div>
           </div>
         </div>
       )}
 
+      </>)}
     </div>
   );
 }
