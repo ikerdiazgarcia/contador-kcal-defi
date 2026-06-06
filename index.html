@@ -304,6 +304,20 @@
   .theme-dot-row{display:flex;gap:3px;}
   .theme-dot{width:14px;height:14px;border-radius:50%;}
   .theme-name{font-size:10px;font-weight:500;margin-top:2px;}
+
+  /* ── COMIDAS GUARDADAS ── */
+  .saved-meals-bar{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;flex-wrap:wrap;}
+  .saved-meals-bar::-webkit-scrollbar{display:none;}
+  .saved-pill{display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 10px;
+    border-radius:15px;border:0.5px solid var(--acc-mid);background:var(--acc-bg);
+    color:var(--acc-text);font-size:11px;font-weight:500;cursor:pointer;white-space:nowrap;
+    transition:filter .12s,transform .1s;flex-shrink:0;}
+  .saved-pill:hover{filter:brightness(.92);}
+  .saved-pill:active{transform:scale(.97);}
+  .saved-pill .del{margin-left:3px;opacity:.5;font-size:13px;padding:0 2px;
+    background:none;border:none;cursor:pointer;color:inherit;line-height:1;}
+  .saved-pill .del:hover{opacity:1;}
+  .save-meal-form{display:flex;gap:6px;align-items:center;margin-top:8px;flex-wrap:wrap;}
 </style>
 </head>
 <body>
@@ -847,6 +861,10 @@ function App() {
   const [confirm,      setConfirm]      = useState(null);  // 'reset' | 'advance' | null
   const [theme,        setTheme]        = useState('default');
   const [showSettings, setShowSettings] = useState(false);
+  const [savedMeals,   setSavedMeals]   = useState({});   // { mealId: [{id,name,items},...] }
+  const [showSaveMeal, setShowSaveMeal] = useState(false);
+  const [saveMealName, setSaveMealName] = useState('');
+  const [selSavedMeal, setSelSavedMeal] = useState('');
 
   /* ── Carga inicial ── */
   useEffect(() => {
@@ -858,6 +876,7 @@ function App() {
     const todayD    = LS.get('nutri_day_' + savedDay);
     const hist = {};
     ds.filter(d => d !== savedDay).forEach(d => { const data = LS.get('nutri_day_' + d); if (data) hist[d] = data; });
+    const sm        = LS.get('nutri_saved_meals') || {};
     const savedTheme = LS.get('nutri_theme') || 'default';
     applyTheme(savedTheme);
     setTheme(savedTheme);
@@ -869,6 +888,7 @@ function App() {
     setDeletedFoods(deleted);
     if (todayD) setMeals(todayD);
     setHistory(hist);
+    setSavedMeals(sm);
     setLoading(false);
   }, []);
 
@@ -885,6 +905,7 @@ function App() {
   useEffect(() => {
     if (!loading) { LS.set('nutri_theme', theme); applyTheme(theme); }
   }, [theme, loading]);
+  useEffect(() => { if (!loading) LS.set('nutri_saved_meals', savedMeals); }, [savedMeals, loading]);
 
   /* ── Datos derivados ── */
   const allFoods = useMemo(
@@ -966,6 +987,26 @@ function App() {
 
   const delItem = (mid, id) => setMeals(p => ({ ...p, [mid]: p[mid].filter(i => i.id !== id) }));
 
+  /* ── Comidas guardadas ── */
+  const applySavedMeal = (savedMeal) => {
+    // Clone items with fresh IDs so they can be deleted independently
+    const itemsToAdd = savedMeal.items.map(item => ({ ...item, id: Date.now() + Math.random() }));
+    setMeals(p => ({ ...p, [active]: [...p[active], ...itemsToAdd] }));
+  };
+
+  const saveCurrentMeal = () => {
+    const name = saveMealName.trim();
+    if (!name || !curItems.length) return;
+    const newMeal = { id: 'sm_' + Date.now(), name, items: curItems };
+    setSavedMeals(p => ({ ...p, [active]: [...(p[active] || []), newMeal] }));
+    setSaveMealName('');
+    setShowSaveMeal(false);
+  };
+
+  const deleteSavedMeal = (slotId, mealId) => {
+    setSavedMeals(p => ({ ...p, [slotId]: (p[slotId] || []).filter(m => m.id !== mealId) }));
+  };
+
   /* ── Pasar al día siguiente ── */
   const advanceDay = () => {
     // 1. Persist current day's meals before moving on
@@ -1014,10 +1055,11 @@ function App() {
 
   // editMode is rendered inline below (so mobile nav stays visible)
 
-  const isToday    = viewDate === currentDay;
-  const curItems   = enrichedToday[active] || [];
-  const curTotals  = todayMealT[active];
-  const activeMeal = MEALS.find(m => m.id === active);
+  const isToday      = viewDate === currentDay;
+  const curItems     = enrichedToday[active] || [];
+  const curTotals    = todayMealT[active];
+  const activeMeal   = MEALS.find(m => m.id === active);
+  const curSavedMeals = savedMeals[active] || [];
   const preview    = amt && +amt > 0 && food ? calcFood(food, +amt, overrides) : null;
   const hasDayData = Object.values(todayMealT).some(t => t.count > 0);
   const todayLabel = (() => {
@@ -1276,7 +1318,7 @@ function App() {
             const t = todayMealT[ml.id];
             return (
               <button key={ml.id} className={`tab ${active === ml.id ? 'active' : ''}`}
-                onClick={() => setActive(ml.id)}>
+                onClick={() => { setActive(ml.id); setSelSavedMeal(''); }}>
                 <i className={`ti ${ml.icon} tab-icon`}></i>
                 {ml.name}
                 {t.count > 0 && <span className="tab-sub">{t.kcal}kcal·{t.protein}g</span>}
@@ -1291,6 +1333,49 @@ function App() {
             <i className={`ti ${activeMeal?.icon}`}></i>
             {activeMeal?.name} — Añadir alimento
           </div>
+
+          {/* ── Comidas guardadas para este slot ── */}
+          {curSavedMeals.length > 0 && (
+            <div style={{ marginBottom:10 }}>
+              <div className="row-g" style={{ alignItems:'center' }}>
+                <select
+                  value={selSavedMeal}
+                  onChange={e => setSelSavedMeal(e.target.value)}
+                  style={{ flex:'1 1 0' }}
+                >
+                  <option value="">— Aplicar comida guardada —</option>
+                  {curSavedMeals.map(sm => (
+                    <option key={sm.id} value={sm.id}>
+                      {sm.name} ({sm.items.reduce((s,i)=>s+i.kcal,0)} kcal · {Math.round(sm.items.reduce((s,i)=>s+i.protein,0)*10)/10}g)
+                    </option>
+                  ))}
+                </select>
+                <button
+                  className="btn-add"
+                  disabled={!selSavedMeal}
+                  style={{ opacity: selSavedMeal ? 1 : 0.4, flex:'0 0 auto' }}
+                  onClick={() => {
+                    const sm = curSavedMeals.find(m => m.id === selSavedMeal);
+                    if (sm) { applySavedMeal(sm); setSelSavedMeal(''); }
+                  }}
+                >
+                  <i className="ti ti-bolt-lightning"></i> Aplicar
+                </button>
+                <button
+                  className="btn-icon"
+                  disabled={!selSavedMeal}
+                  style={{ opacity: selSavedMeal ? 1 : 0.3, flex:'0 0 auto' }}
+                  title="Eliminar comida guardada"
+                  onClick={() => {
+                    if (selSavedMeal) { deleteSavedMeal(active, selSavedMeal); setSelSavedMeal(''); }
+                  }}
+                >
+                  <i className="ti ti-trash"></i>
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className="row-g" style={{ flexWrap:'wrap' }}>
             <div style={{ flex:'2 1 180px' }}>
               <select value={selFood} onChange={e => { setSelFood(e.target.value); setUdsMode('uds'); }}>
@@ -1351,6 +1436,39 @@ function App() {
               </div>
             );
           })()}
+
+          {/* ── Guardar comida actual ── */}
+          {curItems.length > 0 && (
+            <div style={{ marginTop:10, borderTop:'0.5px solid var(--border)', paddingTop:10 }}>
+              {!showSaveMeal ? (
+                <button style={{ fontSize:11, height:28, padding:'0 10px', color:'var(--text2)' }}
+                  onClick={() => setShowSaveMeal(true)}>
+                  <i className="ti ti-device-floppy" style={{ fontSize:13 }}></i>
+                  Guardar esta comida
+                </button>
+              ) : (
+                <div className="save-meal-form">
+                  <input
+                    type="text"
+                    placeholder={`Nombre — ej. "Desayuno clásico"`}
+                    value={saveMealName}
+                    onChange={e => setSaveMealName(e.target.value)}
+                    onKeyDown={e => { if (e.key === 'Enter') saveCurrentMeal(); if (e.key === 'Escape') { setShowSaveMeal(false); setSaveMealName(''); } }}
+                    style={{ flex:'1 1 150px', height:32, fontSize:12 }}
+                    autoFocus
+                  />
+                  <button className="btn-save" style={{ height:32, padding:'0 12px', fontSize:12 }}
+                    onClick={saveCurrentMeal}>
+                    <i className="ti ti-check"></i> Guardar
+                  </button>
+                  <button style={{ height:32, padding:'0 10px', fontSize:12 }}
+                    onClick={() => { setShowSaveMeal(false); setSaveMealName(''); }}>
+                    <i className="ti ti-x"></i>
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Tabla de alimentos */}
