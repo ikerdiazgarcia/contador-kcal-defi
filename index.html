@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <style>
   /* ── BASE (se sobreescribe por data-theme) ── */
   :root {
@@ -37,9 +36,6 @@
     --red-bg:#fff1f2; --red-mid:#fda4af; --red-text:#9f1239;
     --amber-bg:#fffbeb; --amber-text:#92400e;
   }
-
-
-
   [data-theme="steel-teal-l"] {
     --bg:#ffffff; --bg2:#f0fdfa; --bg3:#ccfbf1;
     --text:#134e4a; --text2:#0f766e; --text3:#5eead4;
@@ -48,8 +44,6 @@
     --red-bg:#fff1f2; --red-mid:#fda4af; --red-text:#9f1239;
     --amber-bg:#fffbeb; --amber-text:#92400e;
   }
-
-
   [data-theme="void-purple-l"] {
     --bg:#ffffff; --bg2:#faf5ff; --bg3:#ede9fe;
     --text:#4c1d95; --text2:#7c3aed; --text3:#c4b5fd;
@@ -75,9 +69,6 @@
     --red-bg:#3b0f0f; --red-mid:#7f1d1d; --red-text:#fca5a5;
     --amber-bg:#2d1a00; --amber-text:#fbbf24;
   }
-
-
-
   [data-theme="steel-teal"] {
     --bg:#0f1f2e; --bg2:#09111a; --bg3:#050d12;
     --text:#f0fdfa; --text2:#2dd4bf; --text3:#0f4c44;
@@ -86,8 +77,6 @@
     --red-bg:#3b0f0f; --red-mid:#7f1d1d; --red-text:#fca5a5;
     --amber-bg:#2d1a00; --amber-text:#fbbf24;
   }
-
-
   [data-theme="void-purple"] {
     --bg:#12102a; --bg2:#080810; --bg3:#050508;
     --text:#ede9fe; --text2:#a78bfa; --text3:#4c1d95;
@@ -107,7 +96,6 @@
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:-apple-system,'Segoe UI',system-ui,sans-serif;background:var(--bg3);color:var(--text);min-height:100vh;}
   #root{max-width:820px;margin:0 auto;padding:16px;}
-
   select,input[type=number],input[type=text]{
     height:36px;border:0.5px solid var(--border2);border-radius:var(--radius);
     padding:0 10px;font-size:13px;background:var(--bg);color:var(--text);
@@ -137,26 +125,21 @@
   .btn-icon:hover{background:var(--red-bg);color:var(--red-text);border-color:var(--red-mid);}
   .btn-icon-b{color:var(--text3);}
   .btn-icon-b:hover{background:var(--acc-bg);color:var(--acc-text);border-color:var(--acc-mid);}
-
   .card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);}
   .cp{padding:14px 16px;}
-
   .header{display:flex;justify-content:space-between;align-items:flex-start;padding:14px 16px;margin-bottom:14px;gap:10px;}
   .header-title{font-weight:600;font-size:16px;display:flex;align-items:center;gap:8px;}
   .header-sub{font-size:11px;color:var(--text3);margin-top:2px;text-transform:capitalize;}
   .hactions{display:flex;gap:6px;flex-wrap:wrap;align-items:center;justify-content:flex-end;flex-shrink:0;max-width:60%;}
   @media(max-width:480px){.hactions .btn-label{display:none;}}
-
   .stats{display:flex;gap:10px;margin-bottom:14px;}
   .stat{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);
     padding:12px 16px;flex:1;text-align:center;}
   .stat-label{font-size:11px;color:var(--text2);margin-bottom:3px;}
   .stat-val{font-size:24px;font-weight:600;line-height:1.1;}
   .stat-unit{font-size:13px;font-weight:400;}
-
   .kcal{color:var(--acc-dark);font-weight:500;}
   .prot{color:var(--acc-dark);opacity:.75;font-weight:500;}
-
   .date-pills{display:flex;gap:5px;overflow-x:auto;margin-bottom:14px;scrollbar-width:none;padding-bottom:2px;}
   .date-pills::-webkit-scrollbar{display:none;}
   .dpill{flex-direction:column;gap:1px;height:auto;padding:5px 12px;flex:0 0 auto;font-size:12px;border-radius:16px;}
@@ -166,7 +149,6 @@
   .dpill.nodata{opacity:.5;}
   .dpill-sub{font-size:9px;color:var(--acc-dark);display:block;text-align:center;}
   .dpill:not(.active) .dpill-sub{color:var(--text3);}
-
   .tabs{display:flex;gap:5px;overflow-x:auto;margin-bottom:14px;scrollbar-width:none;}
   .tabs::-webkit-scrollbar{display:none;}
   .tab{height:auto;padding:7px 11px;flex-direction:column;gap:2px;font-size:11px;
@@ -175,7 +157,6 @@
   .tab.active{background:var(--acc-bg);color:var(--acc-text);border-color:var(--acc-mid);}
   .tab.active .tab-icon{color:var(--acc-text);}
   .tab-sub{font-size:9px;color:var(--acc-dark);}
-
   table{width:100%;border-collapse:collapse;}
   th{font-size:11px;font-weight:500;color:var(--text2);padding:6px 8px;text-align:right;
     background:var(--bg2);border-bottom:0.5px solid var(--border);}
@@ -185,7 +166,6 @@
   tr:last-child td{border-bottom:none;}
   .tfoot td{border-top:0.5px solid var(--border2)!important;border-bottom:none!important;
     background:var(--bg2);font-weight:600;font-size:13px;}
-
   .preview{margin-top:7px;font-size:12px;color:var(--acc-dark);background:var(--acc-bg);
     border-radius:6px;padding:4px 10px;display:inline-block;}
   .empty{text-align:center;padding:2.5rem 1rem;color:var(--text3);font-size:13px;}
@@ -209,52 +189,36 @@
   .readonly-banner{background:var(--amber-bg);color:var(--amber-text);border:0.5px solid rgba(99,56,6,.25);
     border-radius:var(--radius);padding:7px 12px;font-size:12px;display:flex;align-items:center;
     gap:7px;margin-bottom:14px;}
-
-  /* Edit rows */
   .edit-row{border-bottom:0.5px solid var(--border);}
   .edit-row:last-child{border-bottom:none;}
   .tag-custom{font-size:9px;padding:1px 5px;border-radius:4px;background:var(--acc-bg);
     color:var(--acc-text);font-weight:500;margin-left:4px;}
   .tag-base{font-size:9px;padding:1px 5px;border-radius:4px;background:var(--bg2);
     color:var(--text3);font-weight:500;margin-left:4px;}
-
-  /* Color-coded edit inputs */
   .inp-kcal{border-color:var(--acc-mid)!important;background:var(--acc-bg)!important;color:var(--acc-text)!important;}
   .inp-kcal::placeholder{color:var(--acc-dark);opacity:.6;}
-  .inp-kcal:focus{box-shadow:0 0 0 2px rgba(var(--acc-rgb,.3))!important;border-color:var(--acc-dark)!important;}
   .inp-prot{border-color:var(--acc-mid)!important;background:var(--acc-bg)!important;color:var(--acc-text)!important;opacity:.8;}
   .inp-prot::placeholder{color:var(--acc-dark);opacity:.5;}
-  .inp-prot:focus{box-shadow:0 0 0 2px rgba(var(--acc-rgb,.2))!important;border-color:var(--acc-dark)!important;}
-
-  /* Desktop edit grid */
   .edit-grid-desktop{display:grid;grid-template-columns:1fr 80px 65px 65px 80px 70px;gap:6px;padding:7px 12px;align-items:center;}
-  /* Mobile edit card: 2-row layout */
   .edit-card-mob{padding:8px 12px;}
   .edit-row1{display:flex;align-items:center;gap:6px;margin-bottom:5px;}
   .edit-row2{display:flex;gap:6px;}
   .edit-name{flex:1;min-width:0;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   @media(min-width:600px){.edit-card-mob{display:none!important;}.edit-grid-desktop{display:grid!important;}}
   @media(max-width:599px){.edit-grid-desktop{display:none!important;}.edit-card-mob{display:block!important;}}
-
-  /* Quick-add extras */
   .quick-add-grid{display:grid;grid-template-columns:1fr 72px 72px 72px;gap:6px;}
   @media(max-width:480px){.quick-add-grid{grid-template-columns:1fr 1fr;}}
-
-  /* uds toggle */
   .toggle-pill{display:inline-flex;border:0.5px solid var(--border2);border-radius:20px;overflow:hidden;}
   .toggle-pill button{border:none;border-radius:0;background:none;height:28px;padding:0 10px;font-size:11px;color:var(--text2);}
   .toggle-pill button.on{background:var(--acc-bg);color:var(--acc-text);font-weight:500;}
   .toggle-pill button:first-child{border-right:0.5px solid var(--border2);}
   .toggle-pill button:hover{background:var(--bg2);}
-
-  /* ── MOBILE BOTTOM NAV ── */
   .mob-nav{display:none;}
   @media(max-width:600px){
     .mob-nav{
       display:flex;position:fixed;bottom:0;left:0;right:0;
       background:var(--bg);border-top:0.5px solid var(--border2);
       z-index:200;
-      /* safe area for notch phones */
       padding-bottom:env(safe-area-inset-bottom, 0px);
     }
     .mob-nav-btn{
@@ -274,26 +238,18 @@
     .desktop-hactions{display:none!important;}
     #root{padding-bottom:calc(88px + env(safe-area-inset-bottom, 0px));}
   }
-
-  /* ── SETTINGS PANEL ── */
   .settings-overlay{
     position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:300;
     display:flex;align-items:flex-end;justify-content:center;
   }
-  @media(min-width:601px){
-    .settings-overlay{align-items:center;}
-  }
+  @media(min-width:601px){.settings-overlay{align-items:center;}}
   .settings-panel{
     background:var(--bg);border-radius:var(--radius-lg) var(--radius-lg) 0 0;
-    width:100%;max-width:480px;padding:20px 20px 32px;
-    border:0.5px solid var(--border2);
+    width:100%;max-width:480px;padding:20px 20px 32px;border:0.5px solid var(--border2);
   }
-  @media(min-width:601px){
-    .settings-panel{border-radius:var(--radius-lg);padding:20px;}
-  }
+  @media(min-width:601px){.settings-panel{border-radius:var(--radius-lg);padding:20px;}}
   .settings-title{font-size:15px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
   .theme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-  @media(min-width:400px){.theme-grid{grid-template-columns:repeat(3,1fr);}}
   .theme-card{
     border-radius:var(--radius);padding:10px;cursor:pointer;
     border:2px solid transparent;transition:border-color .13s,transform .1s;
@@ -304,10 +260,7 @@
   .theme-dot-row{display:flex;gap:3px;}
   .theme-dot{width:14px;height:14px;border-radius:50%;}
   .theme-name{font-size:10px;font-weight:500;margin-top:2px;}
-
-  /* ── COMIDAS GUARDADAS ── */
   .saved-meals-bar{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;flex-wrap:wrap;}
-  .saved-meals-bar::-webkit-scrollbar{display:none;}
   .saved-pill{display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 10px;
     border-radius:15px;border:0.5px solid var(--acc-mid);background:var(--acc-bg);
     color:var(--acc-text);font-size:11px;font-weight:500;cursor:pointer;white-space:nowrap;
@@ -322,42 +275,35 @@
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel">
+<script>
+// Usamos React sin JSX (sintaxis nativa compatible con file:///)
+const e = React.createElement;
 const { useState, useMemo, useEffect, useRef } = React;
 
-/* ═══ STORAGE ════════════════════════════════════════════════════════════════ */
 const LS = {
   get: k => { try { const v = localStorage.getItem(k); return v != null ? JSON.parse(v) : null; } catch { return null; } },
   set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) { console.warn(e); } },
   del: k => { try { localStorage.removeItem(k); } catch {} },
 };
 
-/* ═══ TEMAS ══════════════════════════════════════════════════════════════════ */
 const THEMES = [
   { id:'default',       name:'Clásico',    bg:'#ffffff', bg2:'#f6f6f4', acc:'#3B6D11', dark:false, group:'Clásico' },
-  // Claros
   { id:'deep-space-l',  name:'Deep Space', bg:'#ffffff', bg2:'#f0f9ff', acc:'#0369a1', dark:false, group:'Claro'   },
   { id:'steel-teal-l',  name:'Steel Teal', bg:'#ffffff', bg2:'#f0fdfa', acc:'#0f766e', dark:false, group:'Claro'   },
   { id:'void-purple-l', name:'Void Purple',bg:'#ffffff', bg2:'#faf5ff', acc:'#7c3aed', dark:false, group:'Claro'   },
   { id:'matrix-l',      name:'Matrix',     bg:'#ffffff', bg2:'#f0fdf4', acc:'#16a34a', dark:false, group:'Claro'   },
-  // Oscuros
   { id:'deep-space',    name:'Deep Space', bg:'#111827', bg2:'#0a0e1a', acc:'#4fc3f7', dark:true,  group:'Oscuro'  },
   { id:'steel-teal',    name:'Steel Teal', bg:'#0f1f2e', bg2:'#09111a', acc:'#2dd4bf', dark:true,  group:'Oscuro'  },
   { id:'void-purple',   name:'Void Purple',bg:'#12102a', bg2:'#080810', acc:'#a78bfa', dark:true,  group:'Oscuro'  },
   { id:'matrix',        name:'Matrix',     bg:'#0a1a0e', bg2:'#030805', acc:'#4ade80', dark:true,  group:'Oscuro'  },
 ];
 
-function applyTheme(id) {
-  // Always set attribute so [data-theme="default"] CSS rule fires
-  document.documentElement.setAttribute('data-theme', id);
-}
+function applyTheme(id) { document.documentElement.setAttribute('data-theme', id); }
 
-/* ═══ FECHAS ══════════════════════════════════════════════════════════════════ */
 const REAL_TODAY = new Date().toISOString().slice(0, 10);
-const MAX_HIST   = 4;  // today + 4 past = 5 days
+const MAX_HIST   = 4;
 
 function manageDates(stored, currentDay) {
-  // Merge stored dates with currentDay, newest first, keep MAX_HIST+1 (today+4 past=5)
   let ds = [...new Set([currentDay, ...(stored || [])])].sort().reverse();
   const keep   = ds.slice(0, MAX_HIST + 1);
   const remove = ds.slice(MAX_HIST + 1);
@@ -375,7 +321,6 @@ function fmtDate(ds, currentDay) {
   return d.toLocaleDateString('es-ES', { weekday:'short', day:'numeric', month:'short' });
 }
 
-/* ═══ BASE DE ALIMENTOS (se ordenan alfabéticamente después) ══════════════════ */
 const BASE_FOODS = [
   { id:'aguacate',     name:'Aguacate',                                unit:'g',   kcalPer100:160,  proteinPer100:2    },
   { id:'almendras',    name:'Almendras',                               unit:'g',   kcalPer100:586,  proteinPer100:24   },
@@ -417,51 +362,29 @@ const MEALS = [
 ];
 
 const initMeals = () => Object.fromEntries(MEALS.map(m => [m.id, []]));
+function sortFoods(arr) { return [...arr].sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' })); }
 
-function sortFoods(arr) {
-  return [...arr].sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }));
-}
-
-/* ═══ CÁLCULO ════════════════════════════════════════════════════════════════ */
-/*
-  Lógica de unidades:
-  - g / ml  → kcal = (amount / 100) * kcalPer100
-  - uds     → kcal = amount * (gramsPerUnit / 100) * kcalPer100
-              gramsPerUnit viene de la definición base o del override.
-              Si no hay gramsPerUnit definido, tratamos kcalPer100 como kcal/unidad (legacy).
-*/
 function calcFood(food, amount, overrides) {
   const ov  = overrides?.[food.id] || {};
   const k   = ov.kcal         !== undefined ? +ov.kcal         : food.kcalPer100;
   const p   = ov.protein      !== undefined ? +ov.protein      : food.proteinPer100;
   const unt = ov.unit         !== undefined ? ov.unit          : food.unit;
-  const gpu = ov.gramsPerUnit !== undefined ? +ov.gramsPerUnit
-            : food.gramsPerUnit            ? +food.gramsPerUnit
-            : null;
+  const gpu = ov.gramsPerUnit !== undefined ? +ov.gramsPerUnit : food.gramsPerUnit ? +food.gramsPerUnit : null;
 
   if (unt === 'uds') {
     if (gpu) {
-      return {
-        kcal:    Math.round(amount * gpu / 100 * k),
-        protein: Math.round(amount * gpu / 100 * p * 10) / 10,
-      };
+      return { kcal: Math.round(amount * gpu / 100 * k), protein: Math.round(amount * gpu / 100 * p * 10) / 10 };
     }
-    // legacy: kcalPer100 es kcal por unidad
     return { kcal: Math.round(amount * k), protein: Math.round(amount * p * 10) / 10 };
   }
-  return {
-    kcal:    Math.round(amount / 100 * k),
-    protein: Math.round(amount / 100 * p * 10) / 10,
-  };
+  return { kcal: Math.round(amount / 100 * k), protein: Math.round(amount / 100 * p * 10) / 10 };
 }
 
-function getEffUnit(food, overrides) {
-  return overrides?.[food.id]?.unit ?? food.unit;
-}
+function getEffUnit(food, overrides) { return overrides?.[food.id]?.unit ?? food.unit; }
 
 function enrichItems(items, allFoods, overrides) {
   return items.map(item => {
-    if (item._fixed) return item;  // pre-calculated (quick extra or direct-g uds)
+    if (item._fixed) return item;
     const f = allFoods.find(x => x.id === item.foodId);
     if (!f) return { ...item, kcal: item.kcal || 0, protein: item.protein || 0 };
     return { ...item, ...calcFood(f, item.amount, overrides) };
@@ -489,362 +412,122 @@ function buildDayTotals(mealData, allFoods, overrides) {
   return { kcal, protein: Math.round(prot * 10) / 10, meals: breakdown };
 }
 
-/* ═══ COMPONENTE: EDITOR DE ALIMENTOS ═══════════════════════════════════════ */
+/* ── COMPONENTE: EDITOR DE ALIMENTOS ── */
 function EditView({ allFoods, overrides, setOverrides, custom, setCustom, deletedFoods, setDeletedFoods, onBack }) {
   const [search, setSearch]       = useState('');
   const [confirmDel, setConfirmDel] = useState(null);
 
-  // Include deleted base foods so user can see and restore them
   const allWithDeleted = useMemo(() => {
     const deletedBase = BASE_FOODS.filter(f => deletedFoods.includes(f.id));
     return sortFoods([...allFoods, ...deletedBase]);
   }, [allFoods, deletedFoods]);
 
-  const filtered = search
-    ? allWithDeleted.filter(f => f.name.toLowerCase().includes(search.toLowerCase()))
-    : allWithDeleted;
-
+  const filtered = search ? allWithDeleted.filter(f => f.name.toLowerCase().includes(search.toLowerCase())) : allWithDeleted;
   const isBase    = id => BASE_FOODS.some(f => f.id === id);
   const isDeleted = id => deletedFoods.includes(id);
 
-  const setOv = (id, field, val) =>
-    setOverrides(p => ({
-      ...p,
-      [id]: { ...(p[id] || {}), [field]: val === '' ? undefined : val },
-    }));
+  const setOv = (id, field, val) => setOverrides(p => ({ ...p, [id]: { ...(p[id] || {}), [field]: val === '' ? undefined : val } }));
 
   const changeUnit = (food, newUnit) => {
     setOverrides(p => {
       const existing = { ...(p[food.id] || {}) };
-      if (newUnit === food.unit) {
-        delete existing.unit;
-        delete existing.gramsPerUnit;
-      } else {
-        existing.unit = newUnit;
-        if (newUnit !== 'uds') delete existing.gramsPerUnit;
-      }
+      if (newUnit === food.unit) { delete existing.unit; delete existing.gramsPerUnit; }
+      else { existing.unit = newUnit; if (newUnit !== 'uds') delete existing.gramsPerUnit; }
       return { ...p, [food.id]: existing };
     });
   };
 
-  const resetOv = id =>
-    setOverrides(p => { const n = { ...p }; delete n[id]; return n; });
-
+  const resetOv = id => setOverrides(p => { const n = { ...p }; delete n[id]; return n; });
   const deleteFood = id => {
-    if (isBase(id)) {
-      // Ocultar alimento base (se puede restaurar)
-      setDeletedFoods(p => [...p, id]);
-    } else {
-      // Eliminar alimento personalizado definitivamente
-      setCustom(p => p.filter(f => f.id !== id));
-      setOverrides(p => { const n = { ...p }; delete n[id]; return n; });
-    }
+    if (isBase(id)) { setDeletedFoods(p => [...p, id]); }
+    else { setCustom(p => p.filter(f => f.id !== id)); setOverrides(p => { const n = { ...p }; delete n[id]; return n; }); }
     setConfirmDel(null);
   };
+  const restoreFood = id => { setDeletedFoods(p => p.filter(x => x !== id)); };
+  const hasOverrides = id => { const ov = overrides[id]; return ov && Object.values(ov).some(v => v !== undefined); };
 
-  const restoreFood = id => {
-    setDeletedFoods(p => p.filter(x => x !== id));
-  };
-
-  const hasOverrides = id => {
-    const ov = overrides[id];
-    return ov && Object.values(ov).some(v => v !== undefined);
-  };
-
-  return (
-    <div style={{ paddingBottom: '2rem' }}>
-      {/* Header */}
-      <div className="card cp header">
-        <div>
-          <div className="header-title">
-            <i className="ti ti-edit" style={{ color: 'var(--blue-dark)', fontSize: 18 }}></i>
-            Editar lista de alimentos
-          </div>
-          <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 2 }}>
-            {allFoods.length} activos · {deletedFoods.length} ocultos
-          </div>
-        </div>
-        <div className="hactions">
-          <button className="btn-edit" onClick={onBack}>
-            <i className="ti ti-arrow-left"></i> Volver
-          </button>
-        </div>
-      </div>
-
-      {/* Info + leyenda de colores */}
-      <div className="info-note">
-        <i className="ti ti-info-circle" style={{ fontSize: 13 }}></i>{' '}
-        Cambia la unidad de medida y los valores nutricionales por 100g/ml. Si usas <strong>unidades</strong>,
-        indica los <strong>gramos por unidad</strong> para un cálculo exacto.
-        Los alimentos <strong>base</strong> eliminados se ocultan y pueden restaurarse. Los <strong>personalizados</strong> se eliminan definitivamente.
-        <div style={{ display:'flex', gap:6, marginTop:8, flexWrap:'wrap' }}>
-          <div style={{ display:'flex', alignItems:'center', gap:5 }}>
-            <input readOnly className="compact inp-kcal" style={{ width:60, textAlign:'right', pointerEvents:'none',color:'var(--acc-text)' }} placeholder="Kcal" />
-            <span style={{ fontSize:11, color:'var(--text2)' }}>= Kcal por 100g/ml/ud</span>
-          </div>
-          <div style={{ display:'flex', alignItems:'center', gap:5 }}>
-            <input readOnly className="compact inp-prot" style={{ width:60, textAlign:'right', pointerEvents:'none',color:'var(--acc-text)' }} placeholder="Prot." />
-            <span style={{ fontSize:11, color:'var(--text2)' }}>= Proteína por 100g/ml/ud</span>
-          </div>
-        </div>
-      </div>
-
-      <input type="text" placeholder="Buscar alimento..." value={search}
-        onChange={e => setSearch(e.target.value)} style={{ marginBottom: 10 }} />
-
-      {/* Lista */}
-      <div className="card" style={{ overflow: 'hidden', marginBottom: 14 }}>
-        {/* Cabecera DESKTOP únicamente */}
-        <div className="edit-grid-desktop" style={{
-          background: 'var(--bg2)', borderBottom: '0.5px solid var(--border)',
-          fontSize: 10, fontWeight: 500, color: 'var(--text2)',
-        }}>
-          <span>Alimento</span>
-          <span style={{ textAlign: 'center' }}>Unidad</span>
-          <span style={{ textAlign: 'right' }}>Kcal/100</span>
-          <span style={{ textAlign: 'right' }}>Prot./100</span>
-          <span style={{ textAlign: 'center' }}>g/ud.</span>
-          <span style={{ textAlign: 'center' }}>Acciones</span>
-        </div>
-
-        {filtered.length === 0 && (
-          <div style={{ textAlign: 'center', padding: '16px', color: 'var(--text3)', fontSize: 13 }}>
-            Sin resultados
-          </div>
-        )}
-
-        {filtered.map(f => {
-          const ov      = overrides[f.id] || {};
-          const effUnit = ov.unit !== undefined ? ov.unit : f.unit;
-          const isUds   = effUnit === 'uds';
-          const base    = isBase(f.id);
-          const deleted = isDeleted(f.id);
-          const hasOv   = hasOverrides(f.id);
-
-          // Confirmación de borrado
-          if (confirmDel === f.id) {
-            return (
-              <div key={f.id} style={{
-                display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px',
-                background: 'var(--red-bg)', borderBottom: '0.5px solid var(--border)', flexWrap:'wrap',
-              }}>
-                <i className="ti ti-alert-triangle" style={{ color: 'var(--red-text)', fontSize: 15 }}></i>
-                <span style={{ flex: 1, fontSize: 12, color: 'var(--red-text)', minWidth: 140 }}>
-                  {base
-                    ? <>¿Ocultar <strong>{f.name}</strong>? Podrás restaurarlo.</>
-                    : <>¿Eliminar <strong>{f.name}</strong>? No se puede deshacer.</>
-                  }
-                </span>
-                <button className="btn-sm btn-reset" onClick={() => deleteFood(f.id)}>
-                  <i className="ti ti-trash"></i> {base ? 'Ocultar' : 'Eliminar'}
-                </button>
-                <button className="btn-sm btn-ghost" onClick={() => setConfirmDel(null)}>
-                  Cancelar
-                </button>
-              </div>
-            );
-          }
-
-          // Campos reutilizables
-          const kcalInp = (
-            <input type="number" className="compact inp-kcal" min="0" style={{ textAlign:'right', width:'100%' }}
-              disabled={deleted}
-              placeholder={String(f.kcalPer100)}
-              value={ov.kcal !== undefined ? ov.kcal : ''}
-              onChange={e => setOv(f.id, 'kcal', e.target.value)} />
+  return e('div', { style: { paddingBottom: '2rem' } },
+    e('div', { className: 'card cp header' },
+      e('div', null,
+        e('div', { className: 'header-title' }, e('i', { className: 'ti ti-edit', style: { color: 'var(--blue-dark)', fontSize: 18 } }), 'Editar lista de alimentos'),
+        e('div', { style: { fontSize: 11, color: 'var(--text3)', marginTop: 2 } }, `${allFoods.length} activos · ${deletedFoods.length} ocultos`)
+      ),
+      e('div', { className: 'hactions' }, e('button', { className: 'btn-edit', onClick: onBack }, e('i', { className: 'ti ti-arrow-left' }), ' Volver'))
+    ),
+    e('div', { className: 'info-note' },
+      e('i', { className: 'ti ti-info-circle', style: { fontSize: 13 } }), ' Cambia la unidad de medida y los valores nutricionales por 100g/ml. Si usas unidades, indica los gramos por unidad. Alimentos base eliminados se ocultan, los personalizados se borran del todo.',
+      e('div', { style: { display:'flex', gap:6, marginTop:8, flexWrap:'wrap' } },
+        e('div', { style: { display:'flex', alignItems:'center', gap:5 } }, e('input', { readOnly: true, className: 'compact inp-kcal', style: { width:60, textAlign:'right', pointerEvents:'none' }, placeholder: 'Kcal' }), e('span', { style: { fontSize:11, color:'var(--text2)' } }, '= Kcal por 100g/ml/ud')),
+        e('div', { style: { display:'flex', alignItems:'center', gap:5 } }, e('input', { readOnly: true, className: 'compact inp-prot', style: { width:60, textAlign:'right', pointerEvents:'none' }, placeholder: 'Prot.' }), e('span', { style: { fontSize:11, color:'var(--text2)' } }, '= Prot por 100g/ml/ud'))
+      )
+    ),
+    e('input', { type: 'text', placeholder: 'Buscar alimento...', value: search, onChange: e => setSearch(e.target.value), style: { marginBottom: 10 } }),
+    e('div', { className: 'card', style: { overflow: 'hidden', marginBottom: 14 } },
+      e('div', { className: 'edit-grid-desktop', style: { background: 'var(--bg2)', borderBottom: '0.5px solid var(--border)', fontSize: 10, fontWeight: 500, color: 'var(--text2)' } },
+        e('span', null, 'Alimento'), e('span', { style: { textAlign: 'center' } }, 'Unidad'), e('span', { style: { textAlign: 'right' } }, 'Kcal/100'), e('span', { style: { textAlign: 'right' } }, 'Prot./100'), e('span', { style: { textAlign: 'center' } }, 'g/ud.'), e('span', { style: { textAlign: 'center' } }, 'Acciones')
+      ),
+      filtered.length === 0 ? e('div', { style: { textAlign: 'center', padding: '16px', color: 'var(--text3)', fontSize: 13 } }, 'Sin resultados') : null,
+      filtered.map(f => {
+        const ov = overrides[f.id] || {}; const effUnit = ov.unit !== undefined ? ov.unit : f.unit; const isUds = effUnit === 'uds'; const base = isBase(f.id); const deleted = isDeleted(f.id); const hasOv = hasOverrides(f.id);
+        if (confirmDel === f.id) {
+          return e('div', { key: f.id, style: { display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', background: 'var(--red-bg)', borderBottom: '0.5px solid var(--border)', flexWrap:'wrap' } },
+            e('i', { className: 'ti ti-alert-triangle', style: { color: 'var(--red-text)', fontSize: 15 } }),
+            e('span', { style: { flex: 1, fontSize: 12, color: 'var(--red-text)', minWidth: 140 } }, base ? `¿Ocultar ${f.name}?` : `¿Eliminar ${f.name} definitivamente?`),
+            e('button', { className: 'btn-sm btn-reset', onClick: () => deleteFood(f.id) }, 'Sí'), e('button', { className: 'btn-sm btn-ghost', onClick: () => setConfirmDel(null) }, 'Cancelar')
           );
-          const protInp = (
-            <input type="number" className="compact inp-prot" min="0" step="0.1" style={{ textAlign:'right', width:'100%' }}
-              disabled={deleted}
-              placeholder={String(f.proteinPer100)}
-              value={ov.protein !== undefined ? ov.protein : ''}
-              onChange={e => setOv(f.id, 'protein', e.target.value)} />
-          );
-          const gpuInp = isUds && !deleted ? (
-            <input type="number" className="compact" min="0" style={{ textAlign:'right', width:'100%' }}
-              placeholder={f.gramsPerUnit ? String(f.gramsPerUnit) : 'g/ud'}
-              value={ov.gramsPerUnit !== undefined ? ov.gramsPerUnit : ''}
-              onChange={e => setOv(f.id, 'gramsPerUnit', e.target.value)} />
-          ) : (
-            <span style={{ fontSize:11, color:'var(--text3)', display:'block', textAlign:'center' }}>—</span>
-          );
-          const unitSel = (
-            <select className="compact-sel" value={effUnit} disabled={deleted}
-              onChange={e => changeUnit(f, e.target.value)} style={{ width:'100%' }}>
-              <option value="g">g</option>
-              <option value="ml">ml</option>
-              <option value="uds">uds</option>
-            </select>
-          );
-          const actionsBtns = deleted ? (
-            <button className="btn-icon btn-icon-b" title="Restaurar alimento" onClick={() => restoreFood(f.id)}>
-              <i className="ti ti-restore"></i>
-            </button>
-          ) : (
-            <>
-              {hasOv && (
-                <button className="btn-icon btn-icon-b" title="Restaurar valores originales" onClick={() => resetOv(f.id)}>
-                  <i className="ti ti-refresh"></i>
-                </button>
-              )}
-              <button className="btn-icon" title={base ? 'Ocultar alimento' : 'Eliminar alimento'} onClick={() => setConfirmDel(f.id)}>
-                <i className="ti ti-trash"></i>
-              </button>
-            </>
-          );
-
-          const udsHint = isUds && !deleted ? (
-            <div style={{ fontSize:10.5, color:'var(--amber-text)', display:'flex', alignItems:'center', gap:4, marginTop:4 }}>
-              <i className="ti ti-info-circle" style={{ fontSize:12 }}></i>
-              {(() => {
-                const gpu = ov.gramsPerUnit !== undefined ? +ov.gramsPerUnit : (f.gramsPerUnit || null);
-                const k   = ov.kcal    !== undefined ? +ov.kcal    : f.kcalPer100;
-                const p   = ov.protein !== undefined ? +ov.protein : f.proteinPer100;
-                if (gpu) return `1 unidad = ${gpu}g → ${Math.round(gpu/100*k)} kcal · ${Math.round(gpu/100*p*10)/10}g prot.`;
-                return 'Indica los gramos por unidad para un cálculo preciso.';
-              })()}
-            </div>
-          ) : null;
-
-          return (
-            <div key={f.id} className="edit-row" style={{ opacity: deleted ? 0.45 : 1 }}>
-
-              {/* ── DESKTOP ── */}
-              <div className="edit-grid-desktop">
-                <div style={{ overflow:'hidden' }}>
-                  <span style={{ fontSize:12, display:'block', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
-                    {f.name}
-                    <span className={base ? 'tag-base' : 'tag-custom'}>{base ? 'base' : 'custom'}</span>
-                    {deleted && <span style={{ fontSize:9, color:'var(--red-text)', marginLeft:4, fontWeight:500 }}>OCULTO</span>}
-                  </span>
-                </div>
-                <div>{unitSel}</div>
-                <div>{kcalInp}</div>
-                <div>{protInp}</div>
-                <div>{gpuInp}</div>
-                <div style={{ display:'flex', gap:2, justifyContent:'center' }}>{actionsBtns}</div>
-              </div>
-              {/* uds hint desktop */}
-              {isUds && !deleted && (
-                <div style={{ padding:'0 12px 7px', fontSize:10.5, color:'var(--amber-text)', display:'flex', alignItems:'center', gap:5 }}
-                  className="edit-grid-desktop" >
-                  {udsHint}
-                </div>
-              )}
-
-              {/* ── MÓVIL ── */}
-              <div className="edit-card-mob">
-                {/* Fila 1: nombre | unidad | g/ud | acciones */}
-                <div className="edit-row1">
-                  <span className="edit-name">
-                    {f.name}
-                    <span className={base ? 'tag-base' : 'tag-custom'}>{base ? 'base' : 'custom'}</span>
-                    {deleted && <span style={{ fontSize:9, color:'var(--red-text)', marginLeft:4, fontWeight:500 }}>OCULTO</span>}
-                  </span>
-                  <div style={{ width:60, flexShrink:0 }}>{unitSel}</div>
-                  <div style={{ width:56, flexShrink:0 }}>{isUds && !deleted ? gpuInp : <span style={{fontSize:11,color:'var(--text3)',display:'block',textAlign:'center'}}>—</span>}</div>
-                  <div style={{ display:'flex', gap:2, flexShrink:0 }}>{actionsBtns}</div>
-                </div>
-                {/* Fila 2: kcal | prot */}
-                {!deleted && (
-                  <div className="edit-row2">
-                    <div style={{ flex:1 }}>{kcalInp}</div>
-                    <div style={{ flex:1 }}>{protInp}</div>
-                  </div>
-                )}
-                {udsHint}
-              </div>
-
-            </div>
-          );
-        })}
-      </div>
-
-      <div style={{ fontSize: 11, color: 'var(--text3)', textAlign: 'center' }}>
-        {allFoods.length} activos · {deletedFoods.length} oculto{deletedFoods.length !== 1 ? 's' : ''} · {custom.length} personalizado{custom.length !== 1 ? 's' : ''}
-      </div>
-    </div>
+        }
+        const kcalInp = e('input', { type: 'number', className: 'compact inp-kcal', disabled: deleted, placeholder: f.kcalPer100, value: ov.kcal !== undefined ? ov.kcal : '', onChange: e => setOv(f.id, 'kcal', e.target.value), style: { textAlign:'right', width:'100%' } });
+        const protInp = e('input', { type: 'number', className: 'compact inp-prot', disabled: deleted, placeholder: f.proteinPer100, value: ov.protein !== undefined ? ov.protein : '', onChange: e => setOv(f.id, 'protein', e.target.value), style: { textAlign:'right', width:'100%' }, step: '0.1' });
+        const gpuInp = isUds && !deleted ? e('input', { type: 'number', className: 'compact', placeholder: f.gramsPerUnit || 'g/ud', value: ov.gramsPerUnit !== undefined ? ov.gramsPerUnit : '', onChange: e => setOv(f.id, 'gramsPerUnit', e.target.value), style: { textAlign:'right', width:'100%' } }) : e('span', { style: { fontSize:11, color:'var(--text3)', display:'block', textAlign:'center' } }, '—');
+        const unitSel = e('select', { className: 'compact-sel', value: effUnit, disabled: deleted, onChange: e => changeUnit(f, e.target.value), style: { width:'100%' } }, e('option', { value: 'g' }, 'g'), e('option', { value: 'ml' }, 'ml'), e('option', { value: 'uds' }, 'uds'));
+        const actionsBtns = deleted ? e('button', { className: 'btn-icon btn-icon-b', onClick: () => restoreFood(f.id) }, e('i', { className: 'ti ti-restore' })) : e(React.Fragment, null, hasOv && e('button', { className: 'btn-icon btn-icon-b', onClick: () => resetOv(f.id) }, e('i', { className: 'ti ti-refresh' })), e('button', { className: 'btn-icon', onClick: () => setConfirmDel(f.id) }, e('i', { className: 'ti ti-trash' })));
+        
+        return e('div', { key: f.id, className: 'edit-row', style: { opacity: deleted ? 0.45 : 1 } },
+          e('div', { className: 'edit-grid-desktop' },
+            e('div', { style: { overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' } }, f.name, e('span', { className: base ? 'tag-base' : 'tag-custom' }, base ? 'base' : 'custom')),
+            e('div', null, unitSel), e('div', null, kcalInp), e('div', null, protInp), e('div', null, gpuInp), e('div', { style: { display:'flex', justifyContent:'center' } }, actionsBtns)
+          ),
+          e('div', { className: 'edit-card-mob' },
+            e('div', { className: 'edit-row1' }, e('span', { className: 'edit-name' }, f.name), e('div', { style: { width:60 } }, unitSel), e('div', { style: { width:56 } }, gpuInp), e('div', null, actionsBtns)),
+            !deleted && e('div', { className: 'edit-row2' }, e('div', { style: { flex:1 } }, kcalInp), e('div', { style: { flex:1 } }, protInp))
+          )
+        );
+      })
+    )
   );
 }
 
-/* ═══ COMPONENTE: VISTA HISTÓRICO ════════════════════════════════════════════ */
-function HistoryView({ data, dateLabel }) {
+/* ── COMPONENTE: VISTA HISTÓRICO ── */
+function HistoryView({ data }) {
   if (!data || (data.kcal === 0 && data.protein === 0)) {
-    return (
-      <div className="card" style={{ marginBottom: 10 }}>
-        <div className="empty">
-          <i className="ti ti-calendar-off empty-icon"></i>
-          Sin datos registrados para este día
-        </div>
-      </div>
-    );
+    return e('div', { className: 'card', style: { marginBottom: 10 } }, e('div', { className: 'empty' }, e('i', { className: 'ti ti-calendar-off empty-icon' }), 'Sin datos registrados para este día'));
   }
-  return (
-    <>
-      <div className="stats">
-        <div className="stat">
-          <div className="stat-label">Calorías</div>
-          <div className="stat-val kcal">{data.kcal} <span className="stat-unit">kcal</span></div>
-        </div>
-        <div className="stat">
-          <div className="stat-label">Proteínas</div>
-          <div className="stat-val prot">{data.protein} <span className="stat-unit">g</span></div>
-        </div>
-      </div>
-      <div className="card cp" style={{ marginBottom: 14 }}>
-        <div className="sec-title">
-          <i className="ti ti-history"></i> Detalle por comida
-        </div>
-        {MEALS.map(ml => {
-          const m = data.meals[ml.id];
-          if (!m || !m.count) return null;
-          return (
-            <div key={ml.id} style={{ marginBottom: 6 }}>
-              <div className="day-row">
-                <span style={{ display:'flex', alignItems:'center', gap:5, color:'var(--text2)', fontSize:13 }}>
-                  <i className={`ti ${ml.icon}`} style={{ fontSize:13 }}></i>
-                  {ml.name}
-                  <span style={{ fontSize:10, color:'var(--text3)' }}>({m.count} alim.)</span>
-                </span>
-                <span>
-                  <span className="kcal">{m.kcal} kcal</span>
-                  <span style={{ color:'var(--text3)', margin:'0 4px' }}>·</span>
-                  <span className="prot">{m.protein}g</span>
-                </span>
-              </div>
-              {m.items.map(item => (
-                <div key={item.id} className="hist-item">
-                  <span>{item.name} <span style={{ color:'var(--text3)' }}>({item.amount} {item.unit})</span></span>
-                  <span>
-                    <span style={{ color:'var(--green-dark)' }}>{item.kcal} kcal</span>
-                    <span style={{ color:'var(--text3)', margin:'0 3px' }}>·</span>
-                    <span style={{ color:'var(--blue-dark)' }}>{item.protein}g</span>
-                  </span>
-                </div>
-              ))}
-            </div>
-          );
-        })}
-        <hr className="divider" />
-        <div style={{ display:'flex', justifyContent:'space-between', fontWeight:600, fontSize:14 }}>
-          <span>TOTAL</span>
-          <span>
-            <span className="kcal">{data.kcal} kcal</span>
-            <span style={{ color:'var(--text3)', margin:'0 4px' }}>·</span>
-            <span className="prot">{data.protein}g prot.</span>
-          </span>
-        </div>
-      </div>
-    </>
+  return e(React.Fragment, null,
+    e('div', { className: 'stats' },
+      e('div', { className: 'stat' }, e('div', { className: 'stat-label' }, 'Calorías'), e('div', { className: 'stat-val kcal' }, data.kcal, e('span', { className: 'stat-unit' }, ' kcal'))),
+      e('div', { className: 'stat' }, e('div', { className: 'stat-label' }, 'Proteínas'), e('div', { className: 'stat-val prot' }, data.protein, e('span', { className: 'stat-unit' }, ' g')))
+    ),
+    e('div', { className: 'card cp', style: { marginBottom: 14 } },
+      e('div', { className: 'sec-title' }, e('i', { className: 'ti ti-history' }), ' Detalle por comida'),
+      MEALS.map(ml => {
+        const m = data.meals[ml.id]; if (!m || !m.count) return null;
+        return e('div', { key: ml.id, style: { marginBottom: 6 } },
+          e('div', { className: 'day-row' }, e('span', { style: { display:'flex', alignItems:'center', gap:5, color:'var(--text2)' } }, e('i', { className: `ti ${ml.icon}` }), ml.name), e('span', null, e('span', { className: 'kcal' }, `${m.kcal} kcal`), ' · ', e('span', { className: 'prot' }, `${m.protein}g`))),
+          m.items.map(item => e('div', { key: item.id, className: 'hist-item' }, e('span', null, `${item.name} (${item.amount} ${item.unit})`), e('span', null, e('span', { style: { color: 'var(--acc-dark)' } }, `${item.kcal} kcal`), ' · ', e('span', null, `${item.protein}g`))))
+        );
+      }),
+      e('hr', { className: 'divider' }),
+      e('div', { style: { display:'flex', justifyContent:'space-between', fontWeight:600, fontSize:14 } }, e('span', null, 'TOTAL'), e('span', null, e('span', { className: 'kcal' }, `${data.kcal} kcal`), ' · ', e('span', { className: 'prot' }, `${data.protein}g prot.`)))
+    )
   );
 }
 
-/* ═══ APP PRINCIPAL ══════════════════════════════════════════════════════════ */
+/* ── APP PRINCIPAL ── */
 function App() {
   const [loading,      setLoading]      = useState(true);
   const [meals,        setMeals]        = useState(initMeals);
   const [custom,       setCustom]       = useState([]);
-  const [deletedFoods, setDeletedFoods] = useState([]);   // IDs ocultos (base o custom)
+  const [deletedFoods, setDeletedFoods] = useState([]);
   const [overrides,    setOverrides]    = useState({});
   const [history,      setHistory]      = useState({});
   const [dates,        setDates]        = useState([REAL_TODAY]);
@@ -856,857 +539,206 @@ function App() {
   const [editMode,     setEditMode]     = useState(false);
   const [newF,         setNewF]         = useState({ name:'', unit:'g', kcal:'', protein:'', gramsPerUnit:'' });
   const [extraQuick,   setExtraQuick]   = useState({ name:'', kcal:'', protein:'', qty:'' });
-  const [udsMode,      setUdsMode]      = useState('uds');  // 'uds' | 'g' for unit foods
-  const [currentDay,   setCurrentDay]   = useState(REAL_TODAY);  // the active working day
-  const [confirm,      setConfirm]      = useState(null);  // 'reset' | 'advance' | null
+  const [udsMode,      setUdsMode]      = useState('uds');
+  const [currentDay,   setCurrentDay]   = useState(REAL_TODAY);
+  const [confirm,      setConfirm]      = useState(null);
   const [theme,        setTheme]        = useState('default');
   const [showSettings, setShowSettings] = useState(false);
-  const [savedMeals,   setSavedMeals]   = useState({});   // { mealId: [{id,name,items},...] }
+  const [savedMeals,   setSavedMeals]   = useState({});
   const [showSaveMeal, setShowSaveMeal] = useState(false);
   const [saveMealName, setSaveMealName] = useState('');
   const [selSavedMeal, setSelSavedMeal] = useState('');
 
-  /* ── Carga inicial ── */
   useEffect(() => {
     const savedDay  = LS.get('nutri_currentDay') || REAL_TODAY;
     const ds        = manageDates(LS.get('nutri_dates') || [], savedDay);
-    const customF   = LS.get('nutri_foods')    || [];
-    const ovs       = LS.get('nutri_overrides') || {};
-    const deleted   = LS.get('nutri_deleted')  || [];
     const todayD    = LS.get('nutri_day_' + savedDay);
-    const hist = {};
-    ds.filter(d => d !== savedDay).forEach(d => { const data = LS.get('nutri_day_' + d); if (data) hist[d] = data; });
-    const sm        = LS.get('nutri_saved_meals') || {};
+    const hist = {}; ds.filter(d => d !== savedDay).forEach(d => { const data = LS.get('nutri_day_' + d); if (data) hist[d] = data; });
     const savedTheme = LS.get('nutri_theme') || 'default';
-    applyTheme(savedTheme);
-    setTheme(savedTheme);
-    setCurrentDay(savedDay);
-    setViewDate(savedDay);
-    setDates(ds);
-    setCustom(customF);
-    setOverrides(ovs);
-    setDeletedFoods(deleted);
-    if (todayD) setMeals(todayD);
-    setHistory(hist);
-    setSavedMeals(sm);
-    setLoading(false);
+    applyTheme(savedTheme); setTheme(savedTheme); setCurrentDay(savedDay); setViewDate(savedDay); setDates(ds);
+    setCustom(LS.get('nutri_foods') || []); setOverrides(LS.get('nutri_overrides') || {}); setDeletedFoods(LS.get('nutri_deleted') || []);
+    if (todayD) setMeals(todayD); setHistory(hist); setSavedMeals(LS.get('nutri_saved_meals') || {}); setLoading(false);
   }, []);
 
-  /* ── Guardado automático ── */
   const saveTimer = useRef(null);
-  useEffect(() => {
-    if (loading) return;
-    clearTimeout(saveTimer.current);
-    saveTimer.current = setTimeout(() => LS.set('nutri_day_' + currentDay, meals), 300);
-  }, [meals, loading]);
-  useEffect(() => { if (!loading) LS.set('nutri_overrides', overrides);       }, [overrides,    loading]);
-  useEffect(() => { if (!loading) LS.set('nutri_foods',     custom);          }, [custom,       loading]);
-  useEffect(() => { if (!loading) LS.set('nutri_deleted',   deletedFoods);    }, [deletedFoods, loading]);
-  useEffect(() => {
-    if (!loading) { LS.set('nutri_theme', theme); applyTheme(theme); }
-  }, [theme, loading]);
+  useEffect(() => { if (loading) return; clearTimeout(saveTimer.current); saveTimer.current = setTimeout(() => LS.set('nutri_day_' + currentDay, meals), 300); }, [meals, loading]);
+  useEffect(() => { if (!loading) LS.set('nutri_overrides', overrides); }, [overrides, loading]);
+  useEffect(() => { if (!loading) LS.set('nutri_foods', custom); }, [custom, loading]);
+  useEffect(() => { if (!loading) LS.set('nutri_deleted', deletedFoods); }, [deletedFoods, loading]);
+  useEffect(() => { if (!loading) { LS.set('nutri_theme', theme); applyTheme(theme); } }, [theme, loading]);
   useEffect(() => { if (!loading) LS.set('nutri_saved_meals', savedMeals); }, [savedMeals, loading]);
 
-  /* ── Datos derivados ── */
-  const allFoods = useMemo(
-    () => sortFoods([...BASE_FOODS, ...custom].filter(f => !deletedFoods.includes(f.id))),
-    [custom, deletedFoods]
-  );
+  const allFoods = useMemo(() => sortFoods([...BASE_FOODS, ...custom].filter(f => !deletedFoods.includes(f.id))), [custom, deletedFoods]);
   const food     = allFoods.find(f => f.id === selFood) || allFoods[0];
   const effUnit  = food ? getEffUnit(food, overrides) : 'g';
 
+  useEffect(() => { if (allFoods.length && !allFoods.some(f => f.id === selFood)) { setSelFood(allFoods[0].id); } }, [allFoods, selFood]);
+
   const enrichedToday = useMemo(() => {
-    const r = {};
-    Object.entries(meals).forEach(([mid, items]) => { r[mid] = enrichItems(items, allFoods, overrides); });
-    return r;
+    const r = {}; Object.entries(meals).forEach(([mid, items]) => { r[mid] = enrichItems(items, allFoods, overrides); }); return r;
   }, [meals, overrides, allFoods]);
 
-  const todayMealT = useMemo(() =>
-    Object.fromEntries(MEALS.map(ml => [ml.id, mealTotals(enrichedToday[ml.id] || [])])),
-    [enrichedToday]
-  );
+  const todayMealT = useMemo(() => Object.fromEntries(MEALS.map(ml => [ml.id, mealTotals(enrichedToday[ml.id] || [])])), [enrichedToday]);
+  const todayDay = useMemo(() => ({ kcal: Object.values(todayMealT).reduce((s, m) => s + m.kcal, 0), protein: Math.round(Object.values(todayMealT).reduce((s, m) => s + m.protein, 0) * 10) / 10 }), [todayMealT]);
+  const histData = useMemo(() => { const r = {}; Object.entries(history).forEach(([d, data]) => { r[d] = buildDayTotals(data, allFoods, overrides); }); return r; }, [history, allFoods, overrides]);
 
-  const todayDay = useMemo(() => ({
-    kcal:    Object.values(todayMealT).reduce((s, m) => s + m.kcal, 0),
-    protein: Math.round(Object.values(todayMealT).reduce((s, m) => s + m.protein, 0) * 10) / 10,
-  }), [todayMealT]);
-
-  const histData = useMemo(() => {
-    const r = {};
-    Object.entries(history).forEach(([d, data]) => { r[d] = buildDayTotals(data, allFoods, overrides); });
-    return r;
-  }, [history, allFoods, overrides]);
-
-  /* ── Handlers ── */
   const addItem = () => {
-    const n = +amt;
-    if (!n || n <= 0 || !food) return;
-    // For uds foods: if user chose to enter grams directly, override unit to 'g' for this entry
+    const n = +amt; if (!n || n <= 0 || !food) return;
     const resolvedUnit = effUnit === 'uds' && udsMode === 'g' ? 'g' : effUnit;
-    // Build a synthetic food override for direct-grams entry on a uds food
     let entryKcal, entryProt;
     if (effUnit === 'uds' && udsMode === 'g') {
-      // calculate as grams
-      const ov = overrides?.[food.id] || {};
-      const k  = ov.kcal    !== undefined ? +ov.kcal    : food.kcalPer100;
-      const p  = ov.protein !== undefined ? +ov.protein : food.proteinPer100;
-      entryKcal    = Math.round(n / 100 * k);
-      entryProt    = Math.round(n / 100 * p * 10) / 10;
+      const ov = overrides?.[food.id] || {}; const k = ov.kcal !== undefined ? +ov.kcal : food.kcalPer100; const p = ov.protein !== undefined ? +ov.protein : food.proteinPer100;
+      entryKcal = Math.round(n / 100 * k); entryProt = Math.round(n / 100 * p * 10) / 10;
     } else {
-      const res = calcFood(food, n, overrides);
-      entryKcal    = res.kcal;
-      entryProt    = res.protein;
+      const res = calcFood(food, n, overrides); entryKcal = res.kcal; entryProt = res.protein;
     }
-    setMeals(p => ({
-      ...p,
-      [active]: [...p[active], {
-        id: Date.now(), foodId: food.id, name: food.name,
-        amount: n, unit: resolvedUnit,
-        kcal: entryKcal, protein: entryProt,
-        _fixed: true,   // mark as pre-calculated so enrichItems skips recalc
-      }],
-    }));
+    setMeals(p => ({ ...p, [active]: [...p[active], { id: Date.now(), foodId: food.id, name: food.name, amount: n, unit: resolvedUnit, kcal: entryKcal, protein: entryProt, _fixed: true }] }));
     setAmt('');
   };
 
   const addQuickExtra = () => {
-    const { name, kcal, protein, qty } = extraQuick;
-    const n = +qty, k = +kcal, p = +protein;
-    if (!name || !k || !p || !n || n <= 0) return;
-    const itemKcal = Math.round(n / 100 * k);
-    const itemProt = Math.round(n / 100 * p * 10) / 10;
-    setMeals(prev => ({
-      ...prev,
-      extras: [...prev.extras, {
-        id: Date.now(), foodId: '__quick__', name, amount: n, unit: 'g',
-        kcal: itemKcal, protein: itemProt, _fixed: true,
-      }],
-    }));
+    const { name, kcal, protein, qty } = extraQuick; const n = +qty, k = +kcal, p = +protein; if (!name || !k || !p || !n || n <= 0) return;
+    setMeals(prev => ({ ...prev, extras: [...prev.extras, { id: Date.now(), foodId: '__quick__', name, amount: n, unit: 'g', kcal: Math.round(n / 100 * k), protein: Math.round(n / 100 * p * 10) / 10, _fixed: true }] }));
     setExtraQuick({ name:'', kcal:'', protein:'', qty:'' });
   };
 
   const delItem = (mid, id) => setMeals(p => ({ ...p, [mid]: p[mid].filter(i => i.id !== id) }));
-
-  /* ── Comidas guardadas ── */
-  const applySavedMeal = (savedMeal) => {
-    // Clone items with fresh IDs so they can be deleted independently
-    const itemsToAdd = savedMeal.items.map(item => ({ ...item, id: Date.now() + Math.random() }));
-    setMeals(p => ({ ...p, [active]: [...p[active], ...itemsToAdd] }));
-  };
-
-  const saveCurrentMeal = () => {
-    const name = saveMealName.trim();
-    if (!name || !curItems.length) return;
-    const newMeal = { id: 'sm_' + Date.now(), name, items: curItems };
-    setSavedMeals(p => ({ ...p, [active]: [...(p[active] || []), newMeal] }));
-    setSaveMealName('');
-    setShowSaveMeal(false);
-  };
-
-  const deleteSavedMeal = (slotId, mealId) => {
-    setSavedMeals(p => ({ ...p, [slotId]: (p[slotId] || []).filter(m => m.id !== mealId) }));
-  };
-
-  /* ── Pasar al día siguiente ── */
+  const applySavedMeal = (savedMeal) => { const itemsToAdd = savedMeal.items.map(item => ({ ...item, id: Date.now() + Math.random() })); setMeals(p => ({ ...p, [active]: [...p[active], ...itemsToAdd] })); };
+  const saveCurrentMeal = () => { const name = saveMealName.trim(); if (!name || !curItems.length) return; const newMeal = { id: 'sm_' + Date.now(), name, items: curItems }; setSavedMeals(p => ({ ...p, [active]: [...(p[active] || []), newMeal] })); setSaveMealName(''); setShowSaveMeal(false); };
+  const deleteSavedMeal = (slotId, mealId) => { setSavedMeals(p => ({ ...p, [slotId]: (p[slotId] || []).filter(m => m.id !== mealId) })); };
+  
   const advanceDay = () => {
-    // 1. Persist current day's meals before moving on
-    LS.set('nutri_day_' + currentDay, meals);
-    // 2. Compute next calendar day from currentDay
-    const base = new Date(currentDay + 'T12:00:00');
-    base.setDate(base.getDate() + 1);
-    const nextDay = base.toISOString().slice(0, 10);
-    // 3. Move current meals to history, reset today
-    setHistory(prev => ({ ...prev, [currentDay]: meals }));
-    setMeals(initMeals());
-    // 4. Update dates list (add nextDay, prune old, keep 5 max)
-    const newDates = manageDates([currentDay, ...dates.filter(x => x !== currentDay)], nextDay);
-    setDates(newDates);
-    // 5. Switch working day
-    setCurrentDay(nextDay);
-    setViewDate(nextDay);
-    LS.set('nutri_currentDay', nextDay);
+    LS.set('nutri_day_' + currentDay, meals); const base = new Date(currentDay + 'T12:00:00'); base.setDate(base.getDate() + 1); const nextDay = base.toISOString().slice(0, 10);
+    setHistory(prev => ({ ...prev, [currentDay]: meals })); setMeals(initMeals()); const newDates = manageDates([currentDay, ...dates.filter(x => x !== currentDay)], nextDay);
+    setDates(newDates); setCurrentDay(nextDay); setViewDate(nextDay); LS.set('nutri_currentDay', nextDay);
   };
 
   const saveCustom = () => {
     if (!newF.name || !newF.kcal || !newF.protein) return;
-    const nf = {
-      id: 'c' + Date.now(),
-      name: newF.name,
-      unit: newF.unit,
-      kcalPer100:    +newF.kcal,
-      proteinPer100: +newF.protein,
-      ...(newF.unit === 'uds' && newF.gramsPerUnit ? { gramsPerUnit: +newF.gramsPerUnit } : {}),
-    };
-    setCustom(p => p.concat(nf));
-    setSelFood(nf.id);
-    setNewF({ name:'', unit:'g', kcal:'', protein:'', gramsPerUnit:'' });
-    setShowAdd(false);
+    const nf = { id: 'c' + Date.now(), name: newF.name, unit: newF.unit, kcalPer100: +newF.kcal, proteinPer100: +newF.protein, ...(newF.unit === 'uds' && newF.gramsPerUnit ? { gramsPerUnit: +newF.gramsPerUnit } : {}) };
+    setCustom(p => p.concat(nf)); setSelFood(nf.id); setNewF({ name:'', unit:'g', kcal:'', protein:'', gramsPerUnit:'' }); setShowAdd(false);
   };
 
-  /* ── Render ── */
-  if (loading) {
-    return (
-      <div style={{ textAlign:'center', padding:'3rem', color:'var(--text2)' }}>
-        <i className="ti ti-loader" style={{ fontSize:28, display:'block', marginBottom:8, opacity:.35 }}></i>
-        Cargando datos...
-      </div>
-    );
-  }
-
-  // editMode is rendered inline below (so mobile nav stays visible)
+  if (loading) return e('div', { style: { textAlign:'center', padding:'3rem', color:'var(--text2)' } }, e('i', { className: 'ti ti-loader' }), ' Cargando datos...');
 
   const isToday      = viewDate === currentDay;
   const curItems     = enrichedToday[active] || [];
   const curTotals    = todayMealT[active];
   const activeMeal   = MEALS.find(m => m.id === active);
   const curSavedMeals = savedMeals[active] || [];
-  const preview    = amt && +amt > 0 && food ? calcFood(food, +amt, overrides) : null;
-  const hasDayData = Object.values(todayMealT).some(t => t.count > 0);
-  const todayLabel = (() => {
-    const d = new Date(currentDay + 'T12:00:00');
-    return d.toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long' });
-  })();
+  const preview      = amt && +amt > 0 && food ? calcFood(food, +amt, overrides) : null;
+  const hasDayData   = Object.values(todayMealT).some(t => t.count > 0);
+  const todayLabel   = new Date(currentDay + 'T12:00:00').toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long' });
 
-  return (
-    <div style={{ paddingBottom: '2rem' }}>
-
-      {/* EDIT VIEW (inline so mobile nav persists) */}
-      {editMode && (
-        <EditView
-          allFoods={allFoods}
-          overrides={overrides}
-          setOverrides={setOverrides}
-          custom={custom}
-          setCustom={setCustom}
-          deletedFoods={deletedFoods}
-          setDeletedFoods={setDeletedFoods}
-          onBack={() => setEditMode(false)}
-        />
-      )}
-      {editMode && (
-        <nav className="mob-nav" aria-label="Navegación principal">
-          <button className="mob-nav-btn" onClick={() => setEditMode(false)}>
-            <i className="ti ti-home" aria-hidden="true"></i>Contador
-          </button>
-          <button className="mob-nav-btn active-tab" onClick={() => setEditMode(true)}>
-            <i className="ti ti-tools-kitchen-2" aria-hidden="true"></i>Alimentos
-          </button>
-          <button className="mob-nav-btn warn" style={{ opacity:.35 }} disabled>
-            <i className="ti ti-calendar-plus" aria-hidden="true"></i>Sig. día
-          </button>
-          <button className="mob-nav-btn acc" onClick={() => setShowSettings(true)}>
-            <i className="ti ti-settings" aria-hidden="true"></i>Config.
-          </button>
-        </nav>
-      )}
-      {editMode && showSettings && (
-        <div className="settings-overlay" onClick={() => setShowSettings(false)}>
-          <div className="settings-panel" onClick={e => e.stopPropagation()}>
-            <div className="settings-title">
-              <i className="ti ti-settings" style={{ color:'var(--acc-dark)' }}></i>
-              Configuración
-            </div>
-            <p style={{ fontSize:12, color:'var(--text2)', marginBottom:12 }}>Tema de color</p>
-            <div className="theme-grid">
-              {['Clásico','Claro','Oscuro'].map(grp => {
-                const items = THEMES.filter(t => t.group === grp);
-                if (!items.length) return null;
-                return (
-                  <React.Fragment key={grp}>
-                    <div style={{ gridColumn:'1/-1', fontSize:10, fontWeight:600, color:'var(--text3)', textTransform:'uppercase', letterSpacing:'.06em', marginTop:grp!=='Clásico'?8:0 }}>{grp}</div>
-                    {items.map(t => (
-                      <div key={t.id} className={`theme-card ${theme===t.id?'selected':''}`}
-                        style={{ background:t.bg, border:theme===t.id?`2px solid ${t.acc}`:`1.5px solid rgba(128,128,128,0.2)` }}
-                        onClick={() => setTheme(t.id)}>
-                        <div className="theme-dot-row">
-                          <div className="theme-dot" style={{ background:t.acc }}></div>
-                          <div className="theme-dot" style={{ background:t.bg2 }}></div>
-                          <div className="theme-dot" style={{ background:t.dark?'#1f2937':'#e5e7eb' }}></div>
-                        </div>
-                        <div className="theme-name" style={{ color:t.dark?'#e5e7eb':'#374151' }}>{t.name}</div>
-                        {theme===t.id && <div style={{ fontSize:9, color:t.acc, fontWeight:600 }}>✓ Activo</div>}
-                      </div>
-                    ))}
-                  </React.Fragment>
-                );
-              })}
-            </div>
-            <div style={{ marginTop:20, display:'flex', justifyContent:'flex-end' }}>
-              <button onClick={() => setShowSettings(false)} style={{ padding:'0 20px' }}>Cerrar</button>
-            </div>
-          </div>
-        </div>
-      )}
-      {!editMode && (<>
-
-      {/* HEADER */}
-      <div className="card cp header">
-        <div>
-          <div className="header-title">
-            <i className="ti ti-leaf" style={{ color:'var(--acc-dark)', fontSize:19 }}></i>
-            Contador Nutricional
-          </div>
-          <div className="header-sub">{todayLabel}</div>
-        </div>
-        {/* Desktop actions */}
-        <div className="hactions desktop-hactions">
-          <button className="btn-edit" onClick={() => setEditMode(true)}>
-            <i className="ti ti-edit"></i>
-            <span className="btn-label">Editar alimentos</span>
-          </button>
-          {isToday && (
-            <button
-              style={{ background:'var(--amber-bg)', color:'var(--amber-text)', borderColor:'rgba(99,56,6,.3)' }}
-              onClick={() => setConfirm('advance')}
-              title="Guarda el día actual y abre uno nuevo"
-            >
-              <i className="ti ti-calendar-plus"></i><span className="btn-label"> Día siguiente</span>
-            </button>
-          )}
-          {isToday && (
-            <button className="btn-reset" onClick={() => setConfirm('reset')}>
-              <i className="ti ti-refresh"></i><span className="btn-label"> Reiniciar hoy</span>
-            </button>
-          )}
-          <button onClick={() => setShowSettings(true)} title="Configuración" style={{ padding:'0 10px' }}>
-            <i className="ti ti-settings"></i>
-          </button>
-        </div>
-        {/* Mobile: solo reiniciar en header (siempre visible arriba a la derecha) */}
-        {isToday && (
-          <button className="btn-reset" style={{ display:'none' }}
-            id="mob-reset-btn"
-            onClick={() => setConfirm('reset')}>
-            <i className="ti ti-refresh"></i>
-          </button>
-        )}
-      </div>
-
-      {/* MOBILE REINICIAR (top-right, separate from nav) */}
-      {isToday && (
-        <style>{`@media(max-width:600px){#mob-reset-btn{display:inline-flex!important;}}`}</style>
-      )}
-
-      {/* MOBILE BOTTOM NAV — 4 buttons: Contador | Alimentos | Sig.día | Config */}
-      <nav className="mob-nav" aria-label="Navegación principal">
-        <button
-          className={`mob-nav-btn ${!editMode ? 'active-tab' : ''}`}
-          onClick={() => setEditMode(false)}
-          aria-label="Inicio"
-        >
-          <i className="ti ti-home" aria-hidden="true"></i>
-          Contador
-        </button>
-        <button
-          className={`mob-nav-btn ${editMode ? 'active-tab' : ''}`}
-          onClick={() => setEditMode(true)}
-          aria-label="Editar alimentos"
-        >
-          <i className="ti ti-tools-kitchen-2" aria-hidden="true"></i>
-          Alimentos
-        </button>
-        <button
-          className={`mob-nav-btn warn ${!isToday ? '' : ''}`}
-          style={{ opacity: isToday ? 1 : 0.35 }}
-          disabled={!isToday}
-          onClick={() => isToday && setConfirm('advance')}
-          aria-label="Día siguiente"
-        >
-          <i className="ti ti-calendar-plus" aria-hidden="true"></i>
-          Sig. día
-        </button>
-        <button
-          className="mob-nav-btn acc"
-          onClick={() => setShowSettings(true)}
-          aria-label="Configuración"
-        >
-          <i className="ti ti-settings" aria-hidden="true"></i>
-          Config.
-        </button>
-      </nav>
-
-      {/* MODAL DE CONFIRMACIÓN */}
-      {confirm && (
-        <div style={{
-          position:'fixed', inset:0, background:'rgba(0,0,0,0.45)', zIndex:1000,
-          display:'flex', alignItems:'center', justifyContent:'center', padding:16,
-        }} onClick={() => setConfirm(null)}>
-          <div className="card cp" style={{ maxWidth:340, width:'100%', boxShadow:'0 8px 32px rgba(0,0,0,0.2)' }}
-            onClick={e => e.stopPropagation()}>
-            <div style={{ fontSize:15, fontWeight:600, marginBottom:8, display:'flex', alignItems:'center', gap:8 }}>
-              {confirm === 'reset'
-                ? <><i className="ti ti-alert-triangle" style={{ color:'var(--red-text)' }}></i> Reiniciar el día</>
-                : <><i className="ti ti-calendar-plus" style={{ color:'var(--amber-text)' }}></i> Pasar al día siguiente</>
-              }
-            </div>
-            <p style={{ fontSize:13, color:'var(--text2)', marginBottom:16, lineHeight:1.6 }}>
-              {confirm === 'reset'
-                ? 'Se borrarán todos los alimentos registrados hoy. Esta acción no se puede deshacer.'
-                : 'Se guardarán los datos de hoy y los contadores se reiniciarán para el nuevo día.'
-              }
-            </p>
-            <div style={{ display:'flex', gap:8, justifyContent:'flex-end' }}>
-              <button className="btn-ghost" onClick={() => setConfirm(null)}>
-                Cancelar
-              </button>
-              <button
-                className={confirm === 'reset' ? 'btn-reset' : ''}
-                style={confirm === 'advance' ? { background:'var(--amber-bg)', color:'var(--amber-text)', borderColor:'rgba(99,56,6,.3)' } : {}}
-                onClick={() => {
-                  if (confirm === 'reset') setMeals(initMeals());
-                  else advanceDay();
-                  setConfirm(null);
-                }}
-              >
-                {confirm === 'reset'
-                  ? <><i className="ti ti-trash"></i> Sí, reiniciar</>
-                  : <><i className="ti ti-check"></i> Sí, día siguiente</>
-                }
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* DATE PILLS — oldest left, newest (hoy) right */}
-      <div className="date-pills">
-        {[...dates].reverse().map(d => {
-          const isCurrentDay = d === currentDay;
-          const pd      = isCurrentDay ? todayDay : (histData[d] || { kcal:0, protein:0 });
-          const hasData = pd.kcal > 0 || pd.protein > 0;
-          const label   = fmtDate(d, currentDay);
-          return (
-            <button key={d}
-              className={`tab dpill ${viewDate === d ? 'active' : ''} ${!isCurrentDay ? 'past' : ''} ${!hasData && !isCurrentDay ? 'nodata' : ''}`}
-              onClick={() => setViewDate(d)}
-            >
-              <span style={{ fontWeight: isCurrentDay ? 600 : 400 }}>{label}</span>
-              {hasData && <span className="dpill-sub">{pd.kcal}kcal · {pd.protein}g</span>}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* BANNER SOLO LECTURA */}
-      {!isToday && (
-        <div className="readonly-banner">
-          <i className="ti ti-eye" style={{ fontSize:15 }}></i>
-          Viendo {fmtDate(viewDate, currentDay).toLowerCase()} — solo lectura.
-          <button style={{ marginLeft:'auto', height:26, padding:'0 10px', fontSize:11 }} onClick={() => setViewDate(currentDay)}>
-            Ir a hoy
-          </button>
-        </div>
-      )}
-
-      {/* VISTA HOY */}
-      {isToday && (<>
-
-        <div className="stats">
-          <div className="stat">
-            <div className="stat-label">Calorías del día</div>
-            <div className="stat-val kcal">{todayDay.kcal} <span className="stat-unit">kcal</span></div>
-          </div>
-          <div className="stat">
-            <div className="stat-label">Proteínas del día</div>
-            <div className="stat-val prot">{todayDay.protein} <span className="stat-unit">g</span></div>
-          </div>
-        </div>
-
-        {/* Meal tabs */}
-        <div className="tabs">
-          {MEALS.map(ml => {
-            const t = todayMealT[ml.id];
-            return (
-              <button key={ml.id} className={`tab ${active === ml.id ? 'active' : ''}`}
-                onClick={() => { setActive(ml.id); setSelSavedMeal(''); }}>
-                <i className={`ti ${ml.icon} tab-icon`}></i>
-                {ml.name}
-                {t.count > 0 && <span className="tab-sub">{t.kcal}kcal·{t.protein}g</span>}
-              </button>
+  const renderSettingsModal = () => {
+    if (!showSettings) return null;
+    return e('div', { className: 'settings-overlay', onClick: () => setShowSettings(false) },
+      e('div', { className: 'settings-panel', onClick: e => e.stopPropagation() },
+        e('div', { className: 'settings-title' }, e('i', { className: 'ti ti-settings' }), 'Configuración'),
+        e('p', { style: { fontSize:12, color:'var(--text2)', marginBottom:12 } }, 'Tema de color'),
+        e('div', { className: 'theme-grid' },
+          ['Clásico','Claro','Oscuro'].map(grp => {
+            const items = THEMES.filter(t => t.group === grp);
+            return e(React.Fragment, { key: grp },
+              e('div', { style: { gridColumn:'1/-1', fontSize:10, fontWeight:600, color:'var(--text3)', textTransform:'uppercase', marginTop: 8 } }, grp),
+              items.map(t => e('div', { key: t.id, className: `theme-card ${theme===t.id?'selected':''}`, style: { background: t.bg, border: theme===t.id?`2px solid ${t.acc}`:`1.5px solid rgba(128,128,128,0.2)` }, onClick: () => setTheme(t.id) },
+                e('div', { className: 'theme-dot-row' }, e('div', { className: 'theme-dot', style: { background: t.acc } }), e('div', { className: 'theme-dot', style: { background: t.bg2 } })),
+                e('div', { className: 'theme-name', style: { color: t.dark?'#e5e7eb':'#374151' } }, t.name)
+              ))
             );
-          })}
-        </div>
+          })
+        ),
+        e('div', { style: { marginTop:20, display:'flex', justifyContent:'flex-end' } }, e('button', { onClick: () => setShowSettings(false) }, 'Cerrar'))
+      )
+    );
+  };
 
-        {/* Añadir alimento */}
-        <div className="card cp" style={{ marginBottom:10 }}>
-          <div className="sec-title">
-            <i className={`ti ${activeMeal?.icon}`}></i>
-            {activeMeal?.name} — Añadir alimento
-          </div>
+  const navBar = e('nav', { className: 'mob-nav' },
+    e('button', { className: `mob-nav-btn ${!editMode ? 'active-tab' : ''}`, onClick: () => setEditMode(false) }, e('i', { className: 'ti ti-home' }), 'Contador'),
+    e('button', { className: `mob-nav-btn ${editMode ? 'active-tab' : ''}`, onClick: () => setEditMode(true) }, e('i', { className: 'ti ti-tools-kitchen-2' }), 'Alimentos'),
+    e('button', { className: 'mob-nav-btn warn', style: { opacity: isToday ? 1 : 0.35 }, disabled: !isToday, onClick: () => isToday && setConfirm('advance') }, e('i', { className: 'ti ti-calendar-plus' }), 'Sig. día'),
+    e('button', { className: 'mob-nav-btn acc', onClick: () => setShowSettings(true) }, e('i', { className: 'ti ti-settings' }), 'Config.')
+  );
 
-          {/* ── Comidas guardadas para este slot ── */}
-          {curSavedMeals.length > 0 && (
-            <div style={{ marginBottom:10 }}>
-              <div className="row-g" style={{ alignItems:'center' }}>
-                <select
-                  value={selSavedMeal}
-                  onChange={e => setSelSavedMeal(e.target.value)}
-                  style={{ flex:'1 1 0' }}
-                >
-                  <option value="">— Aplicar comida guardada —</option>
-                  {curSavedMeals.map(sm => (
-                    <option key={sm.id} value={sm.id}>
-                      {sm.name} ({sm.items.reduce((s,i)=>s+i.kcal,0)} kcal · {Math.round(sm.items.reduce((s,i)=>s+i.protein,0)*10)/10}g)
-                    </option>
-                  ))}
-                </select>
-                <button
-                  className="btn-add"
-                  disabled={!selSavedMeal}
-                  style={{ opacity: selSavedMeal ? 1 : 0.4, flex:'0 0 auto' }}
-                  onClick={() => {
-                    const sm = curSavedMeals.find(m => m.id === selSavedMeal);
-                    if (sm) { applySavedMeal(sm); setSelSavedMeal(''); }
-                  }}
-                >
-                  <i className="ti ti-bolt-lightning"></i> Aplicar
-                </button>
-                <button
-                  className="btn-icon"
-                  disabled={!selSavedMeal}
-                  style={{ opacity: selSavedMeal ? 1 : 0.3, flex:'0 0 auto' }}
-                  title="Eliminar comida guardada"
-                  onClick={() => {
-                    if (selSavedMeal) { deleteSavedMeal(active, selSavedMeal); setSelSavedMeal(''); }
-                  }}
-                >
-                  <i className="ti ti-trash"></i>
-                </button>
-              </div>
-            </div>
-          )}
+  if (editMode) {
+    return e('div', null, e(EditView, { allFoods, overrides, setOverrides, custom, setCustom, deletedFoods, setDeletedFoods, onBack: () => setEditMode(false) }), navBar, renderSettingsModal());
+  }
 
-          <div className="row-g" style={{ flexWrap:'wrap' }}>
-            <div style={{ flex:'2 1 180px' }}>
-              <select value={selFood} onChange={e => { setSelFood(e.target.value); setUdsMode('uds'); }}>
-                <optgroup label="── Alimentos base ──">
-                  {sortFoods(BASE_FOODS.filter(f => !deletedFoods.includes(f.id))).map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
-                </optgroup>
-                {custom.length > 0 && (
-                  <optgroup label="── Alimentos personalizados ──">
-                    {sortFoods(custom.filter(f => !deletedFoods.includes(f.id))).map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
-                  </optgroup>
-                )}
-              </select>
-            </div>
-            {/* Toggle unidades/gramos para alimentos medidos en uds */}
-            {effUnit === 'uds' && (
-              <div className="toggle-pill" style={{ alignSelf:'center' }}>
-                <button className={udsMode === 'uds' ? 'on' : ''} onClick={() => setUdsMode('uds')}>uds</button>
-                <button className={udsMode === 'g' ? 'on' : ''} onClick={() => setUdsMode('g')}>g</button>
-              </div>
-            )}
-            <div style={{ flex:'1 1 90px', display:'flex', alignItems:'center', gap:5 }}>
-              <input type="number" min="0"
-                placeholder={effUnit === 'uds' ? (udsMode === 'g' ? 'g' : 'uds') : effUnit}
-                value={amt} onChange={e => setAmt(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && addItem()} />
-              <span style={{ fontSize:11, color:'var(--text3)', minWidth:28 }}>
-                {effUnit === 'uds' ? udsMode : effUnit}
-              </span>
-            </div>
-            <button className="btn-add" onClick={addItem} style={{ flex:'0 0 auto' }}>
-              <i className="ti ti-plus"></i> Añadir
-            </button>
-          </div>
-          {preview && effUnit !== 'uds' && (
-            <div className="preview">
-              <i className="ti ti-arrow-right" style={{ fontSize:11 }}></i>{' '}
-              <span className="kcal">{preview.kcal} kcal</span>{' · '}
-              <span className="prot">{preview.protein}g proteína</span>
-            </div>
-          )}
-          {effUnit === 'uds' && amt && +amt > 0 && (() => {
-            const ov = overrides?.[food?.id] || {};
-            const k  = ov.kcal    !== undefined ? +ov.kcal    : (food?.kcalPer100 || 0);
-            const p  = ov.protein !== undefined ? +ov.protein : (food?.proteinPer100 || 0);
-            const gpu = ov.gramsPerUnit !== undefined ? +ov.gramsPerUnit : (food?.gramsPerUnit || null);
-            const n  = +amt;
-            let eKcal, eProt;
-            if (udsMode === 'g') {
-              eKcal = Math.round(n / 100 * k); eProt = Math.round(n / 100 * p * 10) / 10;
-            } else if (gpu) {
-              eKcal = Math.round(n * gpu / 100 * k); eProt = Math.round(n * gpu / 100 * p * 10) / 10;
-            } else { return null; }
-            return (
-              <div className="preview">
-                <i className="ti ti-arrow-right" style={{ fontSize:11 }}></i>{' '}
-                <span className="kcal">{eKcal} kcal</span>{' · '}
-                <span className="prot">{eProt}g proteína</span>
-              </div>
-            );
-          })()}
-
-          {/* ── Guardar comida actual ── */}
-          {curItems.length > 0 && (
-            <div style={{ marginTop:10, borderTop:'0.5px solid var(--border)', paddingTop:10 }}>
-              {!showSaveMeal ? (
-                <button style={{ fontSize:11, height:28, padding:'0 10px', color:'var(--text2)' }}
-                  onClick={() => setShowSaveMeal(true)}>
-                  <i className="ti ti-device-floppy" style={{ fontSize:13 }}></i>
-                  Guardar esta comida
-                </button>
-              ) : (
-                <div className="save-meal-form">
-                  <input
-                    type="text"
-                    placeholder={`Nombre — ej. "Desayuno clásico"`}
-                    value={saveMealName}
-                    onChange={e => setSaveMealName(e.target.value)}
-                    onKeyDown={e => { if (e.key === 'Enter') saveCurrentMeal(); if (e.key === 'Escape') { setShowSaveMeal(false); setSaveMealName(''); } }}
-                    style={{ flex:'1 1 150px', height:32, fontSize:12 }}
-                    autoFocus
-                  />
-                  <button className="btn-save" style={{ height:32, padding:'0 12px', fontSize:12 }}
-                    onClick={saveCurrentMeal}>
-                    <i className="ti ti-check"></i> Guardar
-                  </button>
-                  <button style={{ height:32, padding:'0 10px', fontSize:12 }}
-                    onClick={() => { setShowSaveMeal(false); setSaveMealName(''); }}>
-                    <i className="ti ti-x"></i>
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-
-        {/* Tabla de alimentos */}
-        {curItems.length > 0 ? (
-          <div className="card" style={{ marginBottom:10, overflow:'hidden' }}>
-            <table style={{ tableLayout:'fixed' }}>
-              <colgroup>
-                <col style={{ width:'44%' }} /><col style={{ width:'18%' }} />
-                <col style={{ width:'16%' }} /><col style={{ width:'14%' }} /><col style={{ width:'8%' }} />
-              </colgroup>
-              <thead>
-                <tr><th>Alimento</th><th>Cantidad</th><th>Kcal</th><th>Prot.</th><th></th></tr>
-              </thead>
-              <tbody>
-                {curItems.map(item => (
-                  <tr key={item.id}>
-                    <td style={{ overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', maxWidth:0, fontSize:12 }}>{item.name}</td>
-                    <td style={{ color:'var(--text2)', fontSize:12 }}>{item.amount} {item.unit}</td>
-                    <td className="kcal">{item.kcal}</td>
-                    <td className="prot" style={{ fontSize:12 }}>{item.protein}g</td>
-                    <td style={{ textAlign:'center' }}>
-                      <button className="btn-icon" onClick={() => delItem(active, item.id)} aria-label="Eliminar">
-                        <i className="ti ti-x"></i>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td colSpan={2} className="tfoot">Total {activeMeal?.name}</td>
-                  <td className="kcal tfoot">{curTotals.kcal} kcal</td>
-                  <td className="prot tfoot" style={{ fontSize:12 }}>{curTotals.protein}g</td>
-                  <td className="tfoot"></td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-        ) : (
-          <div className="card" style={{ marginBottom:10 }}>
-            <div className="empty">
-              <i className="ti ti-bowl-chopsticks empty-icon"></i>
-              Sin alimentos en {activeMeal?.name.toLowerCase()}
-            </div>
-          </div>
-        )}
-
-        {/* Quick-add para Extras */}
-        {active === 'extras' && (
-          <div className="card cp" style={{ marginBottom:10 }}>
-            <div className="sec-title">
-              <i className="ti ti-pencil-plus"></i>
-              Añadir comida esporádica (sin guardar)
-            </div>
-            <div style={{ fontSize:11, color:'var(--text3)', marginBottom:8, lineHeight:1.5 }}>
-              Introduce los datos manualmente. No se guardará en la lista de alimentos.
-            </div>
-            <div className="quick-add-grid" style={{ marginBottom:7 }}>
-              <input type="text" placeholder="Nombre"
-                value={extraQuick.name} onChange={e => setExtraQuick(p => ({ ...p, name: e.target.value }))} />
-              <input type="number" className="inp-kcal" min="0" placeholder="Kcal/100g"
-                value={extraQuick.kcal} onChange={e => setExtraQuick(p => ({ ...p, kcal: e.target.value }))} />
-              <input type="number" className="inp-prot" min="0" step="0.1" placeholder="Prot/100g"
-                value={extraQuick.protein} onChange={e => setExtraQuick(p => ({ ...p, protein: e.target.value }))} />
-              <input type="number" min="0" placeholder="Gramos"
-                value={extraQuick.qty}
-                onChange={e => setExtraQuick(p => ({ ...p, qty: e.target.value }))}
-                onKeyDown={e => e.key === 'Enter' && addQuickExtra()} />
-            </div>
-            {extraQuick.kcal && extraQuick.protein && extraQuick.qty && +extraQuick.qty > 0 && (
-              <div className="preview" style={{ marginBottom:7 }}>
-                <i className="ti ti-arrow-right" style={{ fontSize:11 }}></i>{' '}
-                <span className="kcal">{Math.round(+extraQuick.qty/100*+extraQuick.kcal)} kcal</span>{' · '}
-                <span className="prot">{Math.round(+extraQuick.qty/100*+extraQuick.protein*10)/10}g proteína</span>
-              </div>
-            )}
-            <button className="btn-add" onClick={addQuickExtra} style={{ width:'100%', justifyContent:'center' }}>
-              <i className="ti ti-plus"></i> Añadir a Extras
-            </button>
-          </div>
-        )}
-
-        {/* Resumen del día */}
-        {hasDayData && (
-          <div className="card cp" style={{ marginBottom:10 }}>
-            <div className="sec-title">
-              <i className="ti ti-calendar-stats"></i> Resumen completo del día
-            </div>
-            {MEALS.map(ml => {
-              const t = todayMealT[ml.id];
-              if (!t.count) return null;
-              return (
-                <div className="day-row" key={ml.id}>
-                  <span style={{ display:'flex', alignItems:'center', gap:5, color:'var(--text2)' }}>
-                    <i className={`ti ${ml.icon}`} style={{ fontSize:13 }}></i>
-                    {ml.name}
-                  </span>
-                  <span>
-                    <span className="kcal">{t.kcal} kcal</span>
-                    <span style={{ color:'var(--text3)', margin:'0 4px' }}>·</span>
-                    <span className="prot">{t.protein}g</span>
-                  </span>
-                </div>
-              );
-            })}
-            <hr className="divider" />
-            <div style={{ display:'flex', justifyContent:'space-between', fontWeight:600, fontSize:14 }}>
-              <span>TOTAL DEL DÍA</span>
-              <span>
-                <span className="kcal">{todayDay.kcal} kcal</span>
-                <span style={{ color:'var(--text3)', margin:'0 4px' }}>·</span>
-                <span className="prot">{todayDay.protein}g proteína</span>
-              </span>
-            </div>
-          </div>
-        )}
-
-        {/* Añadir alimento personalizado */}
-        <button className="btn-wide" style={{ marginBottom:8 }} onClick={() => setShowAdd(!showAdd)}>
-          <i className={`ti ${showAdd ? 'ti-x' : 'ti-circle-plus'}`}></i>
-          {showAdd ? 'Cancelar' : 'Agregar alimento personalizado'}
-        </button>
-
-        {showAdd && (
-          <div className="card cp" style={{ marginBottom:10 }}>
-            <div className="sec-title">
-              <i className="ti ti-circle-plus"></i> Nuevo alimento personalizado
-            </div>
-            <div className="col-g">
-              <div>
-                <label>Nombre del alimento</label>
-                <input type="text" placeholder="ej. Queso fresco batido 0%"
-                  value={newF.name} onChange={e => setNewF(p => ({ ...p, name: e.target.value }))} />
-              </div>
-              <div className="row-g">
-                <div style={{ flex:1 }}>
-                  <label>Unidad</label>
-                  <select value={newF.unit} onChange={e => setNewF(p => ({ ...p, unit: e.target.value, gramsPerUnit:'' }))}>
-                    <option value="g">Gramos (g)</option>
-                    <option value="ml">Mililitros (ml)</option>
-                    <option value="uds">Unidades (uds)</option>
-                  </select>
-                </div>
-                <div style={{ flex:1 }}>
-                  <label>Kcal por {newF.unit === 'uds' ? '100g' : '100' + newF.unit}</label>
-                  <input type="number" min="0" placeholder="kcal"
-                    value={newF.kcal} onChange={e => setNewF(p => ({ ...p, kcal: e.target.value }))} />
-                </div>
-                <div style={{ flex:1 }}>
-                  <label>Prot. por {newF.unit === 'uds' ? '100g' : '100' + newF.unit}</label>
-                  <input type="number" min="0" step="0.1" placeholder="g"
-                    value={newF.protein} onChange={e => setNewF(p => ({ ...p, protein: e.target.value }))} />
-                </div>
-                {newF.unit === 'uds' && (
-                  <div style={{ flex:1 }}>
-                    <label>Gramos por unidad</label>
-                    <input type="number" min="0" placeholder="g"
-                      value={newF.gramsPerUnit} onChange={e => setNewF(p => ({ ...p, gramsPerUnit: e.target.value }))} />
-                  </div>
-                )}
-              </div>
-              {newF.unit === 'uds' && newF.kcal && newF.protein && newF.gramsPerUnit && (
-                <div className="preview" style={{ fontSize:11 }}>
-                  <i className="ti ti-calculator" style={{ fontSize:11 }}></i>{' '}
-                  Cada unidad ≈ <span className="kcal">{Math.round(+newF.gramsPerUnit/100*+newF.kcal)} kcal</span>
-                  {' · '}
-                  <span className="prot">{Math.round(+newF.gramsPerUnit/100*+newF.protein*10)/10}g prot.</span>
-                </div>
-              )}
-              <div className="row-g">
-                <button className="btn-save" onClick={saveCustom}>
-                  <i className="ti ti-check"></i> Guardar alimento
-                </button>
-                <button className="btn-ghost" onClick={() => setShowAdd(false)}>
-                  <i className="ti ti-x"></i> Cancelar
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {custom.length > 0 && (
-          <div style={{ fontSize:11, color:'var(--text3)', textAlign:'center', marginTop:6 }}>
-            {custom.length} alimento{custom.length > 1 ? 's' : ''} personalizado{custom.length > 1 ? 's' : ''} en la lista
-          </div>
-        )}
-
-      </>)}
-
-      {/* VISTA HISTÓRICO */}
-      {!isToday && <HistoryView data={histData[viewDate]} dateLabel={fmtDate(viewDate, currentDay)} />}
-
-      {/* PANEL DE CONFIGURACIÓN */}
-      {!editMode && showSettings && (
-        <div className="settings-overlay" onClick={() => setShowSettings(false)}>
-          <div className="settings-panel" onClick={e => e.stopPropagation()}>
-            <div className="settings-title">
-              <i className="ti ti-settings" style={{ color:'var(--acc-dark)' }} aria-hidden="true"></i>
-              Configuración
-            </div>
-            <p style={{ fontSize:12, color:'var(--text2)', marginBottom:12 }}>Tema de color</p>
-            <div className="theme-grid">
-              {['Clásico','Claro','Oscuro'].map(grp => {
-                const items = THEMES.filter(t => t.group === grp);
-                if (!items.length) return null;
-                return (
-                  <React.Fragment key={grp}>
-                    <div style={{ gridColumn:'1/-1', fontSize:10, fontWeight:600, color:'var(--text3)', textTransform:'uppercase', letterSpacing:'.06em', marginTop: grp !== 'Clásico' ? 10 : 0 }}>{grp}</div>
-                    {items.map(t => (
-                      <div key={t.id} className={`theme-card ${theme === t.id ? 'selected' : ''}`}
-                        style={{ background: t.bg, border: theme === t.id ? `2px solid ${t.acc}` : `1.5px solid rgba(128,128,128,0.2)` }}
-                        onClick={() => setTheme(t.id)}>
-                        <div className="theme-dot-row">
-                          <div className="theme-dot" style={{ background: t.acc }}></div>
-                          <div className="theme-dot" style={{ background: t.bg2 }}></div>
-                          <div className="theme-dot" style={{ background: t.dark ? '#1f2937' : '#e5e7eb' }}></div>
-                        </div>
-                        <div className="theme-name" style={{ color: t.dark ? '#e5e7eb' : '#374151' }}>{t.name}</div>
-                        {theme === t.id && <div style={{ fontSize:9, color: t.acc, fontWeight:600, marginTop:1 }}>✓ Activo</div>}
-                      </div>
-                    ))}
-                  </React.Fragment>
-                );
-              })}
-            </div>
-            <div style={{ marginTop:20, display:'flex', justifyContent:'flex-end' }}>
-              <button onClick={() => setShowSettings(false)} style={{ padding:'0 20px' }}>Cerrar</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      </>)}
-    </div>
+  return e('div', { style: { paddingBottom: '2rem' } },
+    e('div', { className: 'card cp header' },
+      e('div', null, e('div', { className: 'header-title' }, e('i', { className: 'ti ti-leaf' }), 'Contador Nutricional'), e('div', { className: 'header-sub' }, todayLabel)),
+      e('div', { className: 'hactions desktop-hactions' },
+        e('button', { className: 'btn-edit', onClick: () => setEditMode(true) }, e('i', { className: 'ti ti-edit' }), 'Editar alimentos'),
+        isToday && e('button', { style: { background:'var(--amber-bg)', color:'var(--amber-text)' }, onClick: () => setConfirm('advance') }, e('i', { className: 'ti ti-calendar-plus' }), 'Día siguiente'),
+        isToday && e('button', { className: 'btn-reset', onClick: () => setConfirm('reset') }, e('i', { className: 'ti ti-refresh' }), 'Reiniciar hoy'),
+        e('button', { onClick: () => setShowSettings(true) }, e('i', { className: 'ti ti-settings' }))
+      ),
+      isToday && e('button', { className: 'btn-reset', style: { display:'none' }, id: 'mob-reset-btn', onClick: () => setConfirm('reset') }, e('i', { className: 'ti ti-refresh' }))
+    ),
+    confirm && e('div', { style: { position:'fixed', inset:0, background:'rgba(0,0,0,0.45)', zIndex:1000, display:'flex', alignItems:'center', justifyContent:'center', padding:16 }, onClick: () => setConfirm(null) },
+      e('div', { className: 'card cp', style: { maxWidth:340, width:'100%' }, onClick: e => e.stopPropagation() },
+        e('div', { style: { fontSize:15, fontWeight:600, marginBottom:8 } }, confirm === 'reset' ? 'Reiniciar el día' : 'Pasar al día siguiente'),
+        e('p', { style: { fontSize:13, color:'var(--text2)', marginBottom:16 } }, confirm === 'reset' ? 'Se borrarán todos los alimentos de hoy.' : 'Se guardarán los datos y se abrirá un nuevo día.'),
+        e('div', { style: { display:'flex', gap:8, justifyContent:'flex-end' } },
+          e('button', { className: 'btn-ghost', onClick: () => setConfirm(null) }, 'Cancelar'),
+          e('button', { className: confirm === 'reset' ? 'btn-reset' : '', onClick: () => { if (confirm === 'reset') setMeals(initMeals()); else advanceDay(); setConfirm(null); } }, 'Confirmar')
+        )
+      )
+    ),
+    e('div', { className: 'date-pills' }, [...dates].reverse().map(d => {
+      const isCurrentDay = d === currentDay; const pd = isCurrentDay ? todayDay : (histData[d] || { kcal:0, protein:0 }); const hasData = pd.kcal > 0 || pd.protein > 0;
+      return e('button', { key: d, className: `tab dpill ${viewDate === d ? 'active' : ''} ${!isCurrentDay ? 'past' : ''}`, onClick: () => setViewDate(d) }, e('span', null, fmtDate(d, currentDay)), hasData && e('span', { className: 'dpill-sub' }, `${pd.kcal}k`));
+    })),
+    !isToday && e('div', { className: 'readonly-banner' }, e('i', { className: 'ti ti-eye' }), ' Modo lectura.', e('button', { onClick: () => setViewDate(currentDay), style: { marginLeft:'auto' } }, 'Ir a hoy')),
+    isToday && e(React.Fragment, null,
+      e('div', { className: 'stats' },
+        e('div', { className: 'stat' }, e('div', { className: 'stat-label' }, 'Calorías del día'), e('div', { className: 'stat-val kcal' }, todayDay.kcal)),
+        e('div', { className: 'stat' }, e('div', { className: 'stat-label' }, 'Proteínas del día'), e('div', { className: 'stat-val prot' }, todayDay.protein))
+      ),
+      e('div', { className: 'tabs' }, MEALS.map(ml => e('button', { key: ml.id, className: `tab ${active === ml.id ? 'active' : ''}`, onClick: () => setActive(ml.id) }, e('i', { className: `ti ${ml.icon} tab-icon` }), ml.name))),
+      e('div', { className: 'card cp', style: { marginBottom:10 } },
+        e('div', { className: 'sec-title' }, e('i', { className: `ti ${activeMeal?.icon}` }), ` ${activeMeal?.name} — Añadir`),
+        curSavedMeals.length > 0 && e('div', { style: { marginBottom:10 } },
+          e('select', { value: selSavedMeal, onChange: e => setSelSavedMeal(e.target.value) }, e('option', { value: '' }, '— Aplicar comida guardada —'), curSavedMeals.map(sm => e('option', { key: sm.id, value: sm.id }, sm.name))),
+          e('button', { className: 'btn-add', onClick: () => { const sm = curSavedMeals.find(m => m.id === selSavedMeal); if (sm) applySavedMeal(sm); } }, 'Aplicar')
+        ),
+        e('div', { className: 'row-g', style: { flexWrap:'wrap' } },
+          e('div', { style: { flex:'2 1 180px' } }, e('select', { value: selFood, onChange: e => setSelFood(e.target.value) },
+            e('optgroup', { label: 'Alimentos Base' }, allFoods.map(f => e('option', { key: f.id, value: f.id }, f.name)))
+          )),
+          effUnit === 'uds' && e('div', { className: 'toggle-pill' }, e('button', { className: udsMode === 'uds' ? 'on' : '', onClick: () => setUdsMode('uds') }, 'uds'), e('button', { className: udsMode === 'g' ? 'on' : '', onClick: () => setUdsMode('g') }, 'g')),
+          e('div', { style: { flex:'1 1 90px' } }, e('input', { type: 'number', placeholder: effUnit==='uds'?udsMode:effUnit, value: amt, onChange: e => setAmt(e.target.value) })),
+          e('button', { className: 'btn-add', onClick: addItem }, 'Añadir')
+        )
+      ),
+      curItems.length > 0 ? e('div', { className: 'card', style: { marginBottom:10 } },
+        e('table', null,
+          e('thead', null, e('tr', null, e('th', null, 'Alimento'), e('th', null, 'Cant.'), e('th', null, 'Kcal'), e('th', null, 'Prot.'), e('th', null, ''))),
+          e('tbody', null, curItems.map(item => e('tr', { key: item.id }, e('td', null, item.name), e('td', null, `${item.amount} ${item.unit}`), e('td', { className: 'kcal' }, item.kcal), e('td', { className: 'prot' }, `${item.protein}g`), e('td', null, e('button', { className: 'btn-icon', onClick: () => delItem(active, item.id) }, '×'))))),
+          e('tfoot', null, e('tr', null, e('td', { colSpan: 2 }, 'Total'), e('td', { className: 'kcal' }, curTotals.kcal), e('td', { className: 'prot' }, `${curTotals.protein}g`), e('td', null)))
+        )
+      ) : e('div', { className: 'card', style: { marginBottom:10 } }, e('div', { className: 'empty' }, 'Sin alimentos')),
+      hasDayData && e('div', { className: 'card cp' }, e('div', { className: 'sec-title' }, 'Resumen diario'), e('div', { style: { fontWeight:600 } }, `Total: ${todayDay.kcal} kcal · ${todayDay.protein}g proteína`)),
+      e('button', { className: 'btn-wide', style: { marginTop: 10 }, onClick: () => setShowAdd(!showAdd) }, 'Nuevo alimento personalizado'),
+      showAdd && e('div', { className: 'card cp', style: { marginTop: 10 } },
+        e('div', { className: 'col-g' },
+          e('input', { type: 'text', placeholder: 'Nombre', value: newF.name, onChange: e => setNewF({ ...newF, name: e.target.value }) }),
+          e('div', { className: 'row-g' },
+            e('input', { type: 'number', placeholder: 'Kcal', value: newF.kcal, onChange: e => setNewF({ ...newF, kcal: e.target.value }) }),
+            e('input', { type: 'number', placeholder: 'Prot', value: newF.protein, onChange: e => setNewF({ ...newF, protein: e.target.value }) })
+          ),
+          e('button', { className: 'btn-save', onClick: saveCustom }, 'Guardar')
+        )
+      )
+    ),
+    !isToday && e(HistoryView, { data: histData[viewDate] }),
+    navBar,
+    renderSettingsModal()
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(e(App));
 </script>
 </body>
 </html>
